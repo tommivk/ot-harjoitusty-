@@ -1,4 +1,6 @@
 # Ohjelmistotekniikka 2021
+## Työaikakirjanpito
+* [tuntikirjanpito](https://github.com/tommivk/ot-harjoitustyo/blob/master/tuntikirjanpito.md)
 ## Viikko 1
 * [gitlog.txt](https://github.com/tommivk/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
  
