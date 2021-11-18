@@ -22,7 +22,7 @@ public class Game {
         this.gameOver = true;
     }
 
-    public boolean issGameOver() {
+    public boolean isGameOver() {
         return this.gameOver;
     }
 

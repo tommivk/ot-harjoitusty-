@@ -17,6 +17,10 @@ public class Ship {
         return this.squaresLeft == 0;
     }
 
+    public int getSquaresLeft() {
+        return this.squaresLeft;
+    }
+
     public void addButton(Button button) {
         this.buttons.add(button);
     }
