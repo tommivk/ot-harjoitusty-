@@ -1,16 +1,16 @@
 # työaikakirjanpito
 
-| päivä  | aika | mitä tein          |
-| :----: | :--- | :----------------- |
-| 13.11. | 0.5  | vaatimusmäärittely |
-|        |      |                    |
-|        |      |                    |
-|        |      |                    |
-|        |      |                    |
-|        |      |                    |
-|        |      |                    |
-|        |      |                    |
-|        |      |                    |
-|        |      |                    |
-|        |      |                    |
-|  yht   | 0.5  |                    |
+| päivä  | aika | mitä tein                                     |
+| :----: | :--- | :-------------------------------------------- |
+| 13.11. | 0.5  | vaatimusmäärittely                            |
+| 13.11  | 1    | maven projektin alustus                       |
+| 18.11  | 2    | javafx ja sovelluksen runko                   |
+| 19.11  | 3    | ominaisuus laivojen lisäämiselle pelikentälle |
+|        |      |                                               |
+|        |      |                                               |
+|        |      |                                               |
+|        |      |                                               |
+|        |      |                                               |
+|        |      |                                               |
+|        |      |                                               |
+|  yht   | 6.5  |                                               |
