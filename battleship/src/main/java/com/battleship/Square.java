@@ -1,11 +1,16 @@
 package com.battleship;
 
+import javafx.scene.control.Button;
+
 public class Square {
     private boolean isHit;
     private Ship ship = null;
+    private Button button;
 
     public Square() {
         this.isHit = false;
+        this.button = new Button();
+        this.button.setMinSize(30.0, 30.0);
     }
 
     public void addShip(Ship ship) {
@@ -31,5 +36,25 @@ public class Square {
 
     public boolean getIsHit() {
         return this.isHit;
+    }
+
+    public void addButton(Button button) {
+        this.button = button;
+    }
+
+    public Button getButton() {
+        return this.button;
+    }
+
+    public void setBlackButtonColor() {
+        this.button.setStyle("-fx-background-color: black");
+    }
+
+    public void setGreyButtonColor() {
+        this.button.setStyle("-fx-background-color: grey");
+    }
+
+    public void removeButtonColor() {
+        this.button.setStyle(null);
     }
 }

@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import javafx.scene.control.Button;
 
 public class Ship {
+    private int size;
     private int squaresLeft;
     private ArrayList<Button> buttons;
 
     public Ship(int size) {
+        this.size = size;
         this.squaresLeft = size;
         this.buttons = new ArrayList<Button>();
     }
@@ -37,5 +39,9 @@ public class Ship {
 
     public void hit() {
         this.squaresLeft--;
+    }
+
+    public int getSize() {
+        return this.size;
     }
 }
