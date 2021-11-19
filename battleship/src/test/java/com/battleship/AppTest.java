@@ -2,12 +2,24 @@ package com.battleship;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import de.saxsys.javafx.test.JfxRunner;
+
+@RunWith(JfxRunner.class)
 public class AppTest {
-    Game game = new Game();
-    Square square = new Square();
-    Ship ship = new Ship(5);
+    Game game;
+    Square square;
+    Ship ship;
+
+    @Before
+    public void setup() {
+        game = new Game();
+        square = new Square();
+        ship = new Ship(5);
+    }
 
     @Test
     public void newGameIsNotOver() {
@@ -27,6 +39,7 @@ public class AppTest {
 
     @Test
     public void changingTurnWorks() {
+        assertEquals(1, game.getTurn());
         game.changeTurn();
         assertEquals(2, game.getTurn());
     }
@@ -50,6 +63,7 @@ public class AppTest {
     @Test
     public void hittingSquareWorksAndShipHealthisReduced() {
         square.addShip(ship);
+        assertEquals(5, square.getShip().getSquaresLeft());
         square.hitSquare();
         assertEquals(true, square.getIsHit());
         assertEquals(4, square.getShip().getSquaresLeft());

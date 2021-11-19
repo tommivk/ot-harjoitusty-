@@ -29,6 +29,11 @@
       <artifactId>javafx-controls</artifactId>
       <version>12.0.2</version>
     </dependency>
+    <dependency>
+      <groupId>de.saxsys</groupId>
+      <artifactId>jfx-testrunner</artifactId>
+      <version>1.2</version>
+    </dependency>
   </dependencies>
 
   <build>
