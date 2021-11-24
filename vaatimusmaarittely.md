@@ -16,3 +16,4 @@ Käyttöliittymän päänäkymä koostuu kahdesta 10x10 kokoisesta ruudukosta, j
 ## Jatkokehitysideoita
 * pelitilastojen tallettaminen tietokantaan
 * ääniefektit
+* pelaaminen tietokonetta vastaan
