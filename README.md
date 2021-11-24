@@ -15,7 +15,7 @@ mvn compile exec:java -Dexec.mainClass=com.battleship.App
 ```
 mvn test
 ```
-### Testikattavuus reportin luominen
+### Testikattavuusraportin luominen
 ```
 mvn jacoco:report
 ```
