@@ -91,39 +91,26 @@ public class App extends Application {
                 button.setOnMouseClicked(event -> {
                     if (event.getButton() == MouseButton.PRIMARY) {
                         if (!game.player1ShipsIsEmpty()) {
-                            if (game.getPlayer1Direction() == ShipDirection.HORIZONTAL) {
-                                if ((column + game.peekNextPlayer1Ship().getSize()) <= 10) {
+                            if ((column + game.peekNextPlayer1Ship().getSize()) <= 10) {
 
-                                    Ship ship = game.getNewPlayer1Ship();
+                                Ship ship = game.getNewPlayer1Ship();
 
-                                    for (int l = ship.getSize(); l > 0; l--) {
-                                        squares[row][(column - 1) + l].addShip(ship);
-                                        ship.addButton(squares[row][(column - 1) + l].getButton());
-                                        squares[row][(column - 1) + l].setBlackButtonColor();
-                                    }
+                                for (int l = ship.getSize(); l > 0; l--) {
+                                    Square activeSquare = game.getPlayer1Direction() == ShipDirection.HORIZONTAL
+                                            ? squares[row][(column - 1) + l]
+                                            : squares[(row - 1) + l][column];
 
-                                    if (game.player1ShipsIsEmpty()) {
-                                        stage.setScene(playScene(squares, game));
-                                        stage.show();
-                                    }
+                                    activeSquare.addShip(ship);
+                                    ship.addButton(activeSquare.getButton());
+                                    activeSquare.setBlackButtonColor();
                                 }
-                            } else if (game.getPlayer1Direction() == ShipDirection.VERTICAL) {
-                                if ((row + game.peekNextPlayer1Ship().getSize()) <= 10) {
 
-                                    Ship ship = game.getNewPlayer1Ship();
-
-                                    for (int l = ship.getSize(); l > 0; l--) {
-                                        squares[(row - 1) + l][column].addShip(ship);
-                                        ship.addButton(squares[(row - 1) + l][column].getButton());
-                                        squares[(row - 1) + l][column].setBlackButtonColor();
-                                    }
-
-                                    if (game.player1ShipsIsEmpty()) {
-                                        stage.setScene(playScene(squares, game));
-                                        stage.show();
-                                    }
+                                if (game.player1ShipsIsEmpty()) {
+                                    stage.setScene(playScene(squares, game));
+                                    stage.show();
                                 }
                             }
+
                         }
                     } else if (event.getButton() == MouseButton.SECONDARY) {
                         for (int m = 0; m < 10; m++) {
