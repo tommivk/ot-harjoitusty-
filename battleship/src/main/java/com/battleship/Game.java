@@ -6,16 +6,20 @@ enum ShipDirection {
     HORIZONTAL, VERTICAL
 }
 
+enum Turn {
+    PLAYER1, PLAYER2
+}
+
 public class Game {
 
-    private int turn;
+    private Turn turn;
     private boolean gameOver;
     private Stack<Ship> player1Ships;
     private Stack<Ship> player2Ships;
     private ShipDirection player1Direction;
 
     public Game() {
-        this.turn = 1;
+        this.turn = Turn.PLAYER1;
         this.gameOver = false;
         this.player1Direction = ShipDirection.VERTICAL;
         this.player1Ships = new Stack<Ship>();
@@ -37,10 +41,10 @@ public class Game {
     }
 
     public void changeTurn() {
-        this.turn = this.turn == 1 ? 2 : 1;
+        this.turn = this.turn == Turn.PLAYER1 ? Turn.PLAYER2 : Turn.PLAYER1;
     }
 
-    public int getTurn() {
+    public Turn getTurn() {
         return this.turn;
     }
 

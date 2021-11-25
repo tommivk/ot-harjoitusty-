@@ -34,14 +34,14 @@ public class AppTest {
 
     @Test
     public void initialGameTurnIsCorrect() {
-        assertEquals(1, game.getTurn());
+        assertEquals(Turn.PLAYER1, game.getTurn());
     }
 
     @Test
     public void changingTurnWorks() {
-        assertEquals(1, game.getTurn());
+        assertEquals(Turn.PLAYER1, game.getTurn());
         game.changeTurn();
-        assertEquals(2, game.getTurn());
+        assertEquals(Turn.PLAYER2, game.getTurn());
     }
 
     @Test
