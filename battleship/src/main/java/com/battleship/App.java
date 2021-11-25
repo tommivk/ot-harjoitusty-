@@ -24,35 +24,33 @@ public class App extends Application {
         setupHbox.setSpacing(30);
 
         Scene setUpScene = new Scene(setupHbox, 500, 800);
-        Square[][] squares = new Square[10][10];
+        Square[][] player1Squares = game.getPlayer1Squares();
 
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
                 int row = i;
                 int column = k;
 
-                Square square = new Square();
-                Button button = square.getButton();
-                squares[i][k] = square;
+                Button button = player1Squares[i][k].getButton();
 
                 button.setOnMouseEntered(event -> {
                     if (!game.player1ShipsIsEmpty()) {
                         Ship ship = game.peekNextPlayer1Ship();
 
-                        if (game.getPlayer1Direction() == ShipDirection.HORIZONTAL) {
+                        if (game.getShipDirection() == ShipDirection.HORIZONTAL) {
                             if (column + ship.getSize() <= 10) {
                                 for (int j = ship.getSize(); j > 0; j--) {
-                                    Square activeSquare = squares[row][(column - 1) + j];
+                                    Square activeSquare = player1Squares[row][(column - 1) + j];
                                     if (!activeSquare.hasShip()) {
                                         activeSquare.setGreyButtonColor();
                                     }
                                 }
                             }
                         }
-                        if (game.getPlayer1Direction() == ShipDirection.VERTICAL) {
+                        if (game.getShipDirection() == ShipDirection.VERTICAL) {
                             if (row + ship.getSize() <= 10) {
                                 for (int j = ship.getSize(); j > 0; j--) {
-                                    Square activeSquare = squares[(row - 1) + j][column];
+                                    Square activeSquare = player1Squares[(row - 1) + j][column];
                                     if (!activeSquare.hasShip()) {
                                         activeSquare.setGreyButtonColor();
                                     }
@@ -65,20 +63,20 @@ public class App extends Application {
                 button.setOnMouseExited(event -> {
                     if (!game.player1ShipsIsEmpty()) {
                         Ship ship = game.peekNextPlayer1Ship();
-                        if (game.getPlayer1Direction() == ShipDirection.HORIZONTAL) {
+                        if (game.getShipDirection() == ShipDirection.HORIZONTAL) {
                             if (column + ship.getSize() <= 10) {
                                 for (int j = ship.getSize(); j > 0; j--) {
-                                    Square activeSquare = squares[row][(column - 1) + j];
+                                    Square activeSquare = player1Squares[row][(column - 1) + j];
                                     if (!activeSquare.hasShip()) {
                                         activeSquare.removeButtonColor();
                                     }
                                 }
                             }
                         }
-                        if (game.getPlayer1Direction() == ShipDirection.VERTICAL) {
+                        if (game.getShipDirection() == ShipDirection.VERTICAL) {
                             if (row + ship.getSize() <= 10) {
                                 for (int j = ship.getSize(); j > 0; j--) {
-                                    Square activeSquare = squares[(row - 1) + j][column];
+                                    Square activeSquare = player1Squares[(row - 1) + j][column];
                                     if (!activeSquare.hasShip()) {
                                         activeSquare.removeButtonColor();
                                     }
@@ -96,9 +94,9 @@ public class App extends Application {
                                 Ship ship = game.getNewPlayer1Ship();
 
                                 for (int l = ship.getSize(); l > 0; l--) {
-                                    Square activeSquare = game.getPlayer1Direction() == ShipDirection.HORIZONTAL
-                                            ? squares[row][(column - 1) + l]
-                                            : squares[(row - 1) + l][column];
+                                    Square activeSquare = game.getShipDirection() == ShipDirection.HORIZONTAL
+                                            ? player1Squares[row][(column - 1) + l]
+                                            : player1Squares[(row - 1) + l][column];
 
                                     activeSquare.addShip(ship);
                                     ship.addButton(activeSquare.getButton());
@@ -106,7 +104,112 @@ public class App extends Application {
                                 }
 
                                 if (game.player1ShipsIsEmpty()) {
-                                    stage.setScene(playScene(squares, game));
+                                    // stage.setScene(playScene(player1Squares, game));
+                                    // stage.show();
+                                }
+                            }
+
+                        }
+                    } else if (event.getButton() == MouseButton.SECONDARY) {
+                        for (int m = 0; m < 10; m++) {
+                            for (int n = 0; n < 10; n++) {
+                                if (!player1Squares[n][m].hasShip()) {
+                                    player1Squares[n][m].removeButtonColor();
+                                }
+                            }
+                        }
+                        game.changeShipDirection();
+
+                    }
+
+                });
+                player1Setup.add(button, k, i);
+            }
+        }
+
+        ////////////////////////////////////
+
+        Square[][] player2Squares = game.getPlayer2Squares();
+
+        for (int i = 0; i < 10; i++) {
+            for (int k = 0; k < 10; k++) {
+                int row = i;
+                int column = k;
+
+                Button button = player2Squares[i][k].getButton();
+
+                button.setOnMouseEntered(event -> {
+                    if (!game.player2ShipsIsEmpty()) {
+                        Ship ship = game.peekNextPlayer2Ship();
+
+                        if (game.getShipDirection() == ShipDirection.HORIZONTAL) {
+                            if (column + ship.getSize() <= 10) {
+                                for (int j = ship.getSize(); j > 0; j--) {
+                                    Square activeSquare = player2Squares[row][(column - 1) + j];
+                                    if (!activeSquare.hasShip()) {
+                                        activeSquare.setGreyButtonColor();
+                                    }
+                                }
+                            }
+                        }
+                        if (game.getShipDirection() == ShipDirection.VERTICAL) {
+                            if (row + ship.getSize() <= 10) {
+                                for (int j = ship.getSize(); j > 0; j--) {
+                                    Square activeSquare = player2Squares[(row - 1) + j][column];
+                                    if (!activeSquare.hasShip()) {
+                                        activeSquare.setGreyButtonColor();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                button.setOnMouseExited(event -> {
+                    if (!game.player2ShipsIsEmpty()) {
+                        Ship ship = game.peekNextPlayer2Ship();
+                        if (game.getShipDirection() == ShipDirection.HORIZONTAL) {
+                            if (column + ship.getSize() <= 10) {
+                                for (int j = ship.getSize(); j > 0; j--) {
+                                    Square activeSquare = player2Squares[row][(column - 1) + j];
+                                    if (!activeSquare.hasShip()) {
+                                        activeSquare.removeButtonColor();
+                                    }
+                                }
+                            }
+                        }
+                        if (game.getShipDirection() == ShipDirection.VERTICAL) {
+                            if (row + ship.getSize() <= 10) {
+                                for (int j = ship.getSize(); j > 0; j--) {
+                                    Square activeSquare = player2Squares[(row - 1) + j][column];
+                                    if (!activeSquare.hasShip()) {
+                                        activeSquare.removeButtonColor();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                button.setOnMouseClicked(event -> {
+                    if (event.getButton() == MouseButton.PRIMARY) {
+                        if (!game.player2ShipsIsEmpty()) {
+                            if ((column + game.peekNextPlayer2Ship().getSize()) <= 10) {
+
+                                Ship ship = game.getNewPlayer2Ship();
+
+                                for (int l = ship.getSize(); l > 0; l--) {
+                                    Square activeSquare = game.getShipDirection() == ShipDirection.HORIZONTAL
+                                            ? player2Squares[row][(column - 1) + l]
+                                            : player2Squares[(row - 1) + l][column];
+
+                                    activeSquare.addShip(ship);
+                                    ship.addButton(activeSquare.getButton());
+                                    activeSquare.setBlackButtonColor();
+                                }
+
+                                if (game.player2ShipsIsEmpty()) {
+                                    stage.setScene(playScene(game));
                                     stage.show();
                                 }
                             }
@@ -115,17 +218,15 @@ public class App extends Application {
                     } else if (event.getButton() == MouseButton.SECONDARY) {
                         for (int m = 0; m < 10; m++) {
                             for (int n = 0; n < 10; n++) {
-                                if (!squares[n][m].hasShip()) {
-                                    squares[n][m].removeButtonColor();
+                                if (!player2Squares[n][m].hasShip()) {
+                                    player2Squares[n][m].removeButtonColor();
                                 }
                             }
                         }
-                        game.changePlayer1Direction();
-
+                        game.changeShipDirection();
                     }
-
                 });
-                player1Setup.add(button, k, i);
+                player2Setup.add(button, k, i);
             }
             stage.setScene(setUpScene);
             stage.show();
@@ -133,35 +234,68 @@ public class App extends Application {
 
     };
 
-    public Scene playScene(Square[][] squares, Game game) {
-        GridPane gridpane = new GridPane();
+    public Scene playScene(Game game) {
+        GridPane gridpane1 = new GridPane();
+        GridPane gridpane2 = new GridPane();
+
+        Square[][] player1Squares = game.getPlayer1Squares();
+        Square[][] player2Squares = game.getPlayer2Squares();
 
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
 
-                Square square = squares[i][k];
+                Square square = player1Squares[i][k];
                 Button button = square.getButton();
 
                 square.removeButtonColor();
 
                 button.setOnMouseClicked(event -> {
-                    boolean isHit = square.hitSquare();
-                    if (isHit) {
-                        button.setText("X");
-                        if (square.getShip().isDead()) {
-                            square.getShip().setButtonsDisabled();
+                    if (game.getTurn() == Turn.PLAYER2) {
+                        boolean isHit = square.hitSquare();
+                        if (isHit) {
+                            button.setText("X");
+                            if (square.getShip().isDead()) {
+                                square.getShip().setButtonsDisabled();
+                            }
+                        } else {
+                            button.setText("O");
+                            game.changeTurn();
                         }
-                    } else {
-                        button.setText("O");
-                        game.changeTurn();
                     }
                 });
 
-                gridpane.add(button, k, i);
+                gridpane1.add(button, k, i);
 
             }
         }
-        Scene scene = new Scene(gridpane, 500, 800);
+
+        for (int i = 0; i < 10; i++) {
+            for (int k = 0; k < 10; k++) {
+                Square square = player2Squares[i][k];
+                Button button = square.getButton();
+
+                square.removeButtonColor();
+
+                button.setOnMouseClicked(event -> {
+                    if (game.getTurn() == Turn.PLAYER1) {
+                        boolean isHit = square.hitSquare();
+                        if (isHit) {
+                            button.setText("X");
+                            if (square.getShip().isDead()) {
+                                square.getShip().setButtonsDisabled();
+                            }
+                        } else {
+                            button.setText("O");
+                            game.changeTurn();
+                        }
+                    }
+                });
+                gridpane2.add(button, k, i);
+            }
+        }
+        HBox hbox = new HBox(gridpane1, gridpane2);
+        hbox.setSpacing(30);
+        Scene scene = new Scene(hbox, 500, 800);
 
         return scene;
     }
