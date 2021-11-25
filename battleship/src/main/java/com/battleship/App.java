@@ -36,24 +36,15 @@ public class App extends Application {
                 button.setOnMouseEntered(event -> {
                     if (!game.player1ShipsIsEmpty()) {
                         Ship ship = game.peekNextPlayer1Ship();
+                        int index = game.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
 
-                        if (game.getShipDirection() == ShipDirection.HORIZONTAL) {
-                            if (column + ship.getSize() <= 10) {
-                                for (int j = ship.getSize(); j > 0; j--) {
-                                    Square activeSquare = player1Squares[row][(column - 1) + j];
-                                    if (!activeSquare.hasShip()) {
-                                        activeSquare.setGreyButtonColor();
-                                    }
-                                }
-                            }
-                        }
-                        if (game.getShipDirection() == ShipDirection.VERTICAL) {
-                            if (row + ship.getSize() <= 10) {
-                                for (int j = ship.getSize(); j > 0; j--) {
-                                    Square activeSquare = player1Squares[(row - 1) + j][column];
-                                    if (!activeSquare.hasShip()) {
-                                        activeSquare.setGreyButtonColor();
-                                    }
+                        if (index + ship.getSize() <= 10) {
+                            for (int j = ship.getSize(); j > 0; j--) {
+                                Square activeSquare = game.getShipDirection() == ShipDirection.HORIZONTAL
+                                        ? player1Squares[row][(column - 1) + j]
+                                        : player1Squares[(row - 1) + j][column];
+                                if (!activeSquare.hasShip()) {
+                                    activeSquare.setGreyButtonColor();
                                 }
                             }
                         }
@@ -63,23 +54,15 @@ public class App extends Application {
                 button.setOnMouseExited(event -> {
                     if (!game.player1ShipsIsEmpty()) {
                         Ship ship = game.peekNextPlayer1Ship();
-                        if (game.getShipDirection() == ShipDirection.HORIZONTAL) {
-                            if (column + ship.getSize() <= 10) {
-                                for (int j = ship.getSize(); j > 0; j--) {
-                                    Square activeSquare = player1Squares[row][(column - 1) + j];
-                                    if (!activeSquare.hasShip()) {
-                                        activeSquare.removeButtonColor();
-                                    }
-                                }
-                            }
-                        }
-                        if (game.getShipDirection() == ShipDirection.VERTICAL) {
-                            if (row + ship.getSize() <= 10) {
-                                for (int j = ship.getSize(); j > 0; j--) {
-                                    Square activeSquare = player1Squares[(row - 1) + j][column];
-                                    if (!activeSquare.hasShip()) {
-                                        activeSquare.removeButtonColor();
-                                    }
+
+                        int index = game.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
+                        if (index + ship.getSize() <= 10) {
+                            for (int j = ship.getSize(); j > 0; j--) {
+                                Square activeSquare = game.getShipDirection() == ShipDirection.HORIZONTAL
+                                        ? player1Squares[row][(column - 1) + j]
+                                        : player1Squares[(row - 1) + j][column];
+                                if (!activeSquare.hasShip()) {
+                                    activeSquare.removeButtonColor();
                                 }
                             }
                         }
@@ -142,24 +125,15 @@ public class App extends Application {
                 button.setOnMouseEntered(event -> {
                     if (!game.player2ShipsIsEmpty() && game.player1ShipsIsEmpty()) {
                         Ship ship = game.peekNextPlayer2Ship();
+                        int index = game.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
 
-                        if (game.getShipDirection() == ShipDirection.HORIZONTAL) {
-                            if (column + ship.getSize() <= 10) {
-                                for (int j = ship.getSize(); j > 0; j--) {
-                                    Square activeSquare = player2Squares[row][(column - 1) + j];
-                                    if (!activeSquare.hasShip()) {
-                                        activeSquare.setGreyButtonColor();
-                                    }
-                                }
-                            }
-                        }
-                        if (game.getShipDirection() == ShipDirection.VERTICAL) {
-                            if (row + ship.getSize() <= 10) {
-                                for (int j = ship.getSize(); j > 0; j--) {
-                                    Square activeSquare = player2Squares[(row - 1) + j][column];
-                                    if (!activeSquare.hasShip()) {
-                                        activeSquare.setGreyButtonColor();
-                                    }
+                        if (index + ship.getSize() <= 10) {
+                            for (int j = ship.getSize(); j > 0; j--) {
+                                Square activeSquare = game.getShipDirection() == ShipDirection.HORIZONTAL
+                                        ? player2Squares[row][(column - 1) + j]
+                                        : player2Squares[(row - 1) + j][column];
+                                if (!activeSquare.hasShip()) {
+                                    activeSquare.setGreyButtonColor();
                                 }
                             }
                         }
@@ -169,23 +143,15 @@ public class App extends Application {
                 button.setOnMouseExited(event -> {
                     if (!game.player2ShipsIsEmpty()) {
                         Ship ship = game.peekNextPlayer2Ship();
-                        if (game.getShipDirection() == ShipDirection.HORIZONTAL) {
-                            if (column + ship.getSize() <= 10) {
-                                for (int j = ship.getSize(); j > 0; j--) {
-                                    Square activeSquare = player2Squares[row][(column - 1) + j];
-                                    if (!activeSquare.hasShip()) {
-                                        activeSquare.removeButtonColor();
-                                    }
-                                }
-                            }
-                        }
-                        if (game.getShipDirection() == ShipDirection.VERTICAL) {
-                            if (row + ship.getSize() <= 10) {
-                                for (int j = ship.getSize(); j > 0; j--) {
-                                    Square activeSquare = player2Squares[(row - 1) + j][column];
-                                    if (!activeSquare.hasShip()) {
-                                        activeSquare.removeButtonColor();
-                                    }
+
+                        int index = game.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
+                        if (index + ship.getSize() <= 10) {
+                            for (int j = ship.getSize(); j > 0; j--) {
+                                Square activeSquare = game.getShipDirection() == ShipDirection.HORIZONTAL
+                                        ? player2Squares[row][(column - 1) + j]
+                                        : player2Squares[(row - 1) + j][column];
+                                if (!activeSquare.hasShip()) {
+                                    activeSquare.removeButtonColor();
                                 }
                             }
                         }
