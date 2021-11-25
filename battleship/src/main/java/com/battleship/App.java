@@ -89,7 +89,8 @@ public class App extends Application {
                 button.setOnMouseClicked(event -> {
                     if (event.getButton() == MouseButton.PRIMARY) {
                         if (!game.player1ShipsIsEmpty()) {
-                            if ((column + game.peekNextPlayer1Ship().getSize()) <= 10) {
+                            int index = game.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
+                            if ((index + game.peekNextPlayer1Ship().getSize()) <= 10) {
 
                                 Ship ship = game.getNewPlayer1Ship();
 
@@ -194,7 +195,8 @@ public class App extends Application {
                 button.setOnMouseClicked(event -> {
                     if (event.getButton() == MouseButton.PRIMARY) {
                         if (!game.player2ShipsIsEmpty()) {
-                            if ((column + game.peekNextPlayer2Ship().getSize()) <= 10) {
+                            int index = game.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
+                            if ((index + game.peekNextPlayer2Ship().getSize()) <= 10) {
 
                                 Ship ship = game.getNewPlayer2Ship();
 
