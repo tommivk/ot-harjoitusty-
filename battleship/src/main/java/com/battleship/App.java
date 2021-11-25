@@ -140,7 +140,7 @@ public class App extends Application {
                 Button button = player2Squares[i][k].getButton();
 
                 button.setOnMouseEntered(event -> {
-                    if (!game.player2ShipsIsEmpty()) {
+                    if (!game.player2ShipsIsEmpty() && game.player1ShipsIsEmpty()) {
                         Ship ship = game.peekNextPlayer2Ship();
 
                         if (game.getShipDirection() == ShipDirection.HORIZONTAL) {
@@ -193,39 +193,41 @@ public class App extends Application {
                 });
 
                 button.setOnMouseClicked(event -> {
-                    if (event.getButton() == MouseButton.PRIMARY) {
-                        if (!game.player2ShipsIsEmpty()) {
-                            int index = game.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
-                            if ((index + game.peekNextPlayer2Ship().getSize()) <= 10) {
+                    if (game.player1ShipsIsEmpty()) {
+                        if (event.getButton() == MouseButton.PRIMARY) {
+                            if (!game.player2ShipsIsEmpty()) {
+                                int index = game.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
+                                if ((index + game.peekNextPlayer2Ship().getSize()) <= 10) {
 
-                                Ship ship = game.getNewPlayer2Ship();
+                                    Ship ship = game.getNewPlayer2Ship();
 
-                                for (int l = ship.getSize(); l > 0; l--) {
-                                    Square activeSquare = game.getShipDirection() == ShipDirection.HORIZONTAL
-                                            ? player2Squares[row][(column - 1) + l]
-                                            : player2Squares[(row - 1) + l][column];
+                                    for (int l = ship.getSize(); l > 0; l--) {
+                                        Square activeSquare = game.getShipDirection() == ShipDirection.HORIZONTAL
+                                                ? player2Squares[row][(column - 1) + l]
+                                                : player2Squares[(row - 1) + l][column];
 
-                                    activeSquare.addShip(ship);
-                                    ship.addButton(activeSquare.getButton());
-                                    activeSquare.setBlackButtonColor();
+                                        activeSquare.addShip(ship);
+                                        ship.addButton(activeSquare.getButton());
+                                        activeSquare.setBlackButtonColor();
+                                    }
+
+                                    if (game.player2ShipsIsEmpty()) {
+                                        stage.setScene(playScene(game));
+                                        stage.show();
+                                    }
                                 }
 
-                                if (game.player2ShipsIsEmpty()) {
-                                    stage.setScene(playScene(game));
-                                    stage.show();
+                            }
+                        } else if (event.getButton() == MouseButton.SECONDARY) {
+                            for (int m = 0; m < 10; m++) {
+                                for (int n = 0; n < 10; n++) {
+                                    if (!player2Squares[n][m].hasShip()) {
+                                        player2Squares[n][m].removeButtonColor();
+                                    }
                                 }
                             }
-
+                            game.changeShipDirection();
                         }
-                    } else if (event.getButton() == MouseButton.SECONDARY) {
-                        for (int m = 0; m < 10; m++) {
-                            for (int n = 0; n < 10; n++) {
-                                if (!player2Squares[n][m].hasShip()) {
-                                    player2Squares[n][m].removeButtonColor();
-                                }
-                            }
-                        }
-                        game.changeShipDirection();
                     }
                 });
                 player2Setup.add(button, k, i);
