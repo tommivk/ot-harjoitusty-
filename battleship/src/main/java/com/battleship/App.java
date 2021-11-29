@@ -86,15 +86,12 @@ public class App extends Application {
                                     ship.addButton(activeSquare.getButton());
                                     activeSquare.setBlackButtonColor();
                                 }
-
-                                if (game.player1ShipsIsEmpty()) {
-                                    // stage.setScene(playScene(player1Squares, game));
-                                    // stage.show();
-                                }
                             }
 
                         }
-                    } else if (event.getButton() == MouseButton.SECONDARY) {
+                    }
+
+                    if (event.getButton() == MouseButton.SECONDARY) {
                         for (int m = 0; m < 10; m++) {
                             for (int n = 0; n < 10; n++) {
                                 if (!player1Squares[n][m].hasShip()) {
@@ -184,7 +181,9 @@ public class App extends Application {
                                 }
 
                             }
-                        } else if (event.getButton() == MouseButton.SECONDARY) {
+                        }
+
+                        if (event.getButton() == MouseButton.SECONDARY) {
                             for (int m = 0; m < 10; m++) {
                                 for (int n = 0; n < 10; n++) {
                                     if (!player2Squares[n][m].hasShip()) {
