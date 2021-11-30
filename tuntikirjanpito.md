@@ -7,7 +7,7 @@
 | 18.11  | 2    | javafx ja sovelluksen runko                       |
 | 19.11  | 3    | ominaisuus laivojen lisäämiselle pelikentälle     |
 | 25.11  | 2    | pelilogiikan jatkokehitystä ja checkstylen lisäys |
-|        |      |                                                   |
+| 30.11  | 1    | refaktorointia                                    |
 |        |      |                                                   |
 |        |      |                                                   |
 |        |      |                                                   |
