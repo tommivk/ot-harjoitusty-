@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.scene.control.Button;
 
 @RunWith(JfxRunner.class)
 public class AppTest {
@@ -82,5 +83,20 @@ public class AppTest {
     @Test
     public void newShipIsNotDead() {
         assertEquals(false, ship.isDead());
+    }
+
+    @Test
+    public void changingButtonColorToBlackWorks() {
+        square.setBlackButtonColor();
+        Button button = square.getButton();
+        assertEquals("-fx-background-color: black", button.getStyle());
+    }
+
+    @Test
+    public void removingButtonColorWorks() {
+        square.setBlackButtonColor();
+        square.removeButtonColor();
+        Button button = square.getButton();
+        assertEquals("", button.getStyle());
     }
 }
