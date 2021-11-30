@@ -3,6 +3,7 @@ Klassinen laivanupotuspeli
 ## Dokumentaatio
 * [tuntikirjanpito](https://github.com/tommivk/ot-harjoitustyo/blob/master/tuntikirjanpito.md)
 * [vaatimusmäärittely](https://github.com/tommivk/ot-harjoitustyo/blob/master/vaatimusmaarittely.md)
+* [arkkitehtuuri](https://github.com/tommivk/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
 ## Komentorivitoiminnot
 ### Sovelluksen käynnistys
