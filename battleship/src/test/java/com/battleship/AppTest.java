@@ -2,6 +2,11 @@ package com.battleship;
 
 import static org.junit.Assert.assertEquals;
 
+import com.battleship.domain.Game;
+import com.battleship.domain.Ship;
+import com.battleship.domain.Square;
+import com.battleship.domain.Turn;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

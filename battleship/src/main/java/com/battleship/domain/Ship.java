@@ -1,4 +1,4 @@
-package com.battleship;
+package com.battleship.domain;
 
 import java.util.ArrayList;
 

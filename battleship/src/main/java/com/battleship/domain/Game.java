@@ -1,14 +1,6 @@
-package com.battleship;
+package com.battleship.domain;
 
 import java.util.Stack;
-
-enum ShipDirection {
-    HORIZONTAL, VERTICAL
-}
-
-enum Turn {
-    PLAYER1, PLAYER2
-}
 
 public class Game {
 
