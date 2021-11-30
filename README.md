@@ -20,3 +20,7 @@ mvn test
 ```
 mvn jacoco:report
 ```
+### Checkstyle raportin luominen
+``` 
+mvn jxr:jxr checkstyle:checkstyle
+```
