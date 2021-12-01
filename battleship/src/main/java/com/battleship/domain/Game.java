@@ -20,37 +20,8 @@ public class Game {
         this.player1Squares = initializeBoard(10);
         this.player2Squares = initializeBoard(10);
 
-        this.player1Ships = new Stack<Ship>();
-        this.player2Ships = new Stack<Ship>();
-
-        Ship player1Ship1 = new Ship(1);
-        Ship player1Ship2 = new Ship(2);
-        Ship player1Ship3 = new Ship(3);
-        Ship player1Ship4 = new Ship(3);
-        Ship player1Ship5 = new Ship(4);
-        Ship player1Ship6 = new Ship(5);
-
-        this.player1Ships.push(player1Ship1);
-        this.player1Ships.push(player1Ship2);
-        this.player1Ships.push(player1Ship3);
-        this.player1Ships.push(player1Ship4);
-        this.player1Ships.push(player1Ship5);
-        this.player1Ships.push(player1Ship6);
-
-        Ship player2Ship1 = new Ship(1);
-        Ship player2Ship2 = new Ship(2);
-        Ship player2Ship3 = new Ship(3);
-        Ship player2Ship4 = new Ship(3);
-        Ship player2Ship5 = new Ship(4);
-        Ship player2Ship6 = new Ship(5);
-
-        this.player2Ships.push(player2Ship1);
-        this.player2Ships.push(player2Ship2);
-        this.player2Ships.push(player2Ship3);
-        this.player2Ships.push(player2Ship4);
-        this.player2Ships.push(player2Ship5);
-        this.player2Ships.push(player2Ship6);
-
+        this.player1Ships = initializeShips();
+        this.player2Ships = initializeShips();
     }
 
     public Square[][] initializeBoard(int size) {
@@ -61,6 +32,19 @@ public class Game {
             }
         }
         return squares;
+    }
+
+    public Stack<Ship> initializeShips() {
+        Stack<Ship> ships = new Stack<Ship>();
+
+        ships.push(new Ship(1));
+        ships.push(new Ship(2));
+        ships.push(new Ship(3));
+        ships.push(new Ship(3));
+        ships.push(new Ship(4));
+        ships.push(new Ship(5));
+
+        return ships;
     }
 
     public void changeTurn() {
