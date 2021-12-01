@@ -22,7 +22,7 @@ public class AppTest {
 
     @Before
     public void setup() {
-        game = new Game();
+        game = new Game(10);
         square = new Square();
         ship = new Ship(5);
     }

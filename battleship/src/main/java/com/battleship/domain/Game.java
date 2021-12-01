@@ -12,13 +12,13 @@ public class Game {
     private Square[][] player1Squares;
     private Square[][] player2Squares;
 
-    public Game() {
+    public Game(int boardSize) {
         this.turn = Turn.PLAYER1;
         this.gameOver = false;
         this.shipDirection = ShipDirection.VERTICAL;
 
-        this.player1Squares = initializeBoard(10);
-        this.player2Squares = initializeBoard(10);
+        this.player1Squares = initializeBoard(boardSize);
+        this.player2Squares = initializeBoard(boardSize);
 
         this.player1Ships = initializeShips();
         this.player2Ships = initializeShips();
@@ -45,6 +45,71 @@ public class Game {
         ships.push(new Ship(5));
 
         return ships;
+    }
+
+    public void highlightSquares(int row, int column, int player) {
+        if ((player == 1 && !this.player1ShipsIsEmpty()) || (player == 2 && !this.player2ShipsIsEmpty())) {
+
+            Ship ship = player == 1 ? this.peekNextPlayer1Ship() : this.peekNextPlayer2Ship();
+            int index = this.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
+            Square[][] squares = player == 1 ? this.player1Squares : this.player2Squares;
+
+            if (index + ship.getSize() <= 10) {
+                for (int j = ship.getSize(); j > 0; j--) {
+                    Square activeSquare = this.getShipDirection() == ShipDirection.HORIZONTAL
+                            ? squares[row][(column - 1) + j]
+                            : squares[(row - 1) + j][column];
+                    if (!activeSquare.hasShip()) {
+                        activeSquare.setGreyButtonColor();
+                    }
+                }
+            }
+        }
+    }
+
+    public void removeHighlight(int row, int column, int player) {
+        if ((player == 1 && !this.player1ShipsIsEmpty()) || (player == 2 && !this.player2ShipsIsEmpty())) {
+            Ship ship = player == 1 ? this.peekNextPlayer1Ship() : this.peekNextPlayer2Ship();
+
+            int index = this.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
+            Square[][] squares = player == 1 ? this.player1Squares : this.player2Squares;
+
+            if (index + ship.getSize() <= 10) {
+                for (int j = ship.getSize(); j > 0; j--) {
+                    Square activeSquare = this.getShipDirection() == ShipDirection.HORIZONTAL
+                            ? squares[row][(column - 1) + j]
+                            : squares[(row - 1) + j][column];
+                    if (!activeSquare.hasShip()) {
+                        activeSquare.removeButtonColor();
+                    }
+                }
+            }
+        }
+    }
+
+    public void placeShip(int row, int column, int player) {
+        if ((player == 1 && !this.player1ShipsIsEmpty()) || (player == 2 && !this.player2ShipsIsEmpty())) {
+            int index = this.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
+
+            Ship nextShip = player == 1 ? this.peekNextPlayer1Ship() : this.peekNextPlayer2Ship();
+            Square[][] squares = player == 1 ? this.player1Squares : this.player2Squares;
+
+            if ((index + nextShip.getSize()) <= 10) {
+
+                Ship ship = player == 1 ? this.getNewPlayer1Ship() : this.getNewPlayer2Ship();
+
+                for (int l = ship.getSize(); l > 0; l--) {
+                    Square activeSquare = this.getShipDirection() == ShipDirection.HORIZONTAL
+                            ? squares[row][(column - 1) + l]
+                            : squares[(row - 1) + l][column];
+
+                    activeSquare.addShip(ship);
+                    ship.addButton(activeSquare.getButton());
+                    activeSquare.setBlackButtonColor();
+                }
+            }
+
+        }
     }
 
     public void changeTurn() {
