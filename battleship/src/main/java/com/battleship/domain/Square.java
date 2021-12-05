@@ -1,16 +1,17 @@
 package com.battleship.domain;
 
-import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class Square {
     private boolean isHit;
     private Ship ship = null;
-    private Button button;
+    private Rectangle button;
 
     public Square() {
         this.isHit = false;
-        this.button = new Button();
-        this.button.setMinSize(30.0, 30.0);
+        this.button = new Rectangle(30, 30);
+        this.button.setFill(Color.WHITESMOKE);
     }
 
     public void addShip(Ship ship) {
@@ -38,23 +39,27 @@ public class Square {
         return this.isHit;
     }
 
-    public void addButton(Button button) {
+    public void addButton(Rectangle button) {
         this.button = button;
     }
 
-    public Button getButton() {
+    public Rectangle getButton() {
         return this.button;
     }
 
     public void setBlackButtonColor() {
-        this.button.setStyle("-fx-background-color: black");
+        this.button.setFill(Color.BLACK);
     }
 
     public void setGreyButtonColor() {
-        this.button.setStyle("-fx-background-color: grey");
+        this.button.setFill(Color.GREY);
+    }
+
+    public void setBlueButtonColor() {
+        this.button.setFill(Color.BLUE);
     }
 
     public void removeButtonColor() {
-        this.button.setStyle(null);
+        this.button.setFill(Color.WHITESMOKE);
     }
 }

@@ -3,16 +3,17 @@ package com.battleship.domain;
 import java.util.ArrayList;
 
 import javafx.scene.control.Button;
+import javafx.scene.shape.Rectangle;
 
 public class Ship {
     private int size;
     private int squaresLeft;
-    private ArrayList<Button> buttons;
+    private ArrayList<Rectangle> buttons;
 
     public Ship(int size) {
         this.size = size;
         this.squaresLeft = size;
-        this.buttons = new ArrayList<Button>();
+        this.buttons = new ArrayList<Rectangle>();
     }
 
     public boolean isDead() {
@@ -23,11 +24,11 @@ public class Ship {
         return this.squaresLeft;
     }
 
-    public void addButton(Button button) {
+    public void addButton(Rectangle button) {
         this.buttons.add(button);
     }
 
-    public ArrayList<Button> getButtons() {
+    public ArrayList<Rectangle> getButtons() {
         return this.buttons;
     }
 

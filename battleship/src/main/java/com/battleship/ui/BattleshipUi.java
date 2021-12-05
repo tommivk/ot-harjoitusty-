@@ -5,8 +5,8 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseButton;
 
 import com.battleship.domain.Game;
@@ -28,7 +28,8 @@ public class BattleshipUi extends Application {
         HBox setupHbox = new HBox(player1Setup, player2Setup);
         setupHbox.setSpacing(30);
 
-        Scene setUpScene = new Scene(setupHbox, 500, 800);
+        Scene setUpScene = new Scene(setupHbox, 800, 500);
+
         Square[][] player1Squares = game.getPlayer1Squares();
         Square[][] player2Squares = game.getPlayer2Squares();
 
@@ -37,8 +38,8 @@ public class BattleshipUi extends Application {
                 int row = i;
                 int column = k;
 
-                Button player1Button = player1Squares[i][k].getButton();
-                Button player2Button = player2Squares[i][k].getButton();
+                Rectangle player1Button = player1Squares[i][k].getButton();
+                Rectangle player2Button = player2Squares[i][k].getButton();
 
                 player1Button.setOnMouseEntered(event -> {
                     game.highlightSquares(row, column, 1);
@@ -120,7 +121,7 @@ public class BattleshipUi extends Application {
             for (int k = 0; k < 10; k++) {
 
                 Square square = player1Squares[i][k];
-                Button button = square.getButton();
+                Rectangle button = square.getButton();
 
                 square.removeButtonColor();
 
@@ -128,12 +129,12 @@ public class BattleshipUi extends Application {
                     if (game.getTurn() == Turn.PLAYER2) {
                         boolean isHit = square.hitSquare();
                         if (isHit) {
-                            button.setText("X");
+                            square.setBlackButtonColor();
                             if (square.getShip().isDead()) {
                                 square.getShip().setButtonsDisabled();
                             }
                         } else {
-                            button.setText("O");
+                            square.setBlueButtonColor();
                             game.changeTurn();
                         }
                     }
@@ -147,7 +148,7 @@ public class BattleshipUi extends Application {
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
                 Square square = player2Squares[i][k];
-                Button button = square.getButton();
+                Rectangle button = square.getButton();
 
                 square.removeButtonColor();
 
@@ -155,12 +156,12 @@ public class BattleshipUi extends Application {
                     if (game.getTurn() == Turn.PLAYER1) {
                         boolean isHit = square.hitSquare();
                         if (isHit) {
-                            button.setText("X");
+                            square.setBlackButtonColor();
                             if (square.getShip().isDead()) {
                                 square.getShip().setButtonsDisabled();
                             }
                         } else {
-                            button.setText("O");
+                            square.setBlueButtonColor();
                             game.changeTurn();
                         }
                     }
