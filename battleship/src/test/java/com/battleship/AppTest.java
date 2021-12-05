@@ -12,7 +12,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.saxsys.javafx.test.JfxRunner;
-import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 @RunWith(JfxRunner.class)
 public class AppTest {
@@ -88,15 +89,15 @@ public class AppTest {
     @Test
     public void changingButtonColorToBlackWorks() {
         square.setBlackButtonColor();
-        Button button = square.getButton();
-        assertEquals("-fx-background-color: black", button.getStyle());
+        Rectangle button = square.getButton();
+        assertEquals(Color.BLACK, button.getFill());
     }
 
     @Test
     public void removingButtonColorWorks() {
         square.setBlackButtonColor();
         square.removeButtonColor();
-        Button button = square.getButton();
-        assertEquals("", button.getStyle());
+        Rectangle button = square.getButton();
+        assertEquals(Color.WHITESMOKE, button.getFill());
     }
 }
