@@ -10,8 +10,11 @@ public class Square {
 
     public Square() {
         this.isHit = false;
-        this.button = new Rectangle(30, 30);
-        this.button.setFill(Color.WHITESMOKE);
+
+        Rectangle rectangle = new Rectangle(30, 30);
+        rectangle.setFill(Color.WHITESMOKE);
+        rectangle.setStyle("-fx-stroke: dimgray; -fx-stroke-width: 1;");
+        this.button = rectangle;
     }
 
     public void addShip(Ship ship) {
