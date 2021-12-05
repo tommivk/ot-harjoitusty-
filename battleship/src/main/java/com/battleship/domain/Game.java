@@ -112,6 +112,30 @@ public class Game {
         }
     }
 
+    public boolean allPlayer1ShipsDead() {
+        boolean allShipsDead = true;
+        for (int i = 0; i < 10; i++) {
+            for (int k = 0; k < 10; k++) {
+                if (this.player1Squares[i][k].hasShip() && !this.player1Squares[i][k].getShip().isDead()) {
+                    allShipsDead = false;
+                }
+            }
+        }
+        return allShipsDead;
+    }
+
+    public boolean allPlayer2ShipsDead() {
+        boolean allShipsDead = true;
+        for (int i = 0; i < 10; i++) {
+            for (int k = 0; k < 10; k++) {
+                if (this.player2Squares[i][k].hasShip() && !this.player2Squares[i][k].getShip().isDead()) {
+                    allShipsDead = false;
+                }
+            }
+        }
+        return allShipsDead;
+    }
+
     public void changeTurn() {
         this.turn = this.turn == Turn.PLAYER1 ? Turn.PLAYER2 : Turn.PLAYER1;
     }
