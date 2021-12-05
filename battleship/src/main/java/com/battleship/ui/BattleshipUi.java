@@ -146,7 +146,7 @@ public class BattleshipUi extends Application {
                 square.removeButtonColor();
 
                 button.setOnMouseClicked(event -> {
-                    if (game.getTurn() == Turn.PLAYER2 && !square.getIsHit()) {
+                    if (!game.isGameOver() && game.getTurn() == Turn.PLAYER2 && !square.getIsHit()) {
                         boolean hasShip = square.hitSquare();
                         if (hasShip) {
                             square.setBlackButtonColor();
@@ -158,6 +158,10 @@ public class BattleshipUi extends Application {
                             game.changeTurn();
                             turnLabel.setText("TURN: Player 1");
                         }
+                    }
+                    if (game.allPlayer1ShipsDead()) {
+                        game.setGameOver();
+                        turnLabel.setText("PLAYER 2 WINS!");
                     }
                 });
 
@@ -174,7 +178,7 @@ public class BattleshipUi extends Application {
                 square.removeButtonColor();
 
                 button.setOnMouseClicked(event -> {
-                    if (game.getTurn() == Turn.PLAYER1 && !square.getIsHit()) {
+                    if (!game.isGameOver() && game.getTurn() == Turn.PLAYER1 && !square.getIsHit()) {
                         boolean hasShip = square.hitSquare();
                         if (hasShip) {
                             square.setBlackButtonColor();
@@ -185,6 +189,10 @@ public class BattleshipUi extends Application {
                             square.setBlueButtonColor();
                             game.changeTurn();
                             turnLabel.setText("TURN: Player 2");
+                        }
+                        if (game.allPlayer2ShipsDead()) {
+                            game.setGameOver();
+                            turnLabel.setText("PLAYER 1 WINS!");
                         }
                     }
                 });
