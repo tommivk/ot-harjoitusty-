@@ -126,9 +126,9 @@ public class BattleshipUi extends Application {
                 square.removeButtonColor();
 
                 button.setOnMouseClicked(event -> {
-                    if (game.getTurn() == Turn.PLAYER2) {
-                        boolean isHit = square.hitSquare();
-                        if (isHit) {
+                    if (game.getTurn() == Turn.PLAYER2 && !square.getIsHit()) {
+                        boolean hasShip = square.hitSquare();
+                        if (hasShip) {
                             square.setBlackButtonColor();
                             if (square.getShip().isDead()) {
                                 square.getShip().setButtonsDisabled();
@@ -153,9 +153,9 @@ public class BattleshipUi extends Application {
                 square.removeButtonColor();
 
                 button.setOnMouseClicked(event -> {
-                    if (game.getTurn() == Turn.PLAYER1) {
-                        boolean isHit = square.hitSquare();
-                        if (isHit) {
+                    if (game.getTurn() == Turn.PLAYER1 && !square.getIsHit()) {
+                        boolean hasShip = square.hitSquare();
+                        if (hasShip) {
                             square.setBlackButtonColor();
                             if (square.getShip().isDead()) {
                                 square.getShip().setButtonsDisabled();
