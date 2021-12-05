@@ -12,7 +12,7 @@ Käyttöliittymän päänäkymä koostuu kahdesta 10x10 kokoisesta ruudukosta, j
 ### Pelin ollessa käynnissä 
 * käyttäjä voi klikata vastustajan ruudukon kordinaattia, johon haluaa kohdistaa ammuksen. [tehty]
   * jos ammus osuu vastustajan laivaan, käyttäjä saa jatkaa omaa vuoroaan. [tehty]
-  * kaikki vastustajan laivat ensimmäisenä upotettuaan, voittaa käyttäjä pelin 
+  * kaikki vastustajan laivat ensimmäisenä upotettuaan, voittaa käyttäjä pelin ja peli päättyy. [tehty]
 ## Jatkokehitysideoita
 * pelitilastojen tallettaminen tietokantaan
 * ääniefektit
