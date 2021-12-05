@@ -1,11 +1,14 @@
 package com.battleship.ui;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseButton;
 
@@ -23,9 +26,23 @@ public class BattleshipUi extends Application {
         int boardSize = 10;
         Game game = new Game(boardSize);
 
-        GridPane player1Setup = new GridPane();
-        GridPane player2Setup = new GridPane();
+        Label player1Label = new Label("Player 1");
+        player1Label.setPadding(new Insets(10, 0, 10, 0));
+
+        Label player2Label = new Label("Player 2");
+        player2Label.setPadding(new Insets(10, 0, 10, 0));
+
+        GridPane player1SetupGrid = new GridPane();
+        GridPane player2SetupGrid = new GridPane();
+
+        VBox player1Setup = new VBox(player1Label, player1SetupGrid);
+        player1Setup.setAlignment(Pos.TOP_CENTER);
+
+        VBox player2Setup = new VBox(player2Label, player2SetupGrid);
+        player2Setup.setAlignment(Pos.TOP_CENTER);
+
         HBox setupHbox = new HBox(player1Setup, player2Setup);
+        setupHbox.setAlignment(Pos.CENTER);
         setupHbox.setSpacing(30);
 
         Scene setUpScene = new Scene(setupHbox, 800, 500);
@@ -67,7 +84,7 @@ public class BattleshipUi extends Application {
 
                 });
 
-                player1Setup.add(player1Button, k, i);
+                player1SetupGrid.add(player1Button, k, i);
 
                 player2Button.setOnMouseEntered(event -> {
                     if (game.player1ShipsIsEmpty()) {
@@ -102,7 +119,7 @@ public class BattleshipUi extends Application {
                         }
                     }
                 });
-                player2Setup.add(player2Button, k, i);
+                player2SetupGrid.add(player2Button, k, i);
 
                 stage.setScene(setUpScene);
                 stage.show();
@@ -116,6 +133,9 @@ public class BattleshipUi extends Application {
 
         Square[][] player1Squares = game.getPlayer1Squares();
         Square[][] player2Squares = game.getPlayer2Squares();
+
+        Label turnLabel = new Label("TURN: Player 1");
+        turnLabel.setPadding(new Insets(20, 0, 0, 0));
 
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
@@ -136,6 +156,7 @@ public class BattleshipUi extends Application {
                         } else {
                             square.setBlueButtonColor();
                             game.changeTurn();
+                            turnLabel.setText("TURN: Player 1");
                         }
                     }
                 });
@@ -163,15 +184,33 @@ public class BattleshipUi extends Application {
                         } else {
                             square.setBlueButtonColor();
                             game.changeTurn();
+                            turnLabel.setText("TURN: Player 2");
                         }
                     }
                 });
                 gridpane2.add(button, k, i);
             }
         }
-        HBox hbox = new HBox(gridpane1, gridpane2);
+
+        Label player1Label = new Label("Player 1");
+        player1Label.setPadding(new Insets(10, 0, 10, 0));
+
+        Label player2Label = new Label("Player 2");
+        player2Label.setPadding(new Insets(10, 0, 10, 0));
+
+        VBox player1VBox = new VBox(player1Label, gridpane1);
+        player1VBox.setAlignment(Pos.TOP_CENTER);
+
+        VBox player2VBox = new VBox(player2Label, gridpane2);
+        player2VBox.setAlignment(Pos.TOP_CENTER);
+
+        HBox hbox = new HBox(player1VBox, player2VBox);
+        hbox.setAlignment(Pos.CENTER);
         hbox.setSpacing(30);
-        Scene scene = new Scene(hbox, 500, 800);
+
+        VBox container = new VBox(hbox, turnLabel);
+        container.setAlignment(Pos.TOP_CENTER);
+        Scene scene = new Scene(container, 500, 800);
 
         return scene;
     }
