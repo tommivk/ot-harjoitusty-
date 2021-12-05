@@ -131,7 +131,7 @@ public class BattleshipUi extends Application {
                         if (hasShip) {
                             square.setBlackButtonColor();
                             if (square.getShip().isDead()) {
-                                square.getShip().setButtonsDisabled();
+                                square.getShip().setDeadShipColor();
                             }
                         } else {
                             square.setBlueButtonColor();
@@ -158,7 +158,7 @@ public class BattleshipUi extends Application {
                         if (hasShip) {
                             square.setBlackButtonColor();
                             if (square.getShip().isDead()) {
-                                square.getShip().setButtonsDisabled();
+                                square.getShip().setDeadShipColor();
                             }
                         } else {
                             square.setBlueButtonColor();

@@ -2,7 +2,7 @@ package com.battleship.domain;
 
 import java.util.ArrayList;
 
-import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Ship {
@@ -32,9 +32,9 @@ public class Ship {
         return this.buttons;
     }
 
-    public void setButtonsDisabled() {
+    public void setDeadShipColor() {
         for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).setDisable(true);
+            buttons.get(i).setFill(Color.RED);
         }
     }
 
