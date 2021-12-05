@@ -45,7 +45,13 @@ public class BattleshipUi extends Application {
         setupHbox.setAlignment(Pos.CENTER);
         setupHbox.setSpacing(30);
 
-        Scene setUpScene = new Scene(setupHbox, 800, 500);
+        Label tipLabel = new Label("Tip: click mouse 2 to change the ships direction");
+        tipLabel.setPadding(new Insets(20, 0, 0, 0));
+
+        VBox container = new VBox(setupHbox, tipLabel);
+        container.setAlignment(Pos.TOP_CENTER);
+
+        Scene setUpScene = new Scene(container, 800, 500);
 
         Square[][] player1Squares = game.getPlayer1Squares();
         Square[][] player2Squares = game.getPlayer2Squares();
@@ -218,7 +224,7 @@ public class BattleshipUi extends Application {
 
         VBox container = new VBox(hbox, turnLabel);
         container.setAlignment(Pos.TOP_CENTER);
-        Scene scene = new Scene(container, 500, 800);
+        Scene scene = new Scene(container, 800, 500);
 
         return scene;
     }
