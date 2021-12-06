@@ -93,6 +93,7 @@
         <configuration>
           <excludes>
             <exclude>com/battleship/ui/*</exclude>
+            <exclude>com/battleship/App.class</exclude>
           </excludes>
         </configuration>
         <executions>
