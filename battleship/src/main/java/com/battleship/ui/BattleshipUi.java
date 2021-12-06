@@ -86,6 +86,7 @@ public class BattleshipUi extends Application {
                             }
                         }
                         game.changeShipDirection();
+                        game.highlightSquares(row, column, 1);
                     }
 
                 });
@@ -122,6 +123,7 @@ public class BattleshipUi extends Application {
                                 }
                             }
                             game.changeShipDirection();
+                            game.highlightSquares(row, column, 2);
                         }
                     }
                 });
