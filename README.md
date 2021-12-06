@@ -27,3 +27,8 @@ mvn jacoco:report
 ``` 
 mvn jxr:jxr checkstyle:checkstyle
 ```
+
+### Suoritettavan jarin generointi
+```
+mvn package
+```
