@@ -10,8 +10,8 @@
 | 30.11  | 1    | refaktorointia                                      |
 |  2.12  | 1    | refaktorointia                                      |
 |  5.12  | 3    | bugien korjailua ja sovelluksen ulkoasun parantelua |
+|  6.12  | 1.5  | testausta                                           |
+|  6.12  | 1    | bugien korjailua                                    |
 |        |      |                                                     |
 |        |      |                                                     |
-|        |      |                                                     |
-|        |      |                                                     |
-|  yht   | 13.5 |                                                     |
+|  yht   | 16   |                                                     |
