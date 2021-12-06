@@ -96,20 +96,35 @@ public class Game {
 
             if ((index + nextShip.getSize()) <= 10) {
 
-                Ship ship = player == 1 ? this.getNewPlayer1Ship() : this.getNewPlayer2Ship();
+                if (canPlaceShip(nextShip, row, column, squares)) {
+                    Ship ship = player == 1 ? this.getNewPlayer1Ship() : this.getNewPlayer2Ship();
+                    for (int l = ship.getSize(); l > 0; l--) {
+                        Square activeSquare = this.getShipDirection() == ShipDirection.HORIZONTAL
+                                ? squares[row][(column - 1) + l]
+                                : squares[(row - 1) + l][column];
 
-                for (int l = ship.getSize(); l > 0; l--) {
-                    Square activeSquare = this.getShipDirection() == ShipDirection.HORIZONTAL
-                            ? squares[row][(column - 1) + l]
-                            : squares[(row - 1) + l][column];
-
-                    activeSquare.addShip(ship);
-                    ship.addButton(activeSquare.getButton());
-                    activeSquare.setBlackButtonColor();
+                        activeSquare.addShip(ship);
+                        ship.addButton(activeSquare.getButton());
+                        activeSquare.setBlackButtonColor();
+                    }
                 }
             }
 
         }
+    }
+
+    private boolean canPlaceShip(Ship ship, int row, int column, Square[][] squares) {
+        boolean isOk = true;
+        for (int i = ship.getSize(); i > 0; i--) {
+            Square activeSquare = this.getShipDirection() == ShipDirection.HORIZONTAL
+                    ? squares[row][(column - 1) + i]
+                    : squares[(row - 1) + i][column];
+
+            if (activeSquare.hasShip()) {
+                isOk = false;
+            }
+        }
+        return isOk;
     }
 
     public boolean allPlayer1ShipsDead() {
