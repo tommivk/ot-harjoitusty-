@@ -5,6 +5,9 @@ Klassinen laivanupotuspeli
 * [vaatimusmäärittely](https://github.com/tommivk/ot-harjoitustyo/blob/master/vaatimusmaarittely.md)
 * [arkkitehtuuri](https://github.com/tommivk/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
+## Releaset
+* [Viikko 5](https://github.com/tommivk/ot-harjoitustyo/releases/tag/viikko5)
+
 ## Komentorivitoiminnot
 ### Sovelluksen käynnistys
 ```
