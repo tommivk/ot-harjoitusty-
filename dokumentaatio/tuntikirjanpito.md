@@ -12,6 +12,6 @@
 |  5.12  | 3    | bugien korjailua ja sovelluksen ulkoasun parantelua |
 |  6.12  | 1.5  | testausta                                           |
 |  6.12  | 1    | bugien korjailua                                    |
+|  7.12  | 1    | koordinaatiston lisäys ja refaktorointia            |
 |        |      |                                                     |
-|        |      |                                                     |
-|  yht   | 16   |                                                     |
+|  yht   | 17   |                                                     |
