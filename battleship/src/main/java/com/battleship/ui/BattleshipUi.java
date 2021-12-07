@@ -8,8 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.scene.input.MouseButton;
 
 import com.battleship.domain.Game;
@@ -26,32 +29,8 @@ public class BattleshipUi extends Application {
         int boardSize = 10;
         Game game = new Game(boardSize);
 
-        Label player1Label = new Label("Player 1");
-        player1Label.setPadding(new Insets(10, 0, 10, 0));
-
-        Label player2Label = new Label("Player 2");
-        player2Label.setPadding(new Insets(10, 0, 10, 0));
-
-        GridPane player1SetupGrid = new GridPane();
-        GridPane player2SetupGrid = new GridPane();
-
-        VBox player1Setup = new VBox(player1Label, player1SetupGrid);
-        player1Setup.setAlignment(Pos.TOP_CENTER);
-
-        VBox player2Setup = new VBox(player2Label, player2SetupGrid);
-        player2Setup.setAlignment(Pos.TOP_CENTER);
-
-        HBox setupHbox = new HBox(player1Setup, player2Setup);
-        setupHbox.setAlignment(Pos.CENTER);
-        setupHbox.setSpacing(30);
-
-        Label tipLabel = new Label("Tip: click mouse 2 to change the ships direction");
-        tipLabel.setPadding(new Insets(20, 0, 0, 0));
-
-        VBox container = new VBox(setupHbox, tipLabel);
-        container.setAlignment(Pos.TOP_CENTER);
-
-        Scene setUpScene = new Scene(container, 800, 500);
+        GridPane player1Grid = new GridPane();
+        GridPane player2Grid = new GridPane();
 
         Square[][] player1Squares = game.getPlayer1Squares();
         Square[][] player2Squares = game.getPlayer2Squares();
@@ -91,7 +70,7 @@ public class BattleshipUi extends Application {
 
                 });
 
-                player1SetupGrid.add(player1Button, k, i);
+                player1Grid.add(player1Button, k, i);
 
                 player2Button.setOnMouseEntered(event -> {
                     if (game.player1ShipsIsEmpty()) {
@@ -127,12 +106,37 @@ public class BattleshipUi extends Application {
                         }
                     }
                 });
-                player2SetupGrid.add(player2Button, k, i);
-
-                stage.setScene(setUpScene);
-                stage.show();
+                player2Grid.add(player2Button, k, i);
             }
         }
+        Label player1Label = new Label("Player 1");
+        player1Label.setPadding(new Insets(10, 0, 10, 0));
+
+        Label player2Label = new Label("Player 2");
+        player2Label.setPadding(new Insets(10, 0, 10, 0));
+
+        HBox player1Setup = getBoard(player1Grid);
+        HBox player2Setup = getBoard(player2Grid);
+
+        VBox player1Board = new VBox(player1Label, player1Setup);
+        player1Board.setAlignment(Pos.CENTER);
+
+        VBox player2Board = new VBox(player2Label, player2Setup);
+        player2Board.setAlignment(Pos.CENTER);
+
+        HBox setupHbox = new HBox(player1Board, player2Board);
+        setupHbox.setAlignment(Pos.CENTER);
+        setupHbox.setSpacing(30);
+
+        Label tipLabel = new Label("Tip: click mouse 2 to change the ships direction");
+        tipLabel.setPadding(new Insets(20, 0, 0, 0));
+
+        VBox container = new VBox(setupHbox, tipLabel);
+        container.setAlignment(Pos.TOP_CENTER);
+
+        Scene setUpScene = new Scene(container, 800, 500);
+        stage.setScene(setUpScene);
+        stage.show();
     }
 
     public Scene playScene(Game game) {
@@ -214,13 +218,16 @@ public class BattleshipUi extends Application {
         Label player2Label = new Label("Player 2");
         player2Label.setPadding(new Insets(10, 0, 10, 0));
 
-        VBox player1VBox = new VBox(player1Label, gridpane1);
-        player1VBox.setAlignment(Pos.TOP_CENTER);
+        HBox player1Setup = getBoard(gridpane1);
+        HBox player2Setup = getBoard(gridpane2);
 
-        VBox player2VBox = new VBox(player2Label, gridpane2);
-        player2VBox.setAlignment(Pos.TOP_CENTER);
+        VBox player1Board = new VBox(player1Label, player1Setup);
+        player1Board.setAlignment(Pos.CENTER);
 
-        HBox hbox = new HBox(player1VBox, player2VBox);
+        VBox player2Board = new VBox(player2Label, player2Setup);
+        player2Board.setAlignment(Pos.CENTER);
+
+        HBox hbox = new HBox(player1Board, player2Board);
         hbox.setAlignment(Pos.CENTER);
         hbox.setSpacing(30);
 
@@ -229,6 +236,52 @@ public class BattleshipUi extends Application {
         Scene scene = new Scene(container, 800, 500);
 
         return scene;
+    }
+
+    public HBox getBoard(GridPane setupGrid) {
+        GridPane p1XCoordinates = getXCoordinates();
+        GridPane p1YCoordinates = getYCoordinates();
+        p1YCoordinates.setAlignment(Pos.BOTTOM_RIGHT);
+
+        VBox player1BoardWithX = new VBox(p1XCoordinates, setupGrid);
+        player1BoardWithX.setAlignment(Pos.TOP_CENTER);
+
+        return new HBox(p1YCoordinates, player1BoardWithX);
+    }
+
+    public GridPane getXCoordinates() {
+        GridPane gridpane = new GridPane();
+        String letters = "ABCDEFGHIJ";
+
+        for (int i = 0; i < 10; i++) {
+            Text text = new Text(Character.toString(letters.charAt(i)));
+            text.setFill(Color.BLACK);
+            Rectangle rect = new Rectangle(30, 30);
+            rect.setStyle("-fx-stroke: whitesmoke; -fx-stroke-width: 1;");
+            rect.setFill(Color.WHITESMOKE);
+            StackPane pane = new StackPane();
+            pane.getChildren().addAll(rect, text);
+            gridpane.add(pane, i, 0);
+        }
+
+        return gridpane;
+    }
+
+    public GridPane getYCoordinates() {
+        GridPane gridpane = new GridPane();
+
+        for (int i = 1; i <= 10; i++) {
+            Text text = new Text(Integer.toString(i));
+            text.setFill(Color.BLACK);
+            Rectangle rect = new Rectangle(30, 30);
+            rect.setStyle("-fx-stroke: whitesmoke; -fx-stroke-width: 1;");
+            rect.setFill(Color.WHITESMOKE);
+            StackPane pane2 = new StackPane();
+            pane2.getChildren().addAll(rect, text);
+            gridpane.add(pane2, 0, i);
+        }
+
+        return gridpane;
     }
 
     public static void main(String[] args) {
