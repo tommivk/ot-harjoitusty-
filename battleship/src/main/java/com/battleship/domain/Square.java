@@ -32,9 +32,15 @@ public class Square {
     public boolean hitSquare() {
         this.isHit = true;
         if (this.ship == null) {
+            this.setBlueButtonColor();
             return false;
         }
         this.ship.hit();
+        if (this.ship.isDead()) {
+            this.ship.setDeadShipColor();
+        } else {
+            this.setBlackButtonColor();
+        }
         return true;
     }
 

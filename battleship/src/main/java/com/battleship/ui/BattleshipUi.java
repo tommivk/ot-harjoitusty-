@@ -26,17 +26,53 @@ public class BattleshipUi extends Application {
         stage.setHeight(500);
         stage.setWidth(800);
 
-        int boardSize = 10;
-        Game game = new Game(boardSize);
+        Game game = new Game(10);
 
+        StackPane stackpane = new StackPane();
+        StackPane stackpane2 = new StackPane();
+
+        Rectangle rect = new Rectangle(200, 200);
+        Rectangle rect2 = new Rectangle(200, 200);
+
+        rect.setFill(Color.DARKGREY);
+        rect2.setFill(Color.DARKGREY);
+
+        stackpane.setOnMouseClicked(event -> {
+            game.setIsAgainstComputer(false);
+            Scene setUpScene = setUpScene(game, stage);
+            stage.setScene(setUpScene);
+            stage.show();
+        });
+
+        stackpane2.setOnMouseClicked(event -> {
+            game.setIsAgainstComputer(true);
+            Scene setUpScene = setUpScene(game, stage);
+            stage.setScene(setUpScene);
+            stage.show();
+        });
+
+        Text vsComputer = new Text("VS Computer");
+        Text vsPlayer = new Text("VS another Player");
+        stackpane.getChildren().addAll(rect, vsPlayer);
+        stackpane2.getChildren().addAll(rect2, vsComputer);
+
+        HBox hbox = new HBox(stackpane, stackpane2);
+        hbox.setSpacing(30);
+        hbox.setAlignment(Pos.CENTER);
+        Scene startScene = new Scene(hbox);
+        stage.setScene(startScene);
+        stage.show();
+    }
+
+    public Scene setUpScene(Game game, Stage stage) {
         GridPane player1Grid = new GridPane();
         GridPane player2Grid = new GridPane();
 
         Square[][] player1Squares = game.getPlayer1Squares();
         Square[][] player2Squares = game.getPlayer2Squares();
 
-        for (int i = 0; i < boardSize; i++) {
-            for (int k = 0; k < boardSize; k++) {
+        for (int i = 0; i < 10; i++) {
+            for (int k = 0; k < 10; k++) {
                 int row = i;
                 int column = k;
 
@@ -54,6 +90,14 @@ public class BattleshipUi extends Application {
                 player1Button.setOnMouseClicked(event -> {
                     if (event.getButton() == MouseButton.PRIMARY) {
                         game.placeShip(row, column, 1);
+
+                        if (game.player1ShipsIsEmpty()) {
+                            game.clearButtonColors(1);
+                        }
+                        if (game.getIsAgainstComputer() && game.player1ShipsIsEmpty()) {
+                            stage.setScene(playScene(game));
+                            stage.show();
+                        }
                     }
 
                     if (event.getButton() == MouseButton.SECONDARY) {
@@ -72,47 +116,53 @@ public class BattleshipUi extends Application {
 
                 player1Grid.add(player1Button, k, i);
 
-                player2Button.setOnMouseEntered(event -> {
-                    if (game.player1ShipsIsEmpty()) {
-                        game.highlightSquares(row, column, 2);
-                    }
-                });
+                if (!game.getIsAgainstComputer()) {
 
-                player2Button.setOnMouseExited(event -> {
-                    game.removeHighlight(row, column, 2);
-                });
-
-                player2Button.setOnMouseClicked(event -> {
-                    if (game.player1ShipsIsEmpty()) {
-                        if (event.getButton() == MouseButton.PRIMARY) {
-                            game.placeShip(row, column, 2);
-
-                            if (game.player2ShipsIsEmpty()) {
-                                stage.setScene(playScene(game));
-                                stage.show();
-                            }
-                        }
-
-                        if (event.getButton() == MouseButton.SECONDARY) {
-                            for (int m = 0; m < 10; m++) {
-                                for (int n = 0; n < 10; n++) {
-                                    if (!player2Squares[n][m].hasShip()) {
-                                        player2Squares[n][m].removeButtonColor();
-                                    }
-                                }
-                            }
-                            game.changeShipDirection();
+                    player2Button.setOnMouseEntered(event -> {
+                        if (game.player1ShipsIsEmpty()) {
                             game.highlightSquares(row, column, 2);
                         }
-                    }
-                });
+                    });
+
+                    player2Button.setOnMouseExited(event -> {
+                        game.removeHighlight(row, column, 2);
+                    });
+
+                    player2Button.setOnMouseClicked(event -> {
+                        if (game.player1ShipsIsEmpty()) {
+                            if (event.getButton() == MouseButton.PRIMARY) {
+                                game.placeShip(row, column, 2);
+
+                                if (game.player2ShipsIsEmpty()) {
+                                    stage.setScene(playScene(game));
+                                    stage.show();
+                                }
+                            }
+
+                            if (event.getButton() == MouseButton.SECONDARY) {
+                                for (int m = 0; m < 10; m++) {
+                                    for (int n = 0; n < 10; n++) {
+                                        if (!player2Squares[n][m].hasShip()) {
+                                            player2Squares[n][m].removeButtonColor();
+                                        }
+                                    }
+                                }
+                                game.changeShipDirection();
+                                game.highlightSquares(row, column, 2);
+                            }
+                        }
+                    });
+                } else {
+                    game.getComputer().placeComputerShips();
+                    game.clearButtonColors(2);
+                }
                 player2Grid.add(player2Button, k, i);
             }
         }
-        Label player1Label = new Label("Player 1");
+        Label player1Label = game.getIsAgainstComputer() ? new Label("You") : new Label("Player 1");
         player1Label.setPadding(new Insets(10, 0, 10, 0));
 
-        Label player2Label = new Label("Player 2");
+        Label player2Label = game.getIsAgainstComputer() ? new Label("Computer") : new Label("Player 2");
         player2Label.setPadding(new Insets(10, 0, 10, 0));
 
         HBox player1Setup = getBoard(player1Grid);
@@ -134,9 +184,7 @@ public class BattleshipUi extends Application {
         VBox container = new VBox(setupHbox, tipLabel);
         container.setAlignment(Pos.TOP_CENTER);
 
-        Scene setUpScene = new Scene(container, 800, 500);
-        stage.setScene(setUpScene);
-        stage.show();
+        return new Scene(container, 800, 500);
     }
 
     public Scene playScene(Game game) {
@@ -146,7 +194,7 @@ public class BattleshipUi extends Application {
         Square[][] player1Squares = game.getPlayer1Squares();
         Square[][] player2Squares = game.getPlayer2Squares();
 
-        Label turnLabel = new Label("TURN: Player 1");
+        Label turnLabel = new Label(game.getIsAgainstComputer() ? "TURN: You" : "TURN: Player 1");
         turnLabel.setPadding(new Insets(20, 0, 0, 0));
 
         for (int i = 0; i < 10; i++) {
@@ -154,28 +202,23 @@ public class BattleshipUi extends Application {
 
                 Square square = player1Squares[i][k];
                 Rectangle button = square.getButton();
-
+                button.setOnMouseClicked(null);
                 square.removeButtonColor();
-
-                button.setOnMouseClicked(event -> {
-                    if (!game.isGameOver() && game.getTurn() == Turn.PLAYER2 && !square.getIsHit()) {
-                        boolean hasShip = square.hitSquare();
-                        if (hasShip) {
-                            square.setBlackButtonColor();
-                            if (square.getShip().isDead()) {
-                                square.getShip().setDeadShipColor();
+                if (!game.getIsAgainstComputer()) {
+                    button.setOnMouseClicked(event -> {
+                        if (!game.isGameOver() && game.getTurn() == Turn.PLAYER2 && !square.getIsHit()) {
+                            boolean hasShip = square.hitSquare();
+                            if (!hasShip) {
+                                game.changeTurn();
+                                turnLabel.setText("TURN: Player 1");
                             }
-                        } else {
-                            square.setBlueButtonColor();
-                            game.changeTurn();
-                            turnLabel.setText("TURN: Player 1");
                         }
-                    }
-                    if (game.allPlayer1ShipsDead()) {
-                        game.setGameOver();
-                        turnLabel.setText("PLAYER 2 WINS!");
-                    }
-                });
+                        if (game.allPlayer1ShipsDead()) {
+                            game.setGameOver();
+                            turnLabel.setText("PLAYER 2 WINS!");
+                        }
+                    });
+                }
 
                 gridpane1.add(button, k, i);
 
@@ -188,23 +231,29 @@ public class BattleshipUi extends Application {
                 Rectangle button = square.getButton();
 
                 square.removeButtonColor();
+                button.setOnMouseClicked(null);
 
                 button.setOnMouseClicked(event -> {
                     if (!game.isGameOver() && game.getTurn() == Turn.PLAYER1 && !square.getIsHit()) {
                         boolean hasShip = square.hitSquare();
-                        if (hasShip) {
-                            square.setBlackButtonColor();
-                            if (square.getShip().isDead()) {
-                                square.getShip().setDeadShipColor();
-                            }
-                        } else {
-                            square.setBlueButtonColor();
+                        if (!hasShip) {
                             game.changeTurn();
-                            turnLabel.setText("TURN: Player 2");
+                            if (!game.getIsAgainstComputer()) {
+                                turnLabel.setText("TURN: Player 2");
+                            } else {
+                                turnLabel.setText("TURN: Computer");
+                                game.getComputer().computersTurn();
+                                turnLabel.setText("TURN: You");
+
+                            }
+                        }
+                        if (game.getIsAgainstComputer() && game.allPlayer1ShipsDead()) {
+                            game.setGameOver();
+                            turnLabel.setText("COMPUTER WINS!");
                         }
                         if (game.allPlayer2ShipsDead()) {
                             game.setGameOver();
-                            turnLabel.setText("PLAYER 1 WINS!");
+                            turnLabel.setText(game.getIsAgainstComputer() ? "YOU WIN!" : "PLAYER 1 WINS!");
                         }
                     }
                 });
@@ -212,10 +261,10 @@ public class BattleshipUi extends Application {
             }
         }
 
-        Label player1Label = new Label("Player 1");
+        Label player1Label = new Label(game.getIsAgainstComputer() ? "You" : "Player 1");
         player1Label.setPadding(new Insets(10, 0, 10, 0));
 
-        Label player2Label = new Label("Player 2");
+        Label player2Label = new Label(game.getIsAgainstComputer() ? "Computer" : "Player 2");
         player2Label.setPadding(new Insets(10, 0, 10, 0));
 
         HBox player1Setup = getBoard(gridpane1);

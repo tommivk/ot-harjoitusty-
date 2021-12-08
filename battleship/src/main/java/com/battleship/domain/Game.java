@@ -6,22 +6,31 @@ public class Game {
 
     private Turn turn;
     private boolean gameOver;
+    private boolean againstComputer;
     private Stack<Ship> player1Ships;
     private Stack<Ship> player2Ships;
     private ShipDirection shipDirection;
     private Square[][] player1Squares;
     private Square[][] player2Squares;
+    private Computer computer;
 
     public Game(int boardSize) {
         this.turn = Turn.PLAYER1;
         this.gameOver = false;
         this.shipDirection = ShipDirection.VERTICAL;
 
+        this.againstComputer = false;
+        this.computer = new Computer(this);
+
         this.player1Squares = initializeBoard(boardSize);
         this.player2Squares = initializeBoard(boardSize);
 
         this.player1Ships = initializeShips();
         this.player2Ships = initializeShips();
+    }
+
+    public Computer getComputer() {
+        return this.computer;
     }
 
     public Square[][] initializeBoard(int size) {
@@ -63,6 +72,15 @@ public class Game {
                         activeSquare.setGreyButtonColor();
                     }
                 }
+            }
+        }
+    }
+
+    public void clearButtonColors(int player) {
+        for (int i = 0; i < 10; i++) {
+            for (int k = 0; k < 10; k++) {
+                Square square = player == 1 ? this.player1Squares[i][k] : this.player2Squares[i][k];
+                square.removeButtonColor();
             }
         }
     }
@@ -113,10 +131,16 @@ public class Game {
         }
     }
 
-    private boolean canPlaceShip(Ship ship, int row, int column, Square[][] squares) {
+    public boolean canPlaceShip(Ship ship, int row, int column, Square[][] squares) {
+        int shipSize = ship.getSize();
+        if (this.shipDirection == ShipDirection.VERTICAL && row + shipSize > 10
+                || this.shipDirection == ShipDirection.HORIZONTAL && column + shipSize > 10) {
+            return false;
+        }
+
         boolean isOk = true;
         for (int i = ship.getSize(); i > 0; i--) {
-            Square activeSquare = this.getShipDirection() == ShipDirection.HORIZONTAL
+            Square activeSquare = this.shipDirection == ShipDirection.HORIZONTAL
                     ? squares[row][(column - 1) + i]
                     : squares[(row - 1) + i][column];
 
@@ -153,6 +177,10 @@ public class Game {
 
     public void changeTurn() {
         this.turn = this.turn == Turn.PLAYER1 ? Turn.PLAYER2 : Turn.PLAYER1;
+    }
+
+    public void setTurn(Turn turn) {
+        this.turn = turn;
     }
 
     public Turn getTurn() {
@@ -211,4 +239,13 @@ public class Game {
         this.shipDirection = this.shipDirection == ShipDirection.HORIZONTAL ? ShipDirection.VERTICAL
                 : ShipDirection.HORIZONTAL;
     }
+
+    public void setIsAgainstComputer(boolean bool) {
+        this.againstComputer = bool;
+    }
+
+    public boolean getIsAgainstComputer() {
+        return this.againstComputer;
+    }
+
 }
