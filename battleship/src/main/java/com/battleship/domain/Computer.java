@@ -327,8 +327,8 @@ public class Computer {
             return true;
         }
         if (hit) {
-            this.prevHits++;
             this.prevHit[0] = row + prevHits;
+            this.prevHits++;
             this.prevHitDir = ShipDirection.VERTICAL;
             return true;
         }
@@ -346,8 +346,8 @@ public class Computer {
             return true;
         }
         if (hit) {
-            this.prevHits++;
             this.prevHit[0] = row - prevHits;
+            this.prevHits++;
             this.prevHitDir = ShipDirection.VERTICAL;
             return true;
         }
