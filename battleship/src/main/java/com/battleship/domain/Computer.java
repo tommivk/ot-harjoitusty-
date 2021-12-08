@@ -35,6 +35,15 @@ public class Computer {
         }
     }
 
+    public void setPrevHit(int row, int column) {
+        this.prevHit[0] = row;
+        this.prevHit[1] = column;
+    }
+
+    public int[] getPrevHit() {
+        return this.prevHit;
+    }
+
     public void computersTurn() {
         while (true) {
             if (prevHits == 0) {
