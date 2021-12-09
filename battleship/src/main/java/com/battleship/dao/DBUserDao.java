@@ -28,7 +28,6 @@ public class DBUserDao implements UserDao {
     }
 
     public User create(String username) {
-
         try {
             Connection db = DriverManager.getConnection("jdbc:sqlite:data.db");
 
@@ -39,10 +38,10 @@ public class DBUserDao implements UserDao {
             System.out.print("New user ");
             System.out.print(username);
             System.out.println(" added");
+            return new User(username);
         } catch (SQLException e) {
             System.out.println("Couldn't add new user");
+            return null;
         }
-        User user = new User(username);
-        return user;
     }
 }

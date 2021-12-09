@@ -15,11 +15,15 @@ public class UserService {
 
     public boolean createUser(String userName) {
         try {
-            userDao.create(userName);
+            User user = userDao.create(userName);
+            if (user == null) {
+                return false;
+            }
+            return true;
         } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
-        return true;
     }
 
     public List<User> getAllUsers() {

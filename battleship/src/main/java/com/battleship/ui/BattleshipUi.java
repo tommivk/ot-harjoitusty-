@@ -61,7 +61,7 @@ public class BattleshipUi extends Application {
         });
 
         signUpRect.setOnMouseClicked(event -> {
-            stage.setScene(sigUpScene(game, stage));
+            stage.setScene(signUpScene(game, stage));
         });
 
         Text loginText = new Text("Login");
@@ -81,7 +81,7 @@ public class BattleshipUi extends Application {
         return new Scene(hbox);
     }
 
-    public Scene sigUpScene(Game game, Stage stage) {
+    public Scene signUpScene(Game game, Stage stage) {
         Label label = new Label("Name:");
         TextField textfield = new TextField();
         Button button = new Button("Add new user");
