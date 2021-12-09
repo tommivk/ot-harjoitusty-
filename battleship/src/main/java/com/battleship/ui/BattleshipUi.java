@@ -26,6 +26,7 @@ import com.battleship.domain.UserService;
 
 public class BattleshipUi extends Application {
     private UserService userService;
+    private Game game;
 
     @Override
     public void init() throws Exception {
@@ -39,13 +40,13 @@ public class BattleshipUi extends Application {
         stage.setHeight(500);
         stage.setWidth(800);
 
-        Game game = new Game(10);
+        game = new Game(10);
 
-        stage.setScene(startScene(game, stage));
+        stage.setScene(startScene(stage));
         stage.show();
     }
 
-    public Scene startScene(Game game, Stage stage) {
+    public Scene startScene(Stage stage) {
         StackPane stackpane = new StackPane();
         StackPane stackpane2 = new StackPane();
 
@@ -56,12 +57,12 @@ public class BattleshipUi extends Application {
         signUpRect.setFill(Color.DARKGREY);
 
         loginRect.setOnMouseClicked(event -> {
-            stage.setScene(loginScene(game, stage));
+            stage.setScene(loginScene(stage));
             stage.show();
         });
 
         signUpRect.setOnMouseClicked(event -> {
-            stage.setScene(signUpScene(game, stage));
+            stage.setScene(signUpScene(stage));
         });
 
         Text loginText = new Text("Login");
@@ -71,7 +72,7 @@ public class BattleshipUi extends Application {
 
         Button skip = new Button("Continue without logging in");
         skip.setOnMouseClicked(event -> {
-            stage.setScene(gameSelectionScene(game, stage));
+            stage.setScene(gameSelectionScene(stage));
             stage.show();
         });
 
@@ -81,7 +82,7 @@ public class BattleshipUi extends Application {
         return new Scene(hbox);
     }
 
-    public Scene signUpScene(Game game, Stage stage) {
+    public Scene signUpScene(Stage stage) {
         Label label = new Label("Name:");
         TextField textfield = new TextField();
         Button button = new Button("Add new user");
@@ -89,7 +90,7 @@ public class BattleshipUi extends Application {
             boolean success = userService.createUser(textfield.getText());
             userService.getAllUsers();
             if (success) {
-                stage.setScene(gameSelectionScene(game, stage));
+                stage.setScene(gameSelectionScene(stage));
                 stage.show();
             }
         });
@@ -97,7 +98,7 @@ public class BattleshipUi extends Application {
         return new Scene(hbox);
     }
 
-    public Scene loginScene(Game game, Stage stage) {
+    public Scene loginScene(Stage stage) {
         Label label = new Label("Name:");
         TextField textfield = new TextField();
         Button button = new Button("OK");
@@ -106,14 +107,14 @@ public class BattleshipUi extends Application {
             boolean success = userService.login(textfield.getText());
             if (success) {
                 game.setPlayerOne(userService.getLoggedUser());
-                stage.setScene(gameSelectionScene(game, stage));
+                stage.setScene(gameSelectionScene(stage));
             }
         });
         HBox hbox = new HBox(label, textfield, button);
         return new Scene(hbox);
     }
 
-    public Scene gameSelectionScene(Game game, Stage stage) {
+    public Scene gameSelectionScene(Stage stage) {
         StackPane stackpane = new StackPane();
         StackPane stackpane2 = new StackPane();
 
@@ -125,7 +126,7 @@ public class BattleshipUi extends Application {
 
         rect.setOnMouseClicked(event -> {
             game.setIsAgainstComputer(false);
-            Scene setUpScene = setUpScene(game, stage);
+            Scene setUpScene = setUpScene(stage);
             stage.setScene(setUpScene);
             stage.show();
         });
@@ -133,7 +134,7 @@ public class BattleshipUi extends Application {
         rect2.setOnMouseClicked(event -> {
             game.setPlayerTwo(new User("Computer"));
             game.setIsAgainstComputer(true);
-            Scene setUpScene = setUpScene(game, stage);
+            Scene setUpScene = setUpScene(stage);
             stage.setScene(setUpScene);
             stage.show();
         });
@@ -149,7 +150,7 @@ public class BattleshipUi extends Application {
         return new Scene(hbox);
     }
 
-    public Scene setUpScene(Game game, Stage stage) {
+    public Scene setUpScene(Stage stage) {
         GridPane player1Grid = new GridPane();
         GridPane player2Grid = new GridPane();
 
@@ -180,7 +181,7 @@ public class BattleshipUi extends Application {
                             game.clearButtonColors(1);
                         }
                         if (game.getIsAgainstComputer() && game.player1ShipsIsEmpty()) {
-                            stage.setScene(playScene(game));
+                            stage.setScene(playScene());
                             stage.show();
                         }
                     }
@@ -219,7 +220,7 @@ public class BattleshipUi extends Application {
                                 game.placeShip(row, column, 2);
 
                                 if (game.player2ShipsIsEmpty()) {
-                                    stage.setScene(playScene(game));
+                                    stage.setScene(playScene());
                                     stage.show();
                                 }
                             }
@@ -272,7 +273,7 @@ public class BattleshipUi extends Application {
         return new Scene(container, 800, 500);
     }
 
-    public Scene playScene(Game game) {
+    public Scene playScene() {
         GridPane gridpane1 = new GridPane();
         GridPane gridpane2 = new GridPane();
 
@@ -300,7 +301,7 @@ public class BattleshipUi extends Application {
                         }
                         if (game.allPlayer1ShipsDead()) {
                             game.setGameOver();
-                            turnLabel.setText(game.getPlayerTwo().getName() + "WINS!");
+                            turnLabel.setText(game.getPlayerTwo().getName() + " WINS!");
                         }
                     });
                 }
@@ -337,7 +338,8 @@ public class BattleshipUi extends Application {
                         }
                         if (game.allPlayer2ShipsDead()) {
                             game.setGameOver();
-                            turnLabel.setText(game.getIsAgainstComputer() ? "YOU WIN!" : "PLAYER 1 WINS!");
+                            turnLabel.setText(game.getIsAgainstComputer() ? "YOU WIN!"
+                                    : game.getPlayerOne().getName() + " WINS!");
                         }
                     }
                 });
