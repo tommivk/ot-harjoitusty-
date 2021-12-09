@@ -23,6 +23,34 @@ public class GameService {
         }
     }
 
+    public int getPlayerShotCount(int playerId) {
+        try {
+            int count = gameDao.getPlayerShotCount(playerId);
+            System.out.println("Count: " + count);
+            return count;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public void addPlayerOneShot() {
+        try {
+            gameDao.addPlayerOneShot(currentGame.getGameId());
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void addPlayerTwoShot() {
+        try {
+            gameDao.addPlayerTwoShot(currentGame.getGameId());
+
+        } catch (Exception e) {
+
+        }
+    }
+
     public Game getGame() {
         return this.currentGame;
     }

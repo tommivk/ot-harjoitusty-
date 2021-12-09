@@ -73,19 +73,7 @@ public class BattleshipUi extends Application {
         stackpane.getChildren().addAll(loginRect, loginText);
         stackpane2.getChildren().addAll(signUpRect, newUserText);
 
-        Button skip = new Button("Continue without logging in");
-        skip.setOnMouseClicked(event -> {
-            stage.setScene(gameSelectionScene(stage));
-            stage.show();
-        });
-
-        Button showStats = new Button("Stats");
-        showStats.setOnMouseClicked(event -> {
-            stage.setScene(statisticsScene(stage));
-            stage.show();
-        });
-
-        HBox hbox = new HBox(stackpane, stackpane2, skip, showStats);
+        HBox hbox = new HBox(stackpane, stackpane2);
         hbox.setSpacing(30);
         hbox.setAlignment(Pos.CENTER);
         return new Scene(hbox);
@@ -93,8 +81,10 @@ public class BattleshipUi extends Application {
 
     public Scene statisticsScene(Stage stage) {
         Label label = new Label("Statistics");
-
-        HBox hbox = new HBox(label);
+        User player = userService.getLoggedPlayerOne();
+        Text name = new Text(player.getName());
+        Text totalShots = new Text("Total shots: " + gameService.getPlayerShotCount(player.getId()));
+        VBox hbox = new VBox(label, name, totalShots);
         return new Scene(hbox);
     }
 
@@ -186,10 +176,17 @@ public class BattleshipUi extends Application {
         stackpane.getChildren().addAll(rect, vsPlayer);
         stackpane2.getChildren().addAll(rect2, vsComputer);
 
+        Button showStats = new Button("Stats");
+        showStats.setOnMouseClicked(event -> {
+            stage.setScene(statisticsScene(stage));
+            stage.show();
+        });
+
         HBox hbox = new HBox(stackpane, stackpane2);
+        VBox vbox = new VBox(hbox, showStats);
         hbox.setSpacing(30);
         hbox.setAlignment(Pos.CENTER);
-        return new Scene(hbox);
+        return new Scene(vbox);
     }
 
     public Scene setUpScene(Stage stage) {
@@ -336,6 +333,7 @@ public class BattleshipUi extends Application {
                     button.setOnMouseClicked(event -> {
                         if (!game.isGameOver() && game.getTurn() == Turn.PLAYER2 && !square.getIsHit()) {
                             boolean hasShip = square.hitSquare();
+                            gameService.addPlayerTwoShot();
                             if (!hasShip) {
                                 game.changeTurn();
                                 turnLabel.setText("TURN: " + game.getPlayerOne().getName());
@@ -364,6 +362,8 @@ public class BattleshipUi extends Application {
                 button.setOnMouseClicked(event -> {
                     if (!game.isGameOver() && game.getTurn() == Turn.PLAYER1 && !square.getIsHit()) {
                         boolean hasShip = square.hitSquare();
+                        gameService.addPlayerOneShot();
+
                         if (!hasShip) {
                             game.changeTurn();
                             if (!game.getIsAgainstComputer()) {
