@@ -244,12 +244,10 @@ public class BattleshipUi extends Application {
                 player2Grid.add(player2Button, k, i);
             }
         }
-        Label player1Label = game.getIsAgainstComputer() ? new Label("You") : new Label(game.getPlayerOne().getName());
+        Label player1Label = new Label(game.getPlayerOne().getName());
         player1Label.setPadding(new Insets(10, 0, 10, 0));
 
-        Label player2Label = game.getIsAgainstComputer() ? new Label("Computer")
-                : new Label(game.getPlayerTwo().getName());
-
+        Label player2Label = new Label(game.getPlayerTwo().getName());
         player2Label.setPadding(new Insets(10, 0, 10, 0));
 
         HBox player1Setup = getBoard(player1Grid);
@@ -281,7 +279,7 @@ public class BattleshipUi extends Application {
         Square[][] player1Squares = game.getPlayer1Squares();
         Square[][] player2Squares = game.getPlayer2Squares();
 
-        Label turnLabel = new Label(game.getIsAgainstComputer() ? "TURN: You" : "TURN: Player 1");
+        Label turnLabel = new Label(game.getPlayerOne().getName());
         turnLabel.setPadding(new Insets(20, 0, 0, 0));
 
         for (int i = 0; i < 10; i++) {
