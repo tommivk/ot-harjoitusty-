@@ -5,7 +5,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -28,8 +30,55 @@ public class BattleshipUi extends Application {
 
         Game game = new Game(10);
 
-        stage.setScene(gameSelectionScene(game, stage));
+        stage.setScene(startScene(game, stage));
         stage.show();
+    }
+
+    public Scene startScene(Game game, Stage stage) {
+        StackPane stackpane = new StackPane();
+        StackPane stackpane2 = new StackPane();
+
+        Rectangle rect = new Rectangle(200, 200);
+        Rectangle rect2 = new Rectangle(200, 200);
+
+        rect.setFill(Color.DARKGREY);
+        rect2.setFill(Color.DARKGREY);
+
+        rect.setOnMouseClicked(event -> {
+            stage.setScene(loginScene(game, stage));
+            stage.show();
+        });
+
+        rect2.setOnMouseClicked(event -> {
+
+        });
+
+        Text loginText = new Text("Login");
+        Text newUserText = new Text("New user");
+        stackpane.getChildren().addAll(rect, loginText);
+        stackpane2.getChildren().addAll(rect2, newUserText);
+
+        Button skip = new Button("Continue without logging in");
+        skip.setOnMouseClicked(event -> {
+            stage.setScene(gameSelectionScene(game, stage));
+        });
+
+        HBox hbox = new HBox(stackpane, stackpane2, skip);
+        hbox.setSpacing(30);
+        hbox.setAlignment(Pos.CENTER);
+        return new Scene(hbox);
+    }
+
+    public Scene loginScene(Game game, Stage stage) {
+        Label label = new Label("Name:");
+        TextField textfield = new TextField();
+        Button button = new Button("OK");
+        button.setOnMouseClicked(event -> {
+            System.out.println(textfield.getText());
+            stage.setScene(gameSelectionScene(game, stage));
+        });
+        HBox hbox = new HBox(label, textfield, button);
+        return new Scene(hbox);
     }
 
     public Scene gameSelectionScene(Game game, Stage stage) {
@@ -42,14 +91,14 @@ public class BattleshipUi extends Application {
         rect.setFill(Color.DARKGREY);
         rect2.setFill(Color.DARKGREY);
 
-        stackpane.setOnMouseClicked(event -> {
+        rect.setOnMouseClicked(event -> {
             game.setIsAgainstComputer(false);
             Scene setUpScene = setUpScene(game, stage);
             stage.setScene(setUpScene);
             stage.show();
         });
 
-        stackpane2.setOnMouseClicked(event -> {
+        rect2.setOnMouseClicked(event -> {
             game.setIsAgainstComputer(true);
             Scene setUpScene = setUpScene(game, stage);
             stage.setScene(setUpScene);
