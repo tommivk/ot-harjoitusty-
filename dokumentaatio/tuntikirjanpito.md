@@ -13,5 +13,8 @@
 |  6.12  | 1.5  | testausta                                           |
 |  6.12  | 1    | bugien korjailua                                    |
 |  7.12  | 1    | koordinaatiston lisäys ja refaktorointia            |
+|  8.12  | 4    | ominaisuus pelaamiselle tietokonetta vastaan        |
+|  9.12  | 6    | tietokannan ja dao luokkien lisäys projektiin       |
 |        |      |                                                     |
-|  yht   | 17   |                                                     |
+|        |      |                                                     |
+|  yht   | 27   |                                                     |
