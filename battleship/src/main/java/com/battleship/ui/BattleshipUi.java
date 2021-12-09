@@ -17,11 +17,22 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.input.MouseButton;
 
+import com.battleship.dao.DBUserDao;
 import com.battleship.domain.Game;
 import com.battleship.domain.Square;
 import com.battleship.domain.Turn;
+import com.battleship.domain.User;
+import com.battleship.domain.UserService;
 
 public class BattleshipUi extends Application {
+    private UserService userService;
+
+    @Override
+    public void init() throws Exception {
+        DBUserDao dbUserDao = new DBUserDao();
+        userService = new UserService(dbUserDao);
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Battleship");
@@ -38,34 +49,51 @@ public class BattleshipUi extends Application {
         StackPane stackpane = new StackPane();
         StackPane stackpane2 = new StackPane();
 
-        Rectangle rect = new Rectangle(200, 200);
-        Rectangle rect2 = new Rectangle(200, 200);
+        Rectangle loginRect = new Rectangle(200, 200);
+        Rectangle signUpRect = new Rectangle(200, 200);
 
-        rect.setFill(Color.DARKGREY);
-        rect2.setFill(Color.DARKGREY);
+        loginRect.setFill(Color.DARKGREY);
+        signUpRect.setFill(Color.DARKGREY);
 
-        rect.setOnMouseClicked(event -> {
+        loginRect.setOnMouseClicked(event -> {
             stage.setScene(loginScene(game, stage));
             stage.show();
         });
 
-        rect2.setOnMouseClicked(event -> {
-
+        signUpRect.setOnMouseClicked(event -> {
+            stage.setScene(sigUpScene(game, stage));
         });
 
         Text loginText = new Text("Login");
         Text newUserText = new Text("New user");
-        stackpane.getChildren().addAll(rect, loginText);
-        stackpane2.getChildren().addAll(rect2, newUserText);
+        stackpane.getChildren().addAll(loginRect, loginText);
+        stackpane2.getChildren().addAll(signUpRect, newUserText);
 
         Button skip = new Button("Continue without logging in");
         skip.setOnMouseClicked(event -> {
             stage.setScene(gameSelectionScene(game, stage));
+            stage.show();
         });
 
         HBox hbox = new HBox(stackpane, stackpane2, skip);
         hbox.setSpacing(30);
         hbox.setAlignment(Pos.CENTER);
+        return new Scene(hbox);
+    }
+
+    public Scene sigUpScene(Game game, Stage stage) {
+        Label label = new Label("Name:");
+        TextField textfield = new TextField();
+        Button button = new Button("Add new user");
+        button.setOnMouseClicked(event -> {
+            boolean success = userService.createUser(textfield.getText());
+            userService.getAllUsers();
+            if (success) {
+                stage.setScene(gameSelectionScene(game, stage));
+                stage.show();
+            }
+        });
+        HBox hbox = new HBox(label, textfield, button);
         return new Scene(hbox);
     }
 
