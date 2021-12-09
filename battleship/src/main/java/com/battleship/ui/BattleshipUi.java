@@ -103,7 +103,11 @@ public class BattleshipUi extends Application {
         Button button = new Button("OK");
         button.setOnMouseClicked(event -> {
             System.out.println(textfield.getText());
-            stage.setScene(gameSelectionScene(game, stage));
+            boolean success = userService.login(textfield.getText());
+            if (success) {
+                game.setPlayerOne(userService.getLoggedUser());
+                stage.setScene(gameSelectionScene(game, stage));
+            }
         });
         HBox hbox = new HBox(label, textfield, button);
         return new Scene(hbox);
@@ -127,6 +131,7 @@ public class BattleshipUi extends Application {
         });
 
         rect2.setOnMouseClicked(event -> {
+            game.setPlayerTwo(new User("Computer"));
             game.setIsAgainstComputer(true);
             Scene setUpScene = setUpScene(game, stage);
             stage.setScene(setUpScene);
@@ -239,10 +244,12 @@ public class BattleshipUi extends Application {
                 player2Grid.add(player2Button, k, i);
             }
         }
-        Label player1Label = game.getIsAgainstComputer() ? new Label("You") : new Label("Player 1");
+        Label player1Label = game.getIsAgainstComputer() ? new Label("You") : new Label(game.getPlayerOne().getName());
         player1Label.setPadding(new Insets(10, 0, 10, 0));
 
-        Label player2Label = game.getIsAgainstComputer() ? new Label("Computer") : new Label("Player 2");
+        Label player2Label = game.getIsAgainstComputer() ? new Label("Computer")
+                : new Label(game.getPlayerTwo().getName());
+
         player2Label.setPadding(new Insets(10, 0, 10, 0));
 
         HBox player1Setup = getBoard(player1Grid);
@@ -290,12 +297,12 @@ public class BattleshipUi extends Application {
                             boolean hasShip = square.hitSquare();
                             if (!hasShip) {
                                 game.changeTurn();
-                                turnLabel.setText("TURN: Player 1");
+                                turnLabel.setText("TURN: " + game.getPlayerOne().getName());
                             }
                         }
                         if (game.allPlayer1ShipsDead()) {
                             game.setGameOver();
-                            turnLabel.setText("PLAYER 2 WINS!");
+                            turnLabel.setText(game.getPlayerTwo().getName() + "WINS!");
                         }
                     });
                 }
@@ -319,9 +326,8 @@ public class BattleshipUi extends Application {
                         if (!hasShip) {
                             game.changeTurn();
                             if (!game.getIsAgainstComputer()) {
-                                turnLabel.setText("TURN: Player 2");
+                                turnLabel.setText("TURN: " + game.getPlayerTwo().getName());
                             } else {
-                                turnLabel.setText("TURN: Computer");
                                 game.getComputer().computersTurn();
                                 turnLabel.setText("TURN: You");
 
@@ -341,10 +347,10 @@ public class BattleshipUi extends Application {
             }
         }
 
-        Label player1Label = new Label(game.getIsAgainstComputer() ? "You" : "Player 1");
+        Label player1Label = new Label(game.getIsAgainstComputer() ? "You" : game.getPlayerOne().getName());
         player1Label.setPadding(new Insets(10, 0, 10, 0));
 
-        Label player2Label = new Label(game.getIsAgainstComputer() ? "Computer" : "Player 2");
+        Label player2Label = new Label(game.getPlayerTwo().getName());
         player2Label.setPadding(new Insets(10, 0, 10, 0));
 
         HBox player1Setup = getBoard(gridpane1);

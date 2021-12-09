@@ -6,5 +6,7 @@ import java.util.List;
 public interface UserDao {
     User create(String username) throws Exception;
 
-    List<User> getAll();
+    User login(String username) throws Exception;
+
+    List<User> getAll() throws Exception;
 }

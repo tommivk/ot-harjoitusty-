@@ -13,6 +13,8 @@ public class Game {
     private Square[][] player1Squares;
     private Square[][] player2Squares;
     private Computer computer;
+    private User playerOne;
+    private User playerTwo;
 
     public Game(int boardSize) {
         this.turn = Turn.PLAYER1;
@@ -27,6 +29,25 @@ public class Game {
 
         this.player1Ships = initializeShips();
         this.player2Ships = initializeShips();
+
+        this.playerOne = new User("Player 1");
+        this.playerTwo = new User("Player 2");
+    }
+
+    public void setPlayerOne(User user) {
+        this.playerOne = user;
+    }
+
+    public void setPlayerTwo(User user) {
+        this.playerTwo = user;
+    }
+
+    public User getPlayerOne() {
+        return this.playerOne;
+    }
+
+    public User getPlayerTwo() {
+        return this.playerTwo;
     }
 
     public Computer getComputer() {

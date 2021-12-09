@@ -8,9 +8,14 @@ import com.battleship.dao.UserDao;
 public class UserService {
 
     private UserDao userDao;
+    private User loggedUser;
 
     public UserService(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    public User getLoggedUser() {
+        return this.loggedUser;
     }
 
     public boolean createUser(String userName) {
@@ -22,6 +27,20 @@ public class UserService {
             return true;
         } catch (Exception e) {
             System.out.println(e);
+            return false;
+        }
+    }
+
+    public boolean login(String username) {
+        try {
+            User user = userDao.login(username);
+            if (user == null) {
+                return false;
+            }
+            this.loggedUser = user;
+            return true;
+
+        } catch (Exception e) {
             return false;
         }
     }

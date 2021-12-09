@@ -27,6 +27,26 @@ public class DBUserDao implements UserDao {
         return list;
     }
 
+    public User login(String username) {
+        try {
+            Connection db = DriverManager.getConnection("jdbc:sqlite:data.db");
+
+            PreparedStatement p = db.prepareStatement("SELECT * FROM Users WHERE username = ?");
+            p.setString(1, username);
+
+            ResultSet r = p.executeQuery();
+
+            if (!r.next()) {
+                return null;
+            }
+
+            return new User(r.getString("username"));
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
     public User create(String username) {
         try {
             Connection db = DriverManager.getConnection("jdbc:sqlite:data.db");
