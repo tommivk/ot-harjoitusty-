@@ -28,6 +28,11 @@ public class BattleshipUi extends Application {
 
         Game game = new Game(10);
 
+        stage.setScene(gameSelectionScene(game, stage));
+        stage.show();
+    }
+
+    public Scene gameSelectionScene(Game game, Stage stage) {
         StackPane stackpane = new StackPane();
         StackPane stackpane2 = new StackPane();
 
@@ -59,9 +64,7 @@ public class BattleshipUi extends Application {
         HBox hbox = new HBox(stackpane, stackpane2);
         hbox.setSpacing(30);
         hbox.setAlignment(Pos.CENTER);
-        Scene startScene = new Scene(hbox);
-        stage.setScene(startScene);
-        stage.show();
+        return new Scene(hbox);
     }
 
     public Scene setUpScene(Game game, Stage stage) {
