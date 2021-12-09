@@ -1,6 +1,4 @@
 /laskarit/viikko2/Unicafe/target
 /battleship/target
 .vscode
-
-
-
+/battleship/data.db
