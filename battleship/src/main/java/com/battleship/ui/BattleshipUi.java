@@ -17,8 +17,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.input.MouseButton;
 
+import com.battleship.dao.DBGameDao;
 import com.battleship.dao.DBUserDao;
 import com.battleship.domain.Game;
+import com.battleship.domain.GameService;
 import com.battleship.domain.Square;
 import com.battleship.domain.Turn;
 import com.battleship.domain.User;
@@ -26,12 +28,15 @@ import com.battleship.domain.UserService;
 
 public class BattleshipUi extends Application {
     private UserService userService;
+    private GameService gameService;
     private Game game;
 
     @Override
     public void init() throws Exception {
         DBUserDao dbUserDao = new DBUserDao();
         userService = new UserService(dbUserDao);
+        DBGameDao dbGameDao = new DBGameDao();
+        gameService = new GameService(dbGameDao);
     }
 
     @Override
@@ -39,8 +44,6 @@ public class BattleshipUi extends Application {
         stage.setTitle("Battleship");
         stage.setHeight(500);
         stage.setWidth(800);
-
-        game = new Game(10);
 
         stage.setScene(startScene(stage));
         stage.show();
@@ -76,9 +79,22 @@ public class BattleshipUi extends Application {
             stage.show();
         });
 
-        HBox hbox = new HBox(stackpane, stackpane2, skip);
+        Button showStats = new Button("Stats");
+        showStats.setOnMouseClicked(event -> {
+            stage.setScene(statisticsScene(stage));
+            stage.show();
+        });
+
+        HBox hbox = new HBox(stackpane, stackpane2, skip, showStats);
         hbox.setSpacing(30);
         hbox.setAlignment(Pos.CENTER);
+        return new Scene(hbox);
+    }
+
+    public Scene statisticsScene(Stage stage) {
+        Label label = new Label("Statistics");
+
+        HBox hbox = new HBox(label);
         return new Scene(hbox);
     }
 
@@ -104,10 +120,34 @@ public class BattleshipUi extends Application {
         Button button = new Button("OK");
         button.setOnMouseClicked(event -> {
             System.out.println(textfield.getText());
-            boolean success = userService.login(textfield.getText());
+            boolean success = userService.playerOneLogin(textfield.getText());
             if (success) {
-                game.setPlayerOne(userService.getLoggedUser());
                 stage.setScene(gameSelectionScene(stage));
+            }
+        });
+        HBox hbox = new HBox(label, textfield, button);
+        return new Scene(hbox);
+    }
+
+    public Scene playerTwoLoginScene(Stage stage) {
+        Label label = new Label("Name:");
+        TextField textfield = new TextField();
+        Button button = new Button("OK");
+        button.setOnMouseClicked(event -> {
+            boolean success = userService.playerTwoLogin(textfield.getText());
+            if (success) {
+                User playerOne = userService.getLoggedPlayerOne();
+                User playerTwo = userService.getLoggedPlayerTwo();
+
+                Boolean gameCreated = gameService.createGame(playerOne, playerTwo);
+
+                if (gameCreated) {
+                    game = gameService.getGame();
+                    game.setIsAgainstComputer(false);
+                    Scene setUpScene = setUpScene(stage);
+                    stage.setScene(setUpScene);
+                    stage.show();
+                }
             }
         });
         HBox hbox = new HBox(label, textfield, button);
@@ -125,18 +165,20 @@ public class BattleshipUi extends Application {
         rect2.setFill(Color.DARKGREY);
 
         rect.setOnMouseClicked(event -> {
-            game.setIsAgainstComputer(false);
-            Scene setUpScene = setUpScene(stage);
-            stage.setScene(setUpScene);
+            stage.setScene(playerTwoLoginScene(stage));
             stage.show();
         });
 
         rect2.setOnMouseClicked(event -> {
-            game.setPlayerTwo(new User("Computer"));
-            game.setIsAgainstComputer(true);
-            Scene setUpScene = setUpScene(stage);
-            stage.setScene(setUpScene);
-            stage.show();
+
+            Boolean gameCreated = gameService.createGame(userService.getLoggedPlayerOne(), new User("Computer", 0));
+            if (gameCreated) {
+                game = gameService.getGame();
+                game.setIsAgainstComputer(true);
+                Scene setUpScene = setUpScene(stage);
+                stage.setScene(setUpScene);
+                stage.show();
+            }
         });
 
         Text vsComputer = new Text("VS Computer");

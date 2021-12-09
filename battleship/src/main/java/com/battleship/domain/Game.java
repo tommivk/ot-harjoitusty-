@@ -15,6 +15,7 @@ public class Game {
     private Computer computer;
     private User playerOne;
     private User playerTwo;
+    private int gameId;
 
     public Game(int boardSize) {
         this.turn = Turn.PLAYER1;
@@ -32,6 +33,28 @@ public class Game {
 
         this.playerOne = new User("Player 1");
         this.playerTwo = new User("Player 2");
+    }
+
+    public Game(int boardSize, int id, User playerOne, User playerTwo) {
+        this.gameId = id;
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+        this.turn = Turn.PLAYER1;
+        this.gameOver = false;
+        this.shipDirection = ShipDirection.VERTICAL;
+
+        this.againstComputer = false;
+        this.computer = new Computer(this);
+
+        this.player1Squares = initializeBoard(boardSize);
+        this.player2Squares = initializeBoard(boardSize);
+
+        this.player1Ships = initializeShips();
+        this.player2Ships = initializeShips();
+    }
+
+    public int getGameId() {
+        return this.gameId;
     }
 
     public void setPlayerOne(User user) {
