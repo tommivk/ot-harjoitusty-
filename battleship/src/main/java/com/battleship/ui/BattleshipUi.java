@@ -379,7 +379,7 @@ public class BattleshipUi extends Application {
         Square[][] player1Squares = game.getPlayer1Squares();
         Square[][] player2Squares = game.getPlayer2Squares();
 
-        Label turnLabel = new Label("TURN: " + game.getPlayerOne().getName());
+        Label turnLabel = new Label("TURN: " + (game.getIsAgainstComputer() ? "You" : game.getPlayerOne().getName()));
         turnLabel.setPadding(new Insets(20, 0, 0, 0));
 
         for (int i = 0; i < 10; i++) {
