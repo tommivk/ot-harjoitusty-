@@ -424,11 +424,17 @@ public class BattleshipUi extends Application {
 
         Button newGame = new Button("New game");
         newGame.setOnMouseClicked(event -> {
+            boolean success = gameService.createGame(game.getPlayerOne(), game.getPlayerTwo());
             boolean isAgainstComputer = game.getIsAgainstComputer();
-            game = new Game(10, game.getGameId(), game.getPlayerOne(), game.getPlayerTwo());
-            game.setIsAgainstComputer(isAgainstComputer);
-            stage.setScene(setUpScene(stage));
-            stage.show();
+            if (success) {
+                game = gameService.getGame();
+                if (isAgainstComputer) {
+                    game.setIsAgainstComputer(true);
+                }
+                stage.setScene(setUpScene(stage));
+                stage.show();
+            }
+
         });
         newGame.setVisible(false);
 
