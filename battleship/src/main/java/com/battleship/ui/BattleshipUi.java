@@ -301,7 +301,7 @@ public class BattleshipUi extends Application {
                             game.clearButtonColors(1);
                         }
                         if (game.getIsAgainstComputer() && game.player1ShipsIsEmpty()) {
-                            stage.setScene(playScene());
+                            stage.setScene(playScene(stage));
                             stage.show();
                         }
                     }
@@ -340,7 +340,7 @@ public class BattleshipUi extends Application {
                                 game.placeShip(row, column, 2);
 
                                 if (game.player2ShipsIsEmpty()) {
-                                    stage.setScene(playScene());
+                                    stage.setScene(playScene(stage));
                                     stage.show();
                                 }
                             }
@@ -393,7 +393,7 @@ public class BattleshipUi extends Application {
         return new Scene(container, 800, 500);
     }
 
-    public Scene playScene() {
+    public Scene playScene(Stage stage) {
         GridPane gridpane1 = new GridPane();
         GridPane gridpane2 = new GridPane();
 
@@ -402,6 +402,16 @@ public class BattleshipUi extends Application {
 
         Label turnLabel = new Label("TURN: " + (game.getIsAgainstComputer() ? "You" : game.getPlayerOne().getName()));
         turnLabel.setPadding(new Insets(20, 0, 0, 0));
+
+        Button newGame = new Button("New game");
+        newGame.setOnMouseClicked(event -> {
+            boolean isAgainstComputer = game.getIsAgainstComputer();
+            game = new Game(10, game.getGameId(), game.getPlayerOne(), game.getPlayerTwo());
+            game.setIsAgainstComputer(isAgainstComputer);
+            stage.setScene(setUpScene(stage));
+            stage.show();
+        });
+        newGame.setVisible(false);
 
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
@@ -423,6 +433,7 @@ public class BattleshipUi extends Application {
                         if (game.allPlayer1ShipsDead()) {
                             game.setGameOver();
                             turnLabel.setText(game.getPlayerTwo().getName() + " WINS!");
+                            newGame.setVisible(true);
                         }
                     });
                 }
@@ -458,11 +469,13 @@ public class BattleshipUi extends Application {
                         if (game.getIsAgainstComputer() && game.allPlayer1ShipsDead()) {
                             game.setGameOver();
                             turnLabel.setText("COMPUTER WINS!");
+                            newGame.setVisible(true);
                         }
                         if (game.allPlayer2ShipsDead()) {
                             game.setGameOver();
                             turnLabel.setText(game.getIsAgainstComputer() ? "YOU WIN!"
                                     : game.getPlayerOne().getName() + " WINS!");
+                            newGame.setVisible(true);
                         }
                     }
                 });
@@ -489,7 +502,7 @@ public class BattleshipUi extends Application {
         hbox.setAlignment(Pos.CENTER);
         hbox.setSpacing(30);
 
-        VBox container = new VBox(hbox, turnLabel);
+        VBox container = new VBox(hbox, turnLabel, newGame);
         container.setAlignment(Pos.TOP_CENTER);
         Scene scene = new Scene(container, 800, 500);
 
