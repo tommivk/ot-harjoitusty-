@@ -117,8 +117,13 @@ public class BattleshipUi extends Application {
             boolean success = userService.createUser(textfield.getText());
             userService.getAllUsers();
             if (success) {
-                stage.setScene(loginScene(stage));
-                stage.show();
+                if (userService.getLoggedPlayerOne() == null) {
+                    stage.setScene(loginScene(stage));
+                    stage.show();
+                } else {
+                    stage.setScene(gameSelectionScene(stage));
+                    stage.show();
+                }
             }
         });
         HBox hbox = new HBox(label, textfield, button);
@@ -187,14 +192,23 @@ public class BattleshipUi extends Application {
             stage.setScene(gameSelectionScene(stage));
             stage.show();
         });
+
+        Button newUserButton = new Button("Create new user");
+        newUserButton.setOnMouseClicked(event -> {
+            stage.setScene(signUpScene(stage));
+            stage.show();
+        });
         HBox hbox = new HBox(label, textfield, button);
         hbox.setAlignment(Pos.CENTER);
         BorderPane pane = new BorderPane();
         pane.setTop(headerText);
-        pane.setCenter(hbox);
+        VBox centerContent = new VBox(hbox, newUserButton);
+        centerContent.setAlignment(Pos.CENTER);
+        VBox.setMargin(newUserButton, new Insets(120, 0, 0, 0));
+        pane.setCenter(centerContent);
         BorderPane.setAlignment(headerText, Pos.CENTER);
         BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
-        BorderPane.setMargin(hbox, new Insets(0, 0, 50, 0));
+        BorderPane.setMargin(centerContent, new Insets(140, 0, 0, 0));
         pane.setBottom(goBackButton);
         BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
         return new Scene(pane);
