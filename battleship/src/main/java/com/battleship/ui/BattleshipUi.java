@@ -246,7 +246,14 @@ public class BattleshipUi extends Application {
         hbox.setSpacing(30);
         hbox.setAlignment(Pos.CENTER);
         vbox.setAlignment(Pos.CENTER);
-        return new Scene(vbox);
+
+        BorderPane pane = new BorderPane();
+        pane.setTop(headerText);
+        pane.setCenter(vbox);
+        BorderPane.setAlignment(headerText, Pos.CENTER);
+        BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
+
+        return new Scene(pane);
     }
 
     public Scene setUpScene(Stage stage) {
