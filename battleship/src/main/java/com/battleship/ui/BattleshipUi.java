@@ -201,6 +201,9 @@ public class BattleshipUi extends Application {
     }
 
     public Scene gameSelectionScene(Stage stage) {
+        Text headerText = new Text(10, 20, "Play Battleships");
+        headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
+
         StackPane stackpane = new StackPane();
         StackPane stackpane2 = new StackPane();
 
