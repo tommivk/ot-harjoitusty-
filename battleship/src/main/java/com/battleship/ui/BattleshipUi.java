@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -56,8 +57,8 @@ public class BattleshipUi extends Application {
         Rectangle loginRect = new Rectangle(200, 200);
         Rectangle signUpRect = new Rectangle(200, 200);
 
-        loginRect.setFill(Color.DARKGREY);
-        signUpRect.setFill(Color.DARKGREY);
+        loginRect.setFill(Color.DIMGRAY);
+        signUpRect.setFill(Color.DIMGRAY);
 
         loginRect.setOnMouseClicked(event -> {
             stage.setScene(loginScene(stage));
@@ -69,7 +70,11 @@ public class BattleshipUi extends Application {
         });
 
         Text loginText = new Text("Login");
+        loginText.setFill(Color.WHITESMOKE);
+        loginText.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
         Text newUserText = new Text("New user");
+        newUserText.setFill(Color.WHITESMOKE);
+        newUserText.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
         stackpane.getChildren().addAll(loginRect, loginText);
         stackpane2.getChildren().addAll(signUpRect, newUserText);
 
@@ -84,27 +89,45 @@ public class BattleshipUi extends Application {
         User player = userService.getLoggedPlayerOne();
         Text name = new Text(player.getName());
         Text totalShots = new Text("Total shots: " + gameService.getPlayerShotCount(player.getId()));
-        VBox hbox = new VBox(label, name, totalShots);
-        return new Scene(hbox);
+        Button goBack = new Button("Go back");
+        goBack.setOnMouseClicked(event -> {
+            stage.setScene(gameSelectionScene(stage));
+            stage.show();
+        });
+        VBox vbox = new VBox(label, name, totalShots, goBack);
+        return new Scene(vbox);
     }
 
     public Scene signUpScene(Stage stage) {
+        Text headerText = new Text(10, 20, "Add new user");
+        headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         Label label = new Label("Name:");
         TextField textfield = new TextField();
-        Button button = new Button("Add new user");
+        Button button = new Button("Add");
         button.setOnMouseClicked(event -> {
             boolean success = userService.createUser(textfield.getText());
             userService.getAllUsers();
             if (success) {
-                stage.setScene(gameSelectionScene(stage));
+                stage.setScene(loginScene(stage));
                 stage.show();
             }
         });
         HBox hbox = new HBox(label, textfield, button);
-        return new Scene(hbox);
+        hbox.setAlignment(Pos.CENTER);
+
+        BorderPane pane = new BorderPane();
+        pane.setTop(headerText);
+        pane.setCenter(hbox);
+        BorderPane.setAlignment(headerText, Pos.CENTER);
+        BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
+        BorderPane.setMargin(hbox, new Insets(0, 0, 50, 0));
+
+        return new Scene(pane);
     }
 
     public Scene loginScene(Stage stage) {
+        Text headerText = new Text(10, 20, "Login");
+        headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         Label label = new Label("Name:");
         TextField textfield = new TextField();
         Button button = new Button("OK");
@@ -116,13 +139,23 @@ public class BattleshipUi extends Application {
             }
         });
         HBox hbox = new HBox(label, textfield, button);
-        return new Scene(hbox);
+        hbox.setAlignment(Pos.CENTER);
+
+        BorderPane pane = new BorderPane();
+        pane.setTop(headerText);
+        pane.setCenter(hbox);
+        BorderPane.setAlignment(headerText, Pos.CENTER);
+        BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
+        BorderPane.setMargin(hbox, new Insets(0, 0, 50, 0));
+        return new Scene(pane);
     }
 
     public Scene playerTwoLoginScene(Stage stage) {
+        Text headerText = new Text(10, 20, "Player 2 Login");
+        headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         Label label = new Label("Name:");
         TextField textfield = new TextField();
-        Button button = new Button("OK");
+        Button button = new Button("Login");
         button.setOnMouseClicked(event -> {
             boolean success = userService.playerTwoLogin(textfield.getText());
             if (success) {
@@ -141,7 +174,15 @@ public class BattleshipUi extends Application {
             }
         });
         HBox hbox = new HBox(label, textfield, button);
-        return new Scene(hbox);
+        hbox.setAlignment(Pos.CENTER);
+        BorderPane pane = new BorderPane();
+        pane.setTop(headerText);
+        pane.setCenter(hbox);
+        BorderPane.setAlignment(headerText, Pos.CENTER);
+        BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
+        BorderPane.setMargin(hbox, new Insets(0, 0, 50, 0));
+
+        return new Scene(pane);
     }
 
     public Scene gameSelectionScene(Stage stage) {
@@ -181,11 +222,12 @@ public class BattleshipUi extends Application {
             stage.setScene(statisticsScene(stage));
             stage.show();
         });
-
         HBox hbox = new HBox(stackpane, stackpane2);
         VBox vbox = new VBox(hbox, showStats);
+        VBox.setMargin(showStats, new Insets(50, 0, 0, 0));
         hbox.setSpacing(30);
         hbox.setAlignment(Pos.CENTER);
+        vbox.setAlignment(Pos.CENTER);
         return new Scene(vbox);
     }
 
@@ -319,7 +361,7 @@ public class BattleshipUi extends Application {
         Square[][] player1Squares = game.getPlayer1Squares();
         Square[][] player2Squares = game.getPlayer2Squares();
 
-        Label turnLabel = new Label(game.getPlayerOne().getName());
+        Label turnLabel = new Label("TURN: " + game.getPlayerOne().getName());
         turnLabel.setPadding(new Insets(20, 0, 0, 0));
 
         for (int i = 0; i < 10; i++) {
