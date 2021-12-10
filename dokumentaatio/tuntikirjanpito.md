@@ -15,6 +15,6 @@
 |  7.12  | 1    | koordinaatiston lisäys ja refaktorointia            |
 |  8.12  | 4    | ominaisuus pelaamiselle tietokonetta vastaan        |
 |  9.12  | 6    | tietokannan ja dao luokkien lisäys projektiin       |
-|        |      |                                                     |
-|        |      |                                                     |
-|  yht   | 27   |                                                     |
+| 10.12  | 1    | sovelluksen ulkoasun parantelua                     |
+| 10.12  | 2    | testausta                                           |
+|  yht   | 30   |                                                     |
