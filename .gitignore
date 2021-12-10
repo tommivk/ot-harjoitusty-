@@ -2,3 +2,4 @@
 /battleship/target
 .vscode
 /battleship/data.db
+/battleship/testdata.db
