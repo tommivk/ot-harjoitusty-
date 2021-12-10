@@ -220,7 +220,7 @@ public class BattleshipUi extends Application {
 
         rect2.setOnMouseClicked(event -> {
 
-            Boolean gameCreated = gameService.createGame(userService.getLoggedPlayerOne(), new User("Computer", 0));
+            Boolean gameCreated = gameService.createGame(userService.getLoggedPlayerOne(), new User("Computer", 1));
             if (gameCreated) {
                 game = gameService.getGame();
                 game.setIsAgainstComputer(true);
