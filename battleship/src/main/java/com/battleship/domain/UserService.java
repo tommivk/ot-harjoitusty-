@@ -25,6 +25,13 @@ public class UserService {
         return this.loggedPlayerTwo;
     }
 
+    /**
+     * Stores new user in database
+     * 
+     * @param userName users name that will be stored
+     * 
+     * @return returns true if succesfull
+     */
     public boolean createUser(String userName) {
         try {
             User user = userDao.create(this.databaseAdress, userName);
@@ -38,6 +45,13 @@ public class UserService {
         }
     }
 
+    /**
+     * logs in player one
+     * 
+     * @param userName users name will be logged in
+     * 
+     * @return returns true if succesfull
+     */
     public boolean playerOneLogin(String username) {
         try {
             User user = userDao.login(this.databaseAdress, username);
@@ -52,6 +66,13 @@ public class UserService {
         }
     }
 
+    /**
+     * logs in player two
+     * 
+     * @param userName users name will be logged in
+     * 
+     * @return returns true if succesfull
+     */
     public boolean playerTwoLogin(String username) {
         try {
             User user = userDao.login(this.databaseAdress, username);
@@ -66,6 +87,9 @@ public class UserService {
         }
     }
 
+    /**
+     * Gets all users that are stored in database
+     */
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<User>();
         try {

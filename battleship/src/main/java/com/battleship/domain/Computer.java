@@ -15,6 +15,9 @@ public class Computer {
         this.game = game;
     }
 
+    /**
+     * Places computer players ships to random locations
+     */
     public void placeComputerShips() {
         Random random = new Random();
 
@@ -35,6 +38,9 @@ public class Computer {
         }
     }
 
+    /**
+     * Stores the coodinates of previous shot that hit a ship
+     */
     public void setPrevHit(int row, int column) {
         this.prevHit[0] = row;
         this.prevHit[1] = column;
@@ -44,6 +50,11 @@ public class Computer {
         return this.prevHit;
     }
 
+    /**
+     * Hits random square if previous hits is 0. If previous hits is 1 it tries to
+     * hit squares around it. If previous hits is > 1
+     * it tries to hit squares depending on what the last two hits direction was
+     */
     public void computersTurn() {
         while (true) {
             if (prevHits == 0) {
@@ -135,6 +146,9 @@ public class Computer {
 
     }
 
+    /**
+     * Checks if squares arounds previous hit square are hittable
+     */
     public boolean computerHitRowOrColumn() {
         if (this.canHitLeft()) {
             return this.hitLeft();
@@ -155,6 +169,9 @@ public class Computer {
         return this.computerHitRandom();
     }
 
+    /**
+     * Checks if square from the left of previous hit is hittable;
+     */
     public boolean canHitLeft() {
         Square[][] squares = this.game.getPlayer1Squares();
         if ((this.prevHit[1] - 1) >= 0
@@ -164,6 +181,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Checks if square from the right of previous hit is hittable;
+     */
     public boolean canHitRight() {
         Square[][] squares = this.game.getPlayer1Squares();
         if ((this.prevHit[1] + 1) < 10
@@ -173,6 +193,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Checks if square from the top of previous hit is hittable;
+     */
     public boolean canHitTop() {
         Square[][] squares = this.game.getPlayer1Squares();
 
@@ -183,6 +206,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Checks if square from the below of previous hit is hittable;
+     */
     public boolean canHitBottom() {
         Square[][] squares = this.game.getPlayer1Squares();
 
@@ -193,6 +219,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Checks if either square from the top or bottom of previous hit are hittable;
+     */
     public boolean canHitRow() {
         if (this.prevHit[0] + 1 < 10 && !this.game.getPlayer1Squares()[this.prevHit[0] + 1][this.prevHit[1]].getIsHit()
                 || this.prevHit[0] - 1 >= 0
@@ -202,6 +231,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Hits the square from the left of the previous hit
+     */
     public boolean hitLeft() {
         int row = prevHit[0];
         int col = prevHit[1];
@@ -222,6 +254,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Hits the square from the right of the previous hit
+     */
     public boolean hitRight() {
         int row = prevHit[0];
         int col = prevHit[1];
@@ -242,6 +277,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Hits the square from the top of the previous hit
+     */
     public boolean hitTop() {
         int row = prevHit[0];
         int col = prevHit[1];
@@ -262,6 +300,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Hits the square from the bottom of the previous hit
+     */
     public boolean hitBottom() {
         int row = prevHit[0];
         int col = prevHit[1];
@@ -281,6 +322,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Checks if either square from the left or right of previous hit are hittable;
+     */
     public boolean canHitColumnEndRight() {
         int row = prevHit[0];
         int col = prevHit[1];
@@ -290,6 +334,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Checks if column from index - prevHits is hittable
+     */
     public boolean canHitColumnEndLeft() {
         int row = prevHit[0];
         int col = prevHit[1];
@@ -299,6 +346,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Checks if row from index - prevHits is hittable
+     */
     public boolean canHitRowEndTop() {
         int row = prevHit[0];
         int col = prevHit[1];
@@ -308,6 +358,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Checks if row from index + prevHits is hittable
+     */
     public boolean canHitRowEndBottom() {
         int row = prevHit[0];
         int col = prevHit[1];
@@ -317,6 +370,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Hits the Square in row index + prevHits
+     */
     public boolean hitRowEndBottom() {
         int row = prevHit[0];
         int col = prevHit[1];
@@ -336,6 +392,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Hits the Square in row index - prevHits
+     */
     public boolean hitRowEndTop() {
         int row = prevHit[0];
         int col = prevHit[1];
@@ -355,6 +414,9 @@ public class Computer {
         return false;
     }
 
+    /**
+     * Hits the Square in column index + prevHits
+     */
     public boolean hitColumnEndRight() {
         int row = prevHit[0];
         int col = prevHit[1];
@@ -377,6 +439,9 @@ public class Computer {
 
     }
 
+    /**
+     * Hits the Square in column index - prevHits
+     */
     public boolean hitColumnEndLeft() {
         int row = prevHit[0];
         int col = prevHit[1];
@@ -399,6 +464,9 @@ public class Computer {
 
     }
 
+    /**
+     * Uses brute force to hit a random square
+     */
     public boolean computerHitRandom() {
         Random random = new Random();
         Square[][] squares = this.game.getPlayer1Squares();

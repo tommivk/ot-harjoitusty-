@@ -149,6 +149,9 @@ public class Game {
         }
     }
 
+    /*
+     * Places new ship to the coordinates
+     */
     public void placeShip(int row, int column, int player) {
         if ((player == 1 && !this.player1ShipsIsEmpty()) || (player == 2 && !this.player2ShipsIsEmpty())) {
             int index = this.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
@@ -175,6 +178,9 @@ public class Game {
         }
     }
 
+    /*
+     * Checks if placing ship is allowed to the coordinates
+     */
     public boolean canPlaceShip(Ship ship, int row, int column, Square[][] squares) {
         int shipSize = ship.getSize();
         if (this.shipDirection == ShipDirection.VERTICAL && row + shipSize > 10
@@ -195,6 +201,9 @@ public class Game {
         return isOk;
     }
 
+    /*
+     * Returns true if all player one ships are dead
+     */
     public boolean allPlayer1ShipsDead() {
         boolean allShipsDead = true;
         for (int i = 0; i < 10; i++) {
@@ -207,6 +216,9 @@ public class Game {
         return allShipsDead;
     }
 
+    /*
+     * Returns true if all player two ships are dead
+     */
     public boolean allPlayer2ShipsDead() {
         boolean allShipsDead = true;
         for (int i = 0; i < 10; i++) {
@@ -279,6 +291,9 @@ public class Game {
         return this.shipDirection;
     }
 
+    /*
+     * Changes the ships direction
+     */
     public void changeShipDirection() {
         this.shipDirection = this.shipDirection == ShipDirection.HORIZONTAL ? ShipDirection.VERTICAL
                 : ShipDirection.HORIZONTAL;
