@@ -2,6 +2,9 @@ package com.battleship.domain;
 
 import com.battleship.dao.GameDao;
 
+/**
+ * Class that is used to interact with the game and the database
+ */
 public class GameService {
     private GameDao gameDao;
     private Game currentGame;

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Ship that can placed on the board
+ */
 public class Ship {
     private int size;
     private int squaresLeft;

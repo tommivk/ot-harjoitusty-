@@ -2,6 +2,9 @@ package com.battleship.domain;
 
 import java.util.Random;
 
+/**
+ * AI opponent
+ */
 public class Computer {
     private int[] prevHit;
     private ShipDirection prevHitDir;

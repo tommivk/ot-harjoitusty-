@@ -2,6 +2,9 @@ package com.battleship.domain;
 
 import java.util.Stack;
 
+/**
+ * Game state
+ */
 public class Game {
 
     private Turn turn;

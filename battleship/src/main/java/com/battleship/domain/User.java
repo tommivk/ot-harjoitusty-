@@ -1,5 +1,8 @@
 package com.battleship.domain;
 
+/**
+ * User of the application
+ */
 public class User {
     private String name;
     private int id;

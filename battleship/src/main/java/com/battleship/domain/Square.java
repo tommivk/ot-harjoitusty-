@@ -3,6 +3,9 @@ package com.battleship.domain;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Square that is part of a ship
+ */
 public class Square {
     private boolean isHit;
     private Ship ship = null;

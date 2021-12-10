@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.battleship.dao.UserDao;
 
+/**
+ * Class that is used to interact with the users and the database
+ */
 public class UserService {
 
     private UserDao userDao;
