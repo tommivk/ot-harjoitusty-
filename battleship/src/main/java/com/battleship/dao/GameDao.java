@@ -4,11 +4,11 @@ import com.battleship.domain.Game;
 import com.battleship.domain.User;
 
 public interface GameDao {
-    Game createGame(User playerOne, User playerTwo) throws Exception;
+    Game createGame(String databaseAdress, User playerOne, User playerTwo) throws Exception;
 
-    int getPlayerShotCount(int playerId) throws Exception;
+    int getPlayerShotCount(String databaseAdress, int playerId) throws Exception;
 
-    void addPlayerOneShot(int gameId) throws Exception;
+    void addPlayerOneShot(String databaseAdress, int gameId) throws Exception;
 
-    void addPlayerTwoShot(int gameId) throws Exception;
+    void addPlayerTwoShot(String databaseAdress, int gameId) throws Exception;
 }

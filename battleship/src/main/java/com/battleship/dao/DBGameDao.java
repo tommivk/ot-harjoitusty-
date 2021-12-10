@@ -7,8 +7,8 @@ import com.battleship.domain.User;
 
 public class DBGameDao implements GameDao {
 
-    public int getPlayerShotCount(int playerId) throws SQLException {
-        Connection db = DriverManager.getConnection("jdbc:sqlite:data.db");
+    public int getPlayerShotCount(String databaseAdress, int playerId) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
         try {
             PreparedStatement p = db.prepareStatement(
                     "SELECT ((SELECT COALESCE(SUM(playeroneshots), 0) FROM Games WHERE playerone = ?) + (SELECT COALESCE(SUM(playertwoshots), 0) from games WHERE playertwo = ?)) as shots;");
@@ -25,8 +25,8 @@ public class DBGameDao implements GameDao {
         }
     }
 
-    public void addPlayerOneShot(int gameId) throws SQLException {
-        Connection db = DriverManager.getConnection("jdbc:sqlite:data.db");
+    public void addPlayerOneShot(String databaseAdress, int gameId) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
         try {
             PreparedStatement p = db
                     .prepareStatement("UPDATE Games SET playeroneshots = playeroneshots + 1 WHERE id=?");
@@ -41,8 +41,8 @@ public class DBGameDao implements GameDao {
         }
     }
 
-    public void addPlayerTwoShot(int gameId) throws SQLException {
-        Connection db = DriverManager.getConnection("jdbc:sqlite:data.db");
+    public void addPlayerTwoShot(String databaseAdress, int gameId) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
         try {
             PreparedStatement p = db
                     .prepareStatement("UPDATE Games SET playertwoshots = playertwoshots + 1 WHERE id=?");
@@ -57,8 +57,8 @@ public class DBGameDao implements GameDao {
         }
     }
 
-    public Game createGame(User playerOne, User playerTwo) throws SQLException {
-        Connection db = DriverManager.getConnection("jdbc:sqlite:data.db");
+    public Game createGame(String databaseAdress, User playerOne, User playerTwo) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
 
         try {
             PreparedStatement p = db.prepareStatement(

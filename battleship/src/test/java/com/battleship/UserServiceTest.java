@@ -24,9 +24,11 @@ public class UserServiceTest {
         Connection db = DriverManager.getConnection(testDatabaseAdress);
 
         try {
-            PreparedStatement p = db.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY, username TEXT UNIQUE);");
-            p.executeUpdate();
+            Statement s = db.createStatement();
+            String dropUsers = "DROP TABLE IF EXISTS Users;";
+            s.execute(dropUsers);
+            String createUsers = "CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY, username TEXT UNIQUE);";
+            s.execute(createUsers);
         } catch (SQLException e) {
             System.out.println("ERROR: " + e);
         } finally {

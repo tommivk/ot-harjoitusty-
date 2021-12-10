@@ -5,14 +5,16 @@ import com.battleship.dao.GameDao;
 public class GameService {
     private GameDao gameDao;
     private Game currentGame;
+    private String databaseAdress;
 
-    public GameService(GameDao gameDao) {
+    public GameService(GameDao gameDao, String databaseAdress) {
         this.gameDao = gameDao;
+        this.databaseAdress = databaseAdress;
     }
 
     public boolean createGame(User playerOne, User playerTwo) {
         try {
-            Game game = gameDao.createGame(playerOne, playerTwo);
+            Game game = gameDao.createGame(this.databaseAdress, playerOne, playerTwo);
             if (game == null) {
                 return false;
             }
@@ -25,7 +27,7 @@ public class GameService {
 
     public int getPlayerShotCount(int playerId) {
         try {
-            int count = gameDao.getPlayerShotCount(playerId);
+            int count = gameDao.getPlayerShotCount(this.databaseAdress, playerId);
             System.out.println("Count: " + count);
             return count;
         } catch (Exception e) {
@@ -35,7 +37,7 @@ public class GameService {
 
     public void addPlayerOneShot() {
         try {
-            gameDao.addPlayerOneShot(currentGame.getGameId());
+            gameDao.addPlayerOneShot(this.databaseAdress, currentGame.getGameId());
 
         } catch (Exception e) {
 
@@ -44,7 +46,7 @@ public class GameService {
 
     public void addPlayerTwoShot() {
         try {
-            gameDao.addPlayerTwoShot(currentGame.getGameId());
+            gameDao.addPlayerTwoShot(this.databaseAdress, currentGame.getGameId());
 
         } catch (Exception e) {
 

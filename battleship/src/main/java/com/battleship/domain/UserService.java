@@ -27,7 +27,7 @@ public class UserService {
 
     public boolean createUser(String userName) {
         try {
-            User user = userDao.create(databaseAdress, userName);
+            User user = userDao.create(this.databaseAdress, userName);
             if (user == null) {
                 return false;
             }
@@ -40,7 +40,7 @@ public class UserService {
 
     public boolean playerOneLogin(String username) {
         try {
-            User user = userDao.login(databaseAdress, username);
+            User user = userDao.login(this.databaseAdress, username);
             if (user == null) {
                 return false;
             }
@@ -54,7 +54,7 @@ public class UserService {
 
     public boolean playerTwoLogin(String username) {
         try {
-            User user = userDao.login(databaseAdress, username);
+            User user = userDao.login(this.databaseAdress, username);
             if (user == null) {
                 return false;
             }
@@ -69,7 +69,7 @@ public class UserService {
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<User>();
         try {
-            users = userDao.getAll(databaseAdress);
+            users = userDao.getAll(this.databaseAdress);
 
             for (int i = 0; i < users.size(); i++) {
                 System.out.println(users.get(i).getName());
