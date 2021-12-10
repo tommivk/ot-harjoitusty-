@@ -126,6 +126,16 @@ public class BattleshipUi extends Application {
                 }
             }
         });
+        Button goBackButton = new Button("Go back");
+        goBackButton.setOnMouseClicked(event -> {
+            if (userService.getLoggedPlayerOne() == null) {
+                stage.setScene(startScene(stage));
+                stage.show();
+            } else {
+                stage.setScene(gameSelectionScene(stage));
+                stage.show();
+            }
+        });
         HBox hbox = new HBox(label, textfield, button);
         hbox.setAlignment(Pos.CENTER);
 
@@ -136,6 +146,8 @@ public class BattleshipUi extends Application {
         BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
         BorderPane.setMargin(hbox, new Insets(0, 0, 50, 0));
 
+        pane.setBottom(goBackButton);
+        BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
         return new Scene(pane);
     }
 
@@ -152,6 +164,11 @@ public class BattleshipUi extends Application {
                 stage.setScene(gameSelectionScene(stage));
             }
         });
+        Button goBackButton = new Button("Go back");
+        goBackButton.setOnMouseClicked(event -> {
+            stage.setScene(startScene(stage));
+            stage.show();
+        });
         HBox hbox = new HBox(label, textfield, button);
         hbox.setAlignment(Pos.CENTER);
 
@@ -161,6 +178,8 @@ public class BattleshipUi extends Application {
         BorderPane.setAlignment(headerText, Pos.CENTER);
         BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
         BorderPane.setMargin(hbox, new Insets(0, 0, 50, 0));
+        pane.setBottom(goBackButton);
+        BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
         return new Scene(pane);
     }
 
