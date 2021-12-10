@@ -32,3 +32,8 @@ mvn jxr:jxr checkstyle:checkstyle
 ```
 mvn package
 ```
+
+### JavaDoc
+```
+mvn javadoc:javadoc
+```
