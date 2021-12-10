@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class DBUserDao implements UserDao {
 
-    public List<User> getAll() throws SQLException {
+    public List<User> getAll(String databaseAdress) throws SQLException {
         List<User> list = new ArrayList<User>();
-        Connection db = DriverManager.getConnection("jdbc:sqlite:data.db");
+        Connection db = DriverManager.getConnection(databaseAdress);
 
         try {
             Statement s = db.createStatement();
@@ -28,8 +28,8 @@ public class DBUserDao implements UserDao {
         return list;
     }
 
-    public User login(String username) throws SQLException {
-        Connection db = DriverManager.getConnection("jdbc:sqlite:data.db");
+    public User login(String databaseAdress, String username) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
 
         try {
             PreparedStatement p = db.prepareStatement("SELECT * FROM Users WHERE username = ?");
@@ -52,8 +52,8 @@ public class DBUserDao implements UserDao {
 
     }
 
-    public User create(String username) throws SQLException {
-        Connection db = DriverManager.getConnection("jdbc:sqlite:data.db");
+    public User create(String databaseAdress, String username) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
 
         try {
 

@@ -35,7 +35,7 @@ public class BattleshipUi extends Application {
     @Override
     public void init() throws Exception {
         DBUserDao dbUserDao = new DBUserDao();
-        userService = new UserService(dbUserDao);
+        userService = new UserService(dbUserDao, "jdbc:sqlite:data.db");
         DBGameDao dbGameDao = new DBGameDao();
         gameService = new GameService(dbGameDao);
     }
