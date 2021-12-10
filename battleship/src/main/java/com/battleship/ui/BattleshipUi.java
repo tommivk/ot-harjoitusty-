@@ -85,17 +85,26 @@ public class BattleshipUi extends Application {
     }
 
     public Scene statisticsScene(Stage stage) {
-        Label label = new Label("Statistics");
+        Text headerText = new Text(10, 20, "Stats");
+        headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         User player = userService.getLoggedPlayerOne();
         Text name = new Text(player.getName());
         Text totalShots = new Text("Total shots: " + gameService.getPlayerShotCount(player.getId()));
-        Button goBack = new Button("Go back");
-        goBack.setOnMouseClicked(event -> {
+        Button goBackButton = new Button("Go back");
+        goBackButton.setOnMouseClicked(event -> {
             stage.setScene(gameSelectionScene(stage));
             stage.show();
         });
-        VBox vbox = new VBox(label, name, totalShots, goBack);
-        return new Scene(vbox);
+        BorderPane pane = new BorderPane();
+        pane.setTop(headerText);
+        BorderPane.setAlignment(headerText, Pos.CENTER);
+        BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
+        VBox vbox = new VBox(name, totalShots, goBackButton);
+        pane.setCenter(vbox);
+        pane.setBottom(goBackButton);
+        BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
+
+        return new Scene(pane);
     }
 
     public Scene signUpScene(Stage stage) {
