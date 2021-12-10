@@ -17,4 +17,6 @@
 |  9.12  | 6    | tietokannan ja dao luokkien lisäys projektiin       |
 | 10.12  | 1    | sovelluksen ulkoasun parantelua                     |
 | 10.12  | 2    | testausta                                           |
-|  yht   | 30   |                                                     |
+| 10.12  | 1    | javadoc                                             |
+|        |      |                                                     |
+|  yht   | 31   |                                                     |
