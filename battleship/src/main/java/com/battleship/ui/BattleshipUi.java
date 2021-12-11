@@ -18,6 +18,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.input.MouseButton;
 
+import java.text.DecimalFormat;
+
 import com.battleship.dao.DBGameDao;
 import com.battleship.dao.DBUserDao;
 import com.battleship.domain.Game;
@@ -89,7 +91,16 @@ public class BattleshipUi extends Application {
         headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         User player = userService.getLoggedPlayerOne();
         Text name = new Text(player.getName());
-        Text totalShots = new Text("Total shots: " + gameService.getPlayerShotCount(player.getId()));
+        int totalShots = gameService.getPlayerShotCount(player.getId());
+        int totalHits = gameService.getPlayerHitCount(player.getId());
+
+        Text totalShotsText = new Text("Total shots: " + Integer.toString(totalShots));
+        Text totalHitsText = new Text("Total hits: " + Integer.toString(totalHits));
+
+        float hitPercentage = ((float) totalHits / totalShots) * 100;
+        System.out.println(hitPercentage);
+        DecimalFormat df = new DecimalFormat("#.##");
+        Text hitPercentageText = new Text("Hit %: " + df.format(hitPercentage));
         Button goBackButton = new Button("Go back");
         goBackButton.setOnMouseClicked(event -> {
             stage.setScene(gameSelectionScene(stage));
@@ -99,7 +110,7 @@ public class BattleshipUi extends Application {
         pane.setTop(headerText);
         BorderPane.setAlignment(headerText, Pos.CENTER);
         BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
-        VBox vbox = new VBox(name, totalShots, goBackButton);
+        VBox vbox = new VBox(name, totalShotsText, totalHitsText, hitPercentageText, goBackButton);
         pane.setCenter(vbox);
         pane.setBottom(goBackButton);
         BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
@@ -453,6 +464,8 @@ public class BattleshipUi extends Application {
                             if (!hasShip) {
                                 game.changeTurn();
                                 turnLabel.setText("TURN: " + game.getPlayerOne().getName());
+                            } else {
+                                gameService.addPlayerTwoHit();
                             }
                         }
                         if (game.allPlayer1ShipsDead()) {
@@ -490,6 +503,8 @@ public class BattleshipUi extends Application {
                                 turnLabel.setText("TURN: You");
 
                             }
+                        } else {
+                            gameService.addPlayerOneHit();
                         }
                         if (game.getIsAgainstComputer() && game.allPlayer1ShipsDead()) {
                             game.setGameOver();

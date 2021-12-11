@@ -39,14 +39,29 @@ public class GameService {
     /**
      * Gets players total shot count from the database
      * 
-     * @param playerID id of the player that's being queried
+     * @param playerId id of the player that's being queried
      * 
      * @return total count of the shots
      */
     public int getPlayerShotCount(int playerId) {
         try {
             int count = gameDao.getPlayerShotCount(this.databaseAdress, playerId);
-            System.out.println("Count: " + count);
+            return count;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Gets players total hit count from the database
+     * 
+     * @param playerId id of the player that's being queried
+     * 
+     * @return total count of the hits
+     */
+    public int getPlayerHitCount(int playerId) {
+        try {
+            int count = gameDao.getPlayerHitCount(this.databaseAdress, playerId);
             return count;
         } catch (Exception e) {
             return 0;
@@ -71,6 +86,30 @@ public class GameService {
     public void addPlayerTwoShot() {
         try {
             gameDao.addPlayerTwoShot(this.databaseAdress, currentGame.getGameId());
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    /**
+     * Increases player one's hits in the game by one in the database
+     */
+    public void addPlayerOneHit() {
+        try {
+            gameDao.addPlayerOneHit(this.databaseAdress, currentGame.getGameId());
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    /**
+     * Increases player two's hits in the game by one in the database
+     */
+    public void addPlayerTwoHit() {
+        try {
+            gameDao.addPlayerTwoHit(this.databaseAdress, currentGame.getGameId());
 
         } catch (Exception e) {
 

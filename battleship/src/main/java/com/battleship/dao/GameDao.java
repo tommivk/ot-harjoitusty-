@@ -8,7 +8,13 @@ public interface GameDao {
 
     int getPlayerShotCount(String databaseAdress, int playerId) throws Exception;
 
+    int getPlayerHitCount(String databaseAdress, int playerId) throws Exception;
+
     void addPlayerOneShot(String databaseAdress, int gameId) throws Exception;
 
     void addPlayerTwoShot(String databaseAdress, int gameId) throws Exception;
+
+    void addPlayerOneHit(String databaseAdress, int gameId) throws Exception;
+
+    void addPlayerTwoHit(String databaseAdress, int gameId) throws Exception;
 }

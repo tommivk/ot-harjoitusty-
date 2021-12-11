@@ -25,6 +25,24 @@ public class DBGameDao implements GameDao {
         }
     }
 
+    public int getPlayerHitCount(String databaseAdress, int playerId) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
+        try {
+            PreparedStatement p = db.prepareStatement(
+                    "SELECT ((SELECT COALESCE(SUM(playeronehits), 0) FROM Games WHERE playerone = ?) + (SELECT COALESCE(SUM(playertwohits), 0) from games WHERE playertwo = ?)) as hits;");
+            p.setInt(1, playerId);
+            p.setInt(2, playerId);
+            ResultSet r = p.executeQuery();
+            return r.getInt("hits");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return 0;
+        } finally {
+            db.close();
+        }
+    }
+
     public void addPlayerOneShot(String databaseAdress, int gameId) throws SQLException {
         Connection db = DriverManager.getConnection(databaseAdress);
         try {
@@ -57,18 +75,49 @@ public class DBGameDao implements GameDao {
         }
     }
 
+    public void addPlayerOneHit(String databaseAdress, int gameId) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
+        try {
+            PreparedStatement p = db
+                    .prepareStatement("UPDATE Games SET playeronehits = playeronehits + 1 WHERE id=?");
+            p.setInt(1, gameId);
+
+            p.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            db.close();
+        }
+    }
+
+    public void addPlayerTwoHit(String databaseAdress, int gameId) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
+        try {
+            PreparedStatement p = db
+                    .prepareStatement("UPDATE Games SET playertwohits = playertwohits + 1 WHERE id=?");
+            p.setInt(1, gameId);
+
+            p.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            db.close();
+        }
+    }
+
     public Game createGame(String databaseAdress, User playerOne, User playerTwo) throws SQLException {
         Connection db = DriverManager.getConnection(databaseAdress);
 
         try {
             PreparedStatement p = db.prepareStatement(
-                    "INSERT INTO Games(playerone, playertwo, playeroneshots, playertwoshots, finished) VALUES (?, ?, ?, ? ,?)",
+                    "INSERT INTO Games(playerone, playertwo, playeroneshots, playertwoshots, playeronehits, playertwohits, finished) VALUES (?, ?, ?, ?, ?, ? ,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             p.setInt(1, playerOne.getId());
             p.setInt(2, playerTwo.getId());
             p.setInt(3, 0);
             p.setInt(4, 0);
-            p.setBoolean(5, false);
+            p.setInt(5, 0);
+            p.setBoolean(7, false);
 
             p.executeUpdate();
 
