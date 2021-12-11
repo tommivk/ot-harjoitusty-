@@ -559,7 +559,7 @@ public class BattleshipUi extends Application {
             }
         }
 
-        Label player1Label = new Label(game.getIsAgainstComputer() ? "You" : game.getPlayerOne().getName());
+        Label player1Label = new Label(game.getPlayerOne().getName());
         player1Label.setPadding(new Insets(10, 0, 10, 0));
 
         Label player2Label = new Label(game.getPlayerTwo().getName());
