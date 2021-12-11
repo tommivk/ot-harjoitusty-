@@ -420,7 +420,17 @@ public class BattleshipUi extends Application {
         VBox container = new VBox(setupHbox, tipLabel);
         container.setAlignment(Pos.TOP_CENTER);
 
-        return new Scene(container, 800, 500);
+        Button quitButton = new Button("Quit");
+        quitButton.setOnMouseClicked(event -> {
+            stage.setScene(gameSelectionScene(stage));
+            stage.show();
+        });
+
+        BorderPane pane = new BorderPane();
+        pane.setCenter(container);
+        pane.setBottom(quitButton);
+
+        return new Scene(pane, 800, 500);
     }
 
     public Scene playScene(Stage stage) {
@@ -432,6 +442,12 @@ public class BattleshipUi extends Application {
 
         Label turnLabel = new Label("TURN: " + (game.getIsAgainstComputer() ? "You" : game.getPlayerOne().getName()));
         turnLabel.setPadding(new Insets(20, 0, 0, 0));
+
+        Button quitButton = new Button("Quit");
+        quitButton.setOnMouseClicked(event -> {
+            stage.setScene(gameSelectionScene(stage));
+            stage.show();
+        });
 
         Button newGame = new Button("New game");
         newGame.setOnMouseClicked(event -> {
@@ -544,7 +560,12 @@ public class BattleshipUi extends Application {
 
         VBox container = new VBox(hbox, turnLabel, newGame);
         container.setAlignment(Pos.TOP_CENTER);
-        Scene scene = new Scene(container, 800, 500);
+
+        BorderPane pane = new BorderPane();
+        pane.setCenter(container);
+        pane.setBottom(quitButton);
+
+        Scene scene = new Scene(pane, 800, 500);
 
         return scene;
     }
