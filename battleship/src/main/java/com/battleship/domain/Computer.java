@@ -58,10 +58,18 @@ public class Computer {
      * hit squares around it. If previous hits is > 1
      * it tries to hit squares depending on what the last two hits direction was
      */
-    public void computersTurn() {
+    private void storeHit(boolean hit, GameService gameService) {
+        if (hit) {
+            gameService.addPlayerTwoHit();
+        }
+        gameService.addPlayerTwoShot();
+    }
+
+    public void computersTurn(GameService gameService) {
         while (true) {
             if (prevHits == 0) {
                 boolean hit = this.computerHitRandom();
+                this.storeHit(hit, gameService);
                 if (!hit) {
                     break;
                 }
@@ -69,6 +77,7 @@ public class Computer {
 
             if (prevHits == 1) {
                 boolean hit = this.computerHitRowOrColumn();
+                this.storeHit(hit, gameService);
                 if (!hit) {
                     break;
                 }
@@ -78,6 +87,7 @@ public class Computer {
             if (prevHits > 1 && this.prevHitDir == ShipDirection.HORIZONTAL) {
                 if (this.canHitLeft()) {
                     boolean hit = this.hitLeft();
+                    this.storeHit(hit, gameService);
                     if (!hit) {
                         break;
                     }
@@ -85,6 +95,7 @@ public class Computer {
                 }
                 if (this.canHitRight()) {
                     boolean hit = this.hitRight();
+                    this.storeHit(hit, gameService);
                     if (!hit) {
                         break;
                     }
@@ -93,6 +104,7 @@ public class Computer {
 
                 if (this.canHitColumnEndLeft()) {
                     boolean hit = this.hitColumnEndLeft();
+                    this.storeHit(hit, gameService);
                     if (!hit) {
                         break;
                     }
@@ -100,6 +112,7 @@ public class Computer {
                 }
                 if (this.canHitColumnEndRight()) {
                     boolean hit = this.hitColumnEndRight();
+                    this.storeHit(hit, gameService);
                     if (!hit) {
                         break;
                     }
@@ -110,6 +123,7 @@ public class Computer {
             if (this.prevHits > 1 && this.prevHitDir == ShipDirection.VERTICAL) {
                 if (this.canHitTop()) {
                     boolean hit = this.hitTop();
+                    this.storeHit(hit, gameService);
                     if (!hit) {
                         break;
                     }
@@ -117,6 +131,7 @@ public class Computer {
                 }
                 if (this.canHitBottom()) {
                     boolean hit = this.hitBottom();
+                    this.storeHit(hit, gameService);
                     if (!hit) {
                         break;
                     }
@@ -125,6 +140,7 @@ public class Computer {
 
                 if (this.canHitRowEndBottom()) {
                     boolean hit = hitRowEndBottom();
+                    this.storeHit(hit, gameService);
                     if (!hit) {
                         break;
                     }
@@ -133,6 +149,7 @@ public class Computer {
 
                 if (this.canHitRowEndTop()) {
                     boolean hit = hitRowEndTop();
+                    this.storeHit(hit, gameService);
                     if (!hit) {
                         break;
                     }
@@ -141,6 +158,7 @@ public class Computer {
             }
 
             boolean hit = this.computerHitRandom();
+            this.storeHit(hit, gameService);
             if (!hit) {
                 break;
             }
@@ -168,7 +186,6 @@ public class Computer {
         if (this.canHitBottom()) {
             return this.hitBottom();
         }
-
         return this.computerHitRandom();
     }
 

@@ -94,15 +94,22 @@ public class BattleshipUi extends Application {
         headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         User player = userService.getLoggedPlayerOne();
         Text name = new Text(player.getName());
+
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        int computerShots = gameService.getPlayerShotCount(1);
+        int computerHits = gameService.getPlayerHitCount(1);
+        Text totalComputerShotsText = new Text("Total shots: " + Integer.toString(computerShots));
+        Text totalComputerHitsText = new Text("Total hits: " + Integer.toString(computerHits));
+        float computerHitPercentage = ((float) computerHits / computerShots) * 100;
+        Text computerHitPercentageText = new Text("Hit %: " + df.format(computerHitPercentage));
+
         int totalShots = gameService.getPlayerShotCount(player.getId());
         int totalHits = gameService.getPlayerHitCount(player.getId());
-
         Text totalShotsText = new Text("Total shots: " + Integer.toString(totalShots));
         Text totalHitsText = new Text("Total hits: " + Integer.toString(totalHits));
 
         float hitPercentage = ((float) totalHits / totalShots) * 100;
-        System.out.println(hitPercentage);
-        DecimalFormat df = new DecimalFormat("#.##");
         Text hitPercentageText = new Text("Hit %: " + df.format(hitPercentage));
         Button goBackButton = new Button("Go back");
         goBackButton.setOnMouseClicked(event -> {
@@ -110,8 +117,13 @@ public class BattleshipUi extends Application {
             stage.show();
         });
         BorderPane pane = new BorderPane();
-        VBox vbox = new VBox(name, totalShotsText, totalHitsText, hitPercentageText, goBackButton);
-        pane.setCenter(vbox);
+        VBox userStats = new VBox(name, totalShotsText, totalHitsText, hitPercentageText, goBackButton);
+        VBox computerStats = new VBox(new Text("Computer"), totalComputerShotsText, totalComputerHitsText,
+                computerHitPercentageText, goBackButton);
+
+        HBox statisticsTable = new HBox(userStats, computerStats);
+
+        pane.setCenter(statisticsTable);
         pane.setBottom(goBackButton);
         BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
 
@@ -535,7 +547,7 @@ public class BattleshipUi extends Application {
                             if (!game.getIsAgainstComputer()) {
                                 turnLabel.setText("TURN: " + game.getPlayerTwo().getName());
                             } else {
-                                game.getComputer().computersTurn();
+                                game.getComputer().computersTurn(gameService);
                                 turnLabel.setText("TURN: You");
 
                             }
