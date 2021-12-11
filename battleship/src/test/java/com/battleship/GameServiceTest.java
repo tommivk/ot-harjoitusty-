@@ -28,7 +28,7 @@ public class GameServiceTest {
             s.execute(dropUsers);
             s.execute(dropGame);
             String createUsers = "CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY, username TEXT UNIQUE);";
-            String createGame = "CREATE TABLE IF NOT EXISTS Games(id INTEGER PRIMARY KEY, finished BOOLEAN,playeroneshots INTEGER, playertwoshots INTEGER, winner INTEGER, playerone INTEGER, playertwo INTEGER, FOREIGN KEY(playerone) REFERENCES Users(id),FOREIGN KEY(playertwo) REFERENCES Users(id), FOREIGN KEY(winner) REFERENCES Users(id));";
+            String createGame = "CREATE TABLE IF NOT EXISTS Games(id INTEGER PRIMARY KEY, finished BOOLEAN,playeroneshots INTEGER, playertwoshots INTEGER, playeronehits INTEGER, playertwohits INTEGER, winner INTEGER, playerone INTEGER, playertwo INTEGER, FOREIGN KEY(playerone) REFERENCES Users(id),FOREIGN KEY(playertwo) REFERENCES Users(id), FOREIGN KEY(winner) REFERENCES Users(id));";
 
             s.execute(createUsers);
             s.execute(createGame);
