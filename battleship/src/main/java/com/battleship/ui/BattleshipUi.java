@@ -392,7 +392,7 @@ public class BattleshipUi extends Application {
                         for (int m = 0; m < 10; m++) {
                             for (int n = 0; n < 10; n++) {
                                 if (!player1Squares[n][m].hasShip()) {
-                                    player1Squares[n][m].removeButtonColor();
+                                    player1Squares[n][m].removeButtonImage();
                                 }
                             }
                         }
@@ -431,7 +431,7 @@ public class BattleshipUi extends Application {
                                 for (int m = 0; m < 10; m++) {
                                     for (int n = 0; n < 10; n++) {
                                         if (!player2Squares[n][m].hasShip()) {
-                                            player2Squares[n][m].removeButtonColor();
+                                            player2Squares[n][m].removeButtonImage();
                                         }
                                     }
                                 }
@@ -525,7 +525,7 @@ public class BattleshipUi extends Application {
                 Square square = player1Squares[i][k];
                 Rectangle button = square.getButton();
                 button.setOnMouseClicked(null);
-                square.removeButtonColor();
+                square.removeButtonImage();
                 if (!game.getIsAgainstComputer()) {
                     button.setOnMouseClicked(event -> {
                         if (!game.isGameOver() && game.getTurn() == Turn.PLAYER2 && !square.getIsHit()) {
@@ -556,7 +556,7 @@ public class BattleshipUi extends Application {
                 Square square = player2Squares[i][k];
                 Rectangle button = square.getButton();
 
-                square.removeButtonColor();
+                square.removeButtonImage();
                 button.setOnMouseClicked(null);
 
                 button.setOnMouseClicked(event -> {

@@ -93,7 +93,7 @@ public class Game {
     public Stack<Ship> initializeShips() {
         Stack<Ship> ships = new Stack<Ship>();
 
-        ships.push(new Ship(1));
+        ships.push(new Ship(2));
         ships.push(new Ship(2));
         ships.push(new Ship(3));
         ships.push(new Ship(3));
@@ -127,7 +127,7 @@ public class Game {
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
                 Square square = player == 1 ? this.player1Squares[i][k] : this.player2Squares[i][k];
-                square.removeButtonColor();
+                square.removeButtonImage();
             }
         }
     }
@@ -145,7 +145,7 @@ public class Game {
                             ? squares[row][(column - 1) + j]
                             : squares[(row - 1) + j][column];
                     if (!activeSquare.hasShip()) {
-                        activeSquare.removeButtonColor();
+                        activeSquare.removeButtonImage();
                     }
                 }
             }
@@ -157,7 +157,7 @@ public class Game {
      */
     public void placeShip(int row, int column, int player) {
         if ((player == 1 && !this.player1ShipsIsEmpty()) || (player == 2 && !this.player2ShipsIsEmpty())) {
-            int index = this.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
+            int index = this.shipDirection == ShipDirection.HORIZONTAL ? column : row;
 
             Ship nextShip = player == 1 ? this.peekNextPlayer1Ship() : this.peekNextPlayer2Ship();
             Square[][] squares = player == 1 ? this.player1Squares : this.player2Squares;
@@ -167,13 +167,14 @@ public class Game {
                 if (canPlaceShip(nextShip, row, column, squares)) {
                     Ship ship = player == 1 ? this.getNewPlayer1Ship() : this.getNewPlayer2Ship();
                     for (int l = ship.getSize(); l > 0; l--) {
-                        Square activeSquare = this.getShipDirection() == ShipDirection.HORIZONTAL
+                        Square activeSquare = this.shipDirection == ShipDirection.HORIZONTAL
                                 ? squares[row][(column - 1) + l]
                                 : squares[(row - 1) + l][column];
 
                         activeSquare.addShip(ship);
                         ship.addButton(activeSquare.getButton());
-                        activeSquare.setBlackButtonColor();
+                        ship.setShipDirection(this.shipDirection);
+                        ship.setShipImage();
                     }
                 }
             }

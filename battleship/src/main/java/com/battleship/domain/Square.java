@@ -1,6 +1,8 @@
 package com.battleship.domain;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -43,14 +45,14 @@ public class Square {
     public boolean hitSquare() {
         this.isHit = true;
         if (this.ship == null) {
-            this.setBlueButtonColor();
+            this.setMissBackground();
             return false;
         }
         this.ship.hit();
         if (this.ship.isDead()) {
-            this.ship.setDeadShipColor();
+            this.ship.setShipImage();
         } else {
-            this.setBlackButtonColor();
+            this.setHitBackground();
         }
         return true;
     }
@@ -68,10 +70,11 @@ public class Square {
     }
 
     /**
-     * Sets black button color
+     * Sets background image
      */
-    public void setBlackButtonColor() {
-        this.button.setFill(Color.BLACK);
+    public void setHitBackground() {
+        Image image = new Image("file:images/hit.png");
+        this.button.setFill(new ImagePattern(image));
     }
 
     /**
@@ -82,16 +85,18 @@ public class Square {
     }
 
     /**
-     * Sets blue button color
+     * Sets background image
      */
-    public void setBlueButtonColor() {
-        this.button.setFill(Color.BLUE);
+    public void setMissBackground() {
+        Image image = new Image("file:images/miss.png");
+        this.button.setFill(new ImagePattern(image));
     }
 
     /**
-     * Removes button color
+     * Removes button image
      */
-    public void removeButtonColor() {
+    public void removeButtonImage() {
         this.button.setFill(Color.WHITESMOKE);
+        this.button.setStyle("-fx-stroke: dimgray; -fx-stroke-width: 1;");
     }
 }

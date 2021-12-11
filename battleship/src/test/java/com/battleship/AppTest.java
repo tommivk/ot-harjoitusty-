@@ -12,8 +12,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.ByteArrayOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 @RunWith(JfxRunner.class)
@@ -135,16 +143,25 @@ public class AppTest {
     }
 
     @Test
-    public void changingButtonColorToBlackWorks() {
-        square.setBlackButtonColor();
+    public void settingHitBackgroundImageWorks() {
+        square.setHitBackground();
+        Image image = new Image("file:images/hit.png");
         Rectangle button = square.getButton();
-        assertEquals(Color.BLACK, button.getFill());
+        Image buttonImage = ((ImagePattern) button.getFill()).getImage();
+
+        PixelReader ogReader = image.getPixelReader();
+        PixelReader reader = buttonImage.getPixelReader();
+
+        assertEquals(ogReader.getColor(10, 10), reader.getColor(10, 10));
+        assertEquals(ogReader.getColor(0, 0), reader.getColor(0, 0));
+        assertEquals(ogReader.getColor(15, 6), reader.getColor(15, 6));
+        assertEquals(ogReader.getColor(25, 15), reader.getColor(25, 15));
     }
 
     @Test
-    public void removingButtonColorWorks() {
-        square.setBlackButtonColor();
-        square.removeButtonColor();
+    public void removingButtonImageWorks() {
+        square.setHitBackground();
+        square.removeButtonImage();
         Rectangle button = square.getButton();
         assertEquals(Color.WHITESMOKE, button.getFill());
     }

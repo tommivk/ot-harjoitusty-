@@ -2,7 +2,8 @@ package com.battleship.domain;
 
 import java.util.ArrayList;
 
-import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -12,6 +13,7 @@ public class Ship {
     private int size;
     private int squaresLeft;
     private ArrayList<Rectangle> buttons;
+    private ShipDirection shipDirection;
 
     public Ship(int size) {
         this.size = size;
@@ -39,6 +41,10 @@ public class Ship {
         this.buttons.add(button);
     }
 
+    public void setShipDirection(ShipDirection direction) {
+        this.shipDirection = direction;
+    }
+
     /**
      * Returns all the rectangles connected to Ship
      */
@@ -47,12 +53,30 @@ public class Ship {
     }
 
     /**
-     * Sets ships rectangles color to red
+     * Sets ship image to rectangles
      */
-    public void setDeadShipColor() {
-        for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).setFill(Color.RED);
+    public void setShipImage() {
+        Image head = new Image("file:images/ship-head.png");
+        Image middle = new Image("file:images/ship-middle.png");
+        Image end = new Image("file:images/ship-end.png");
+
+        if (this.shipDirection == ShipDirection.VERTICAL) {
+            this.buttons.get(this.buttons.size() - 1).setFill(new ImagePattern(head));
+            this.buttons.get(0).setFill(new ImagePattern(end));
+        } else {
+
+            this.buttons.get(this.buttons.size() - 1).setFill(new ImagePattern(end));
+            this.buttons.get(this.buttons.size() - 1).setStyle("-fx-rotate: 90");
+            this.buttons.get(0).setFill(new ImagePattern(head));
+            this.buttons.get(0).setStyle("-fx-rotate: 90");
         }
+        for (int i = 1; i < buttons.size() - 1; i++) {
+            buttons.get(i).setFill(new ImagePattern(middle));
+            if (this.shipDirection == ShipDirection.HORIZONTAL) {
+                buttons.get(i).setStyle("-fx-rotate: 90");
+            }
+        }
+
     }
 
     /**
