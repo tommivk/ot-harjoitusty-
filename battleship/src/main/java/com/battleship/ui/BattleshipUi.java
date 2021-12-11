@@ -448,6 +448,8 @@ public class BattleshipUi extends Application {
         pane.setCenter(container);
         pane.setBottom(quitButton);
 
+        BorderPane.setMargin(quitButton, new Insets(0, 0, 10, 10));
+
         return new Scene(pane, 800, 500);
     }
 
@@ -582,6 +584,8 @@ public class BattleshipUi extends Application {
         BorderPane pane = new BorderPane();
         pane.setCenter(container);
         pane.setBottom(quitButton);
+
+        BorderPane.setMargin(quitButton, new Insets(0, 0, 10, 10));
 
         Scene scene = new Scene(pane, 800, 500);
 
