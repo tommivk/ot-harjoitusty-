@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -88,6 +90,7 @@ public class BattleshipUi extends Application {
 
     public Scene statisticsScene(Stage stage) {
         Text headerText = new Text(10, 20, "Stats");
+        Text loggedInText = new Text("Logged in as " + userService.getLoggedPlayerOne().getName());
         headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         User player = userService.getLoggedPlayerOne();
         Text name = new Text(player.getName());
@@ -107,13 +110,20 @@ public class BattleshipUi extends Application {
             stage.show();
         });
         BorderPane pane = new BorderPane();
-        pane.setTop(headerText);
-        BorderPane.setAlignment(headerText, Pos.CENTER);
-        BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
         VBox vbox = new VBox(name, totalShotsText, totalHitsText, hitPercentageText, goBackButton);
         pane.setCenter(vbox);
         pane.setBottom(goBackButton);
         BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
+
+        Region spacer = new Region();
+
+        HBox loggedInContainer = new HBox(loggedInText, spacer);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        VBox topContent = new VBox(loggedInContainer, headerText);
+        pane.setTop(topContent);
+        topContent.setAlignment(Pos.CENTER);
+        BorderPane.setAlignment(topContent, Pos.CENTER);
 
         return new Scene(pane);
     }
@@ -247,7 +257,7 @@ public class BattleshipUi extends Application {
     public Scene gameSelectionScene(Stage stage) {
         Text headerText = new Text(10, 20, "Play Battleships");
         headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
-
+        Text loggedInText = new Text("Logged in as " + userService.getLoggedPlayerOne().getName());
         StackPane stackpane = new StackPane();
         StackPane stackpane2 = new StackPane();
 
@@ -292,9 +302,17 @@ public class BattleshipUi extends Application {
         vbox.setAlignment(Pos.CENTER);
 
         BorderPane pane = new BorderPane();
-        pane.setTop(headerText);
         pane.setCenter(vbox);
-        BorderPane.setAlignment(headerText, Pos.CENTER);
+
+        Region spacer = new Region();
+
+        HBox loggedInContainer = new HBox(loggedInText, spacer);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        VBox topContent = new VBox(loggedInContainer, headerText);
+        pane.setTop(topContent);
+        topContent.setAlignment(Pos.CENTER);
+        BorderPane.setAlignment(topContent, Pos.CENTER);
         BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
 
         return new Scene(pane);
