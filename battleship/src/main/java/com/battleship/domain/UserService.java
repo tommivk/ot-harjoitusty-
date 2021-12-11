@@ -28,6 +28,11 @@ public class UserService {
         return this.loggedPlayerTwo;
     }
 
+    public void logout() {
+        this.loggedPlayerOne = null;
+        this.loggedPlayerTwo = null;
+    }
+
     /**
      * Stores new user in database
      * 

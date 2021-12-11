@@ -92,7 +92,6 @@ public class BattleshipUi extends Application {
 
     public Scene statisticsScene(Stage stage) {
         Text headerText = new Text(10, 20, "Stats");
-        Text loggedInText = new Text("Logged in as " + userService.getLoggedPlayerOne().getName());
         headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         User player = userService.getLoggedPlayerOne();
         Text name = new Text(player.getName());
@@ -129,10 +128,7 @@ public class BattleshipUi extends Application {
         pane.setBottom(goBackButton);
         BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
 
-        Region spacer = new Region();
-
-        HBox loggedInContainer = new HBox(loggedInText, spacer);
-        HBox.setHgrow(spacer, Priority.ALWAYS);
+        HBox loggedInContainer = getTopContainer(stage);
 
         VBox topContent = new VBox(loggedInContainer, headerText);
         pane.setTop(topContent);
@@ -282,7 +278,6 @@ public class BattleshipUi extends Application {
     public Scene gameSelectionScene(Stage stage) {
         Text headerText = new Text(10, 20, "Play Battleships");
         headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
-        Text loggedInText = new Text("Logged in as " + userService.getLoggedPlayerOne().getName());
         StackPane stackpane = new StackPane();
         StackPane stackpane2 = new StackPane();
 
@@ -331,10 +326,7 @@ public class BattleshipUi extends Application {
         BorderPane pane = new BorderPane();
         pane.setCenter(vbox);
 
-        Region spacer = new Region();
-
-        HBox loggedInContainer = new HBox(loggedInText, spacer);
-        HBox.setHgrow(spacer, Priority.ALWAYS);
+        HBox loggedInContainer = getTopContainer(stage);
 
         VBox topContent = new VBox(loggedInContainer, headerText);
         pane.setTop(topContent);
@@ -343,6 +335,21 @@ public class BattleshipUi extends Application {
         BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
 
         return new Scene(pane);
+    }
+
+    public HBox getTopContainer(Stage stage) {
+        Text loggedInText = new Text("Logged in as " + userService.getLoggedPlayerOne().getName());
+        Button logOutButton = new Button("logout");
+        logOutButton.setOnMouseClicked(event -> {
+            userService.logout();
+            stage.setScene(startScene(stage));
+            stage.show();
+        });
+        Region spacer = new Region();
+
+        HBox hbox = new HBox(loggedInText, spacer, logOutButton);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        return hbox;
     }
 
     public Scene setUpScene(Stage stage) {
