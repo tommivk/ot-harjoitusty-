@@ -63,13 +63,14 @@ public class BattleshipUi extends Application {
 
         loginRect.setFill(Color.DIMGRAY);
         signUpRect.setFill(Color.DIMGRAY);
-
-        loginRect.setOnMouseClicked(event -> {
+        stackpane.setPickOnBounds(false);
+        stackpane.setOnMouseClicked(event -> {
             stage.setScene(loginScene(stage));
             stage.show();
         });
 
-        signUpRect.setOnMouseClicked(event -> {
+        stackpane2.setPickOnBounds(false);
+        stackpane2.setOnMouseClicked(event -> {
             stage.setScene(signUpScene(stage));
         });
 
@@ -279,12 +280,14 @@ public class BattleshipUi extends Application {
         rect.setFill(Color.DARKGREY);
         rect2.setFill(Color.DARKGREY);
 
-        rect.setOnMouseClicked(event -> {
+        stackpane.setPickOnBounds(false);
+        stackpane.setOnMouseClicked(event -> {
             stage.setScene(playerTwoLoginScene(stage));
             stage.show();
         });
 
-        rect2.setOnMouseClicked(event -> {
+        stackpane2.setPickOnBounds(false);
+        stackpane2.setOnMouseClicked(event -> {
 
             Boolean gameCreated = gameService.createGame(userService.getLoggedPlayerOne(), new User("Computer", 1));
             if (gameCreated) {
