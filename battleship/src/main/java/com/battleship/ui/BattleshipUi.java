@@ -30,6 +30,7 @@ import com.battleship.domain.Square;
 import com.battleship.domain.Turn;
 import com.battleship.domain.User;
 import com.battleship.domain.UserService;
+import com.github.javafaker.Faker;
 
 public class BattleshipUi extends Application {
     private UserService userService;
@@ -142,6 +143,7 @@ public class BattleshipUi extends Application {
     }
 
     public Scene signUpScene(Stage stage) {
+        Faker faker = new Faker();
         Text headerText = new Text(10, 20, "Add new user");
         headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         Label label = new Label("Name:");
@@ -160,6 +162,14 @@ public class BattleshipUi extends Application {
                 }
             }
         });
+
+        Button randomButton = new Button("Generate random name");
+        randomButton.setOnMouseClicked(event -> {
+            textfield.setText("");
+            String randomName = faker.name().firstName();
+            textfield.setText(randomName);
+        });
+
         Button goBackButton = new Button("Go back");
         goBackButton.setOnMouseClicked(event -> {
             if (userService.getLoggedPlayerOne() == null) {
@@ -172,13 +182,15 @@ public class BattleshipUi extends Application {
         });
         HBox hbox = new HBox(label, textfield, button);
         hbox.setAlignment(Pos.CENTER);
-
+        VBox vbox = new VBox(hbox, randomButton);
+        vbox.setSpacing(20.0);
+        vbox.setAlignment(Pos.CENTER);
         BorderPane pane = new BorderPane();
         pane.setTop(headerText);
-        pane.setCenter(hbox);
+        pane.setCenter(vbox);
         BorderPane.setAlignment(headerText, Pos.CENTER);
         BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
-        BorderPane.setMargin(hbox, new Insets(0, 0, 50, 0));
+        BorderPane.setMargin(vbox, new Insets(0, 0, 50, 0));
 
         pane.setBottom(goBackButton);
         BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
