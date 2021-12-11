@@ -54,7 +54,6 @@ public class GameServiceTest {
 
             s.execute(dropUsers);
             s.execute(dropGame);
-            db.commit();
         } catch (SQLException e) {
             System.out.println("ERROR: " + e);
         } finally {
