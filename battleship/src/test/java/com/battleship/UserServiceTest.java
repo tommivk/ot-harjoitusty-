@@ -64,6 +64,7 @@ public class UserServiceTest {
         userService.createUser("testUser");
         boolean response = userService.playerOneLogin("testUser");
         assertEquals(true, response);
+        assertEquals("testUser", userService.getLoggedPlayerOne().getName());
     }
 
     @Test
@@ -71,13 +72,15 @@ public class UserServiceTest {
         userService.createUser("testUser");
         boolean response = userService.playerOneLogin("hackerman");
         assertEquals(false, response);
+        assertEquals(null, userService.getLoggedPlayerTwo());
     }
 
     @Test
     public void playerTwoLoginWorks() {
-        userService.createUser("testUser");
-        boolean response = userService.playerTwoLogin("testUser");
+        userService.createUser("testUserTwo");
+        boolean response = userService.playerTwoLogin("testUserTwo");
         assertEquals(true, response);
+        assertEquals("testUserTwo", userService.getLoggedPlayerTwo().getName());
     }
 
     @Test
@@ -88,6 +91,9 @@ public class UserServiceTest {
 
         List<User> response = userService.getAllUsers();
         assertEquals(3, response.size());
+        assertEquals("testUserOne", response.get(0).getName());
+        assertEquals("testUserTwo", response.get(1).getName());
+        assertEquals("testUserThree", response.get(2).getName());
     }
 
 }

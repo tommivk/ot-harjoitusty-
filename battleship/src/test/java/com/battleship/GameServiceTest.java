@@ -84,4 +84,22 @@ public class GameServiceTest {
         gameService.addPlayerTwoShot();
         assertEquals(2, gameService.getPlayerShotCount(1));
     }
+
+    @Test
+    public void addingNewPlayerOneHitWorks() {
+        gameService.createGame(new User("user", 0), new User("userTwo", 1));
+        gameService.addPlayerOneHit();
+        assertEquals(1, gameService.getPlayerHitCount(0));
+        gameService.addPlayerOneHit();
+        assertEquals(2, gameService.getPlayerHitCount(0));
+    }
+
+    @Test
+    public void addingNewPlayerTwoHitWorks() {
+        gameService.createGame(new User("user", 0), new User("userTwo", 1));
+        gameService.addPlayerTwoHit();
+        assertEquals(1, gameService.getPlayerHitCount(1));
+        gameService.addPlayerTwoHit();
+        assertEquals(2, gameService.getPlayerHitCount(1));
+    }
 }
