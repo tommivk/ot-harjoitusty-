@@ -117,6 +117,7 @@ public class DBGameDao implements GameDao {
             p.setInt(3, 0);
             p.setInt(4, 0);
             p.setInt(5, 0);
+            p.setInt(6, 0);
             p.setBoolean(7, false);
 
             p.executeUpdate();
