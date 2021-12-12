@@ -348,6 +348,8 @@ public class BattleshipUi extends Application {
         Region spacer = new Region();
 
         HBox hbox = new HBox(loggedInText, spacer, logOutButton);
+        HBox.setMargin(loggedInText, new Insets(10, 10, 0, 10));
+        HBox.setMargin(logOutButton, new Insets(10, 10, 0, 10));
         HBox.setHgrow(spacer, Priority.ALWAYS);
         return hbox;
     }
