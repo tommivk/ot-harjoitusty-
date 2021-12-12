@@ -103,7 +103,13 @@ public class BattleshipUi extends Application {
         int computerHits = gameService.getPlayerHitCount(1);
         Text totalComputerShotsText = new Text("Total shots: " + Integer.toString(computerShots));
         Text totalComputerHitsText = new Text("Total hits: " + Integer.toString(computerHits));
-        float computerHitPercentage = ((float) computerHits / computerShots) * 100;
+
+        float computerHitPercentage;
+        if (computerHits == 0 || computerShots == 0) {
+            computerHitPercentage = 0;
+        } else {
+            computerHitPercentage = ((float) computerHits / computerShots) * 100;
+        }
         Text computerHitPercentageText = new Text("Hit %: " + df.format(computerHitPercentage));
 
         int totalShots = gameService.getPlayerShotCount(player.getId());
@@ -111,7 +117,12 @@ public class BattleshipUi extends Application {
         Text totalShotsText = new Text("Total shots: " + Integer.toString(totalShots));
         Text totalHitsText = new Text("Total hits: " + Integer.toString(totalHits));
 
-        float hitPercentage = ((float) totalHits / totalShots) * 100;
+        float hitPercentage;
+        if (totalHits == 0 || totalShots == 0) {
+            hitPercentage = 0;
+        } else {
+            hitPercentage = ((float) totalHits / totalShots) * 100;
+        }
         Text hitPercentageText = new Text("Hit %: " + df.format(hitPercentage));
         Button goBackButton = new Button("Go back");
         goBackButton.setOnMouseClicked(event -> {
