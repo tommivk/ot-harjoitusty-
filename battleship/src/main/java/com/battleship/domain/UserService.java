@@ -102,11 +102,6 @@ public class UserService {
         List<User> users = new ArrayList<User>();
         try {
             users = userDao.getAll(this.databaseAdress);
-
-            for (int i = 0; i < users.size(); i++) {
-                System.out.println(users.get(i).getName());
-            }
-
             return users;
         } catch (Exception e) {
 

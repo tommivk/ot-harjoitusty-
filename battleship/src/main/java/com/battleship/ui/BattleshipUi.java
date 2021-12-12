@@ -218,7 +218,6 @@ public class BattleshipUi extends Application {
         TextField textfield = new TextField();
         Button button = new Button("OK");
         button.setOnMouseClicked(event -> {
-            System.out.println(textfield.getText());
             boolean success = userService.playerOneLogin(textfield.getText());
             if (success) {
                 stage.setScene(gameSelectionScene(stage));

@@ -60,9 +60,6 @@ public class DBUserDao implements UserDao {
             PreparedStatement p = db.prepareStatement("INSERT INTO Users(username) VALUES (?)");
             p.setString(1, username);
             p.executeUpdate();
-            System.out.print("New user ");
-            System.out.print(username);
-            System.out.println(" added");
             return new User(username);
         } catch (SQLException e) {
             System.out.println("Couldn't add new user" + e);
