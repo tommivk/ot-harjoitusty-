@@ -94,7 +94,8 @@ public class BattleshipUi extends Application {
         Text headerText = new Text(10, 20, "Stats");
         headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         User player = userService.getLoggedPlayerOne();
-        Text name = new Text(player.getName());
+        Text yourStatsText = new Text("Your stats");
+        yourStatsText.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
 
         DecimalFormat df = new DecimalFormat("#.##");
 
@@ -118,10 +119,13 @@ public class BattleshipUi extends Application {
             stage.show();
         });
         BorderPane pane = new BorderPane();
-        VBox userStats = new VBox(name, totalShotsText, totalHitsText, hitPercentageText, goBackButton);
-        VBox computerStats = new VBox(new Text("Computer"), totalComputerShotsText, totalComputerHitsText,
+        VBox userStats = new VBox(yourStatsText, totalShotsText, totalHitsText, hitPercentageText, goBackButton);
+        VBox.setMargin(yourStatsText, new Insets(0, 0, 10, 0));
+        Text computerText = new Text("Computer");
+        computerText.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
+        VBox computerStats = new VBox(computerText, totalComputerShotsText, totalComputerHitsText,
                 computerHitPercentageText, goBackButton);
-
+        VBox.setMargin(computerText, new Insets(0, 0, 10, 0));
         HBox statisticsTable = new HBox(userStats, computerStats);
         statisticsTable.setAlignment(Pos.CENTER);
         statisticsTable.setSpacing(50);
