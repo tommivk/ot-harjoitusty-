@@ -14,6 +14,6 @@ Käyttöliittymän päänäkymä koostuu kahdesta 10x10 kokoisesta ruudukosta, j
   * jos ammus osuu vastustajan laivaan, käyttäjä saa jatkaa omaa vuoroaan. [tehty]
   * kaikki vastustajan laivat ensimmäisenä upotettuaan, voittaa käyttäjä pelin ja peli päättyy. [tehty]
 ## Jatkokehitysideoita
-* pelitilastojen tallettaminen tietokantaan
+* pelitilastojen tallettaminen tietokantaan [tehty]
 * ääniefektit
-* pelaaminen tietokonetta vastaan
+* pelaaminen tietokonetta vastaan [tehty]
