@@ -123,9 +123,12 @@ public class BattleshipUi extends Application {
                 computerHitPercentageText, goBackButton);
 
         HBox statisticsTable = new HBox(userStats, computerStats);
+        statisticsTable.setAlignment(Pos.CENTER);
+        statisticsTable.setSpacing(50);
 
         pane.setCenter(statisticsTable);
         pane.setBottom(goBackButton);
+        BorderPane.setMargin(statisticsTable, new Insets(30, 0, 0, 0));
         BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
 
         HBox loggedInContainer = getTopContainer(stage);
@@ -280,12 +283,14 @@ public class BattleshipUi extends Application {
         headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         StackPane stackpane = new StackPane();
         StackPane stackpane2 = new StackPane();
-
+        StackPane statsStackpane = new StackPane();
         Rectangle rect = new Rectangle(200, 200);
         Rectangle rect2 = new Rectangle(200, 200);
+        Rectangle statsRect = new Rectangle(430, 100);
 
-        rect.setFill(Color.DARKGREY);
-        rect2.setFill(Color.DARKGREY);
+        rect.setFill(Color.DIMGRAY);
+        rect2.setFill(Color.DIMGRAY);
+        statsRect.setFill(Color.DIMGRAY);
 
         stackpane.setPickOnBounds(false);
         stackpane.setOnMouseClicked(event -> {
@@ -307,18 +312,29 @@ public class BattleshipUi extends Application {
         });
 
         Text vsComputer = new Text("VS Computer");
-        Text vsPlayer = new Text("VS another Player");
+        vsComputer.setFill(Color.WHITESMOKE);
+        vsComputer.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
+
+        Text vsPlayer = new Text("VS Another Player");
+        vsPlayer.setFill(Color.WHITESMOKE);
+        vsPlayer.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
+
+        Text showStatistics = new Text("Show Statistics");
+        showStatistics.setFill(Color.WHITESMOKE);
+        showStatistics.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
+
         stackpane.getChildren().addAll(rect, vsPlayer);
         stackpane2.getChildren().addAll(rect2, vsComputer);
+        statsStackpane.getChildren().addAll(statsRect, showStatistics);
 
-        Button showStats = new Button("Stats");
-        showStats.setOnMouseClicked(event -> {
+        statsStackpane.setPickOnBounds(false);
+        statsStackpane.setOnMouseClicked(event -> {
             stage.setScene(statisticsScene(stage));
             stage.show();
         });
         HBox hbox = new HBox(stackpane, stackpane2);
-        VBox vbox = new VBox(hbox, showStats);
-        VBox.setMargin(showStats, new Insets(50, 0, 0, 0));
+        VBox vbox = new VBox(hbox, statsStackpane);
+        VBox.setMargin(statsStackpane, new Insets(30, 0, 0, 0));
         hbox.setSpacing(30);
         hbox.setAlignment(Pos.CENTER);
         vbox.setAlignment(Pos.CENTER);
