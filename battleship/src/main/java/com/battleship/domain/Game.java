@@ -158,27 +158,22 @@ public class Game {
     public void placeShip(int row, int column, int player) {
         if ((player == 1 && !this.player1ShipsIsEmpty()) || (player == 2 && !this.player2ShipsIsEmpty())) {
             int index = this.shipDirection == ShipDirection.HORIZONTAL ? column : row;
-
             Ship nextShip = player == 1 ? this.peekNextPlayer1Ship() : this.peekNextPlayer2Ship();
             Square[][] squares = player == 1 ? this.player1Squares : this.player2Squares;
 
-            if ((index + nextShip.getSize()) <= 10) {
+            if ((index + nextShip.getSize()) <= 10 && canPlaceShip(nextShip, row, column, squares)) {
+                Ship ship = player == 1 ? this.getNewPlayer1Ship() : this.getNewPlayer2Ship();
+                for (int l = ship.getSize(); l > 0; l--) {
+                    Square activeSquare = this.shipDirection == ShipDirection.HORIZONTAL
+                            ? squares[row][(column - 1) + l]
+                            : squares[(row - 1) + l][column];
 
-                if (canPlaceShip(nextShip, row, column, squares)) {
-                    Ship ship = player == 1 ? this.getNewPlayer1Ship() : this.getNewPlayer2Ship();
-                    for (int l = ship.getSize(); l > 0; l--) {
-                        Square activeSquare = this.shipDirection == ShipDirection.HORIZONTAL
-                                ? squares[row][(column - 1) + l]
-                                : squares[(row - 1) + l][column];
-
-                        activeSquare.addShip(ship);
-                        ship.addButton(activeSquare.getButton());
-                        ship.setShipDirection(this.shipDirection);
-                        ship.setShipImage();
-                    }
+                    activeSquare.addShip(ship);
+                    ship.addButton(activeSquare.getButton());
+                    ship.setShipDirection(this.shipDirection);
+                    ship.setShipImage();
                 }
             }
-
         }
     }
 
