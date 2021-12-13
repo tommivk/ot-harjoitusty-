@@ -31,7 +31,7 @@ Yhtä pelikentän ruutua kuvastaa ``Square`` olio, jolla on ilmentymämuuttujana
 Jos peli on tietokonetta vastaan luo `Game` luokka olion `Computer` ja tallettaa sen ilmentyjämuuttujana. metodia `new Square()` kutsutaan yhteensä 200 kertaa ja oliot tallennetaan ilmentyjämuuttujiin `player1Squares` ja `player2Squares`. Metodia `new Ship()` kutsutaan yhteensä 12 kertaa ja luodut oliot tallennetaan ilmentyjämuuttujiin `player1Ships` ja `player2Ships` 
 
 ### Luokkakaavio
-![luokkakaavio](https://user-images.githubusercontent.com/52420413/145851796-c0ca952b-43b2-4335-94f4-8564bba268d8.jpg)
+![luokkakaavio](https://user-images.githubusercontent.com/52420413/145853645-b76b9881-84e2-4546-b29a-b3f7cbe97069.jpg)
 
 
 ### Sekvenssikaavio koko peliprosessista pääpiirteittäin
