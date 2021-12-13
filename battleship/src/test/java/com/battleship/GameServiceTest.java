@@ -68,6 +68,14 @@ public class GameServiceTest {
     }
 
     @Test
+    public void creatingNewGameFailsWhenDatabaseAdressIsWrong() {
+        DBGameDao dbGameDao = new DBGameDao();
+        GameService service = new GameService(dbGameDao, "sqlite:testdata.db");
+        boolean res = service.createGame(new User("user", 0), new User("userTwo", 1));
+        assertEquals(false, res);
+    }
+
+    @Test
     public void addingNewPlayerOneShotWorks() {
         gameService.createGame(new User("user", 0), new User("userTwo", 1));
         gameService.addPlayerOneShot();

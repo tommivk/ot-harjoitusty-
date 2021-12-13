@@ -186,4 +186,26 @@ public class ComputerTest {
         assertEquals(true, player1Squares[4][5].getIsHit());
     }
 
+    @Test
+    public void computerHitRandomWorks() {
+        for (int i = 0; i < 10; i++) {
+            for (int k = 0; k < 10; k++) {
+                this.player1Squares[i][k].addShip(new Ship(5));
+            }
+        }
+
+        for (int i = 0; i < 100; i++) {
+            computer.computerHitRandom();
+        }
+
+        boolean allHit = true;
+        for (int i = 0; i < 10; i++) {
+            for (int k = 0; k < 10; k++) {
+                if (!player1Squares[i][k].getIsHit()) {
+                    allHit = false;
+                }
+            }
+        }
+        assertEquals(true, allHit);
+    }
 }

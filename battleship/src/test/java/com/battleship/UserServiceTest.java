@@ -60,6 +60,20 @@ public class UserServiceTest {
     }
 
     @Test
+    public void addingUserThatAlreadyExistsFails() {
+        userService.createUser("testUser");
+        boolean response = userService.createUser("testUser");
+        assertEquals(false, response);
+    }
+
+    @Test
+    public void addingNewUserFailsIfDatabaseAddressIsWrong() {
+        UserService service = new UserService(new DBUserDao(), "sqlite:testdata.db");
+        boolean response = service.createUser("testUser");
+        assertEquals(false, response);
+    }
+
+    @Test
     public void playerOneLoginWorks() {
         userService.createUser("testUser");
         boolean response = userService.playerOneLogin("testUser");
@@ -68,10 +82,25 @@ public class UserServiceTest {
     }
 
     @Test
+    public void logoutWorks() {
+        userService.createUser("testUser");
+        userService.playerOneLogin("testUser");
+        assertEquals("testUser", userService.getLoggedPlayerOne().getName());
+        userService.logout();
+        assertEquals(null, userService.getLoggedPlayerOne());
+        assertEquals(null, userService.getLoggedPlayerTwo());
+    }
+
+    @Test
     public void cannotLoginWithUserThatDoesNotExist() {
         userService.createUser("testUser");
         boolean response = userService.playerOneLogin("hackerman");
         assertEquals(false, response);
+        assertEquals(null, userService.getLoggedPlayerOne());
+        assertEquals(null, userService.getLoggedPlayerTwo());
+        boolean res = userService.playerTwoLogin("testuser2");
+        assertEquals(false, res);
+        assertEquals(null, userService.getLoggedPlayerOne());
         assertEquals(null, userService.getLoggedPlayerTwo());
     }
 
