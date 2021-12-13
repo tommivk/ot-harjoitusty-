@@ -22,6 +22,10 @@ Taulussa `Games` on sarakkeet `id` `finished` `playeroneshots`  `playertwoshots`
 ### Sovelluslogiikka
 Yhtä pelikentän ruutua kuvastaa ``Square`` olio, jolla on ilmentymämuuttujana javafx olio ``Rectangle``, jonka javafx lopulta renderöi käyttöliittymään. ``Square`` olioon on myös mahdollista lisätä ilmentymämuuttujana olio ``Ship`` joka kuvastaa yhtä laivaa pelikentällä.
 
+### Sekvenssikaavio käyttäjän sisäänkirjautumisesta
+![login](https://user-images.githubusercontent.com/52420413/145857100-95f4a585-1d3e-4fea-863e-118e1266557a.png)
+
+
 ### Sekvenssikaavio siitä mitä tapahtuu,kun uusi peli luodaan
 ![gamecreation](https://user-images.githubusercontent.com/52420413/145845645-9047ddb2-c09d-4898-a9b2-7868536d07e0.png)
 
