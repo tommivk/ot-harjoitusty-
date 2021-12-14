@@ -19,4 +19,6 @@
 | 10.12  | 2    | testausta                                             |
 | 10.12  | 1    | javadoc                                               |
 | 11.12  | 4    | sovelluksen ulkoasun ja käyttäjäkokemuksen parantelua |
-|  yht   | 35   |                                                       |
+| 12.12  | 1    | ulkoasun parantelua                                   |
+| 13.13  | 1    | testausta                                             |
+|  yht   | 37   |                                                       |
