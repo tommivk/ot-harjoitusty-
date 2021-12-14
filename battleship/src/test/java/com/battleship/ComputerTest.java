@@ -208,4 +208,10 @@ public class ComputerTest {
         }
         assertEquals(true, allHit);
     }
+
+    @Test
+    public void computerHitRandomReturnsFalseWhenNoHit() {
+        boolean res = computer.computerHitRandom();
+        assertEquals(false, res);
+    }
 }

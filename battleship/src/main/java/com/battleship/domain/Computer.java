@@ -53,6 +53,10 @@ public class Computer {
         this.prevHits++;
     }
 
+    public int getPrevHits() {
+        return this.prevHits;
+    }
+
     public int[] getPrevHitCoordinates() {
         return this.prevHitCoordinates;
     }
