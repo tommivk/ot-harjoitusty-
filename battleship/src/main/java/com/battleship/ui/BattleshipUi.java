@@ -115,7 +115,7 @@ public class BattleshipUi extends Application {
         VBox.setMargin(computerText, new Insets(0, 0, 10, 0));
 
         HBox statisticsTable = new HBox(userStatsContainer, computerStatsContainer);
-        statisticsTable.setAlignment(Pos.CENTER);
+        statisticsTable.setAlignment(Pos.TOP_CENTER);
         statisticsTable.setSpacing(50);
 
         TextField userSearch = new TextField();
@@ -129,6 +129,7 @@ public class BattleshipUi extends Application {
 
         VBox searchResult = new VBox();
         searchResult.setAlignment(Pos.CENTER);
+        VBox.setMargin(searchResult, new Insets(10, 0, 0, 0));
 
         searchButton.setOnMouseClicked(event -> {
             User user = userService.getUser(userSearch.getText());
@@ -151,8 +152,8 @@ public class BattleshipUi extends Application {
         searchField.setAlignment(Pos.CENTER);
 
         VBox centerContent = new VBox(statisticsTable, searchField, searchUserText, searchResult);
-        centerContent.setAlignment(Pos.CENTER);
-
+        centerContent.setAlignment(Pos.TOP_CENTER);
+        VBox.setMargin(statisticsTable, new Insets(20, 0, 0, 0));
         VBox.setMargin(searchField, new Insets(20, 20, 20, 20));
         pane.setCenter(centerContent);
         pane.setBottom(goBackButton);
@@ -247,11 +248,15 @@ public class BattleshipUi extends Application {
         headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         Label label = new Label("Name:");
         TextField textfield = new TextField();
-        Button button = new Button("OK");
+        Button button = new Button("Login");
+        Text errorMessage = new Text("");
         button.setOnMouseClicked(event -> {
             boolean success = userService.playerOneLogin(textfield.getText());
             if (success) {
+                errorMessage.setText("");
                 stage.setScene(gameSelectionScene(stage));
+            } else {
+                errorMessage.setText("User not found");
             }
         });
         Button goBackButton = new Button("Go back");
@@ -262,12 +267,14 @@ public class BattleshipUi extends Application {
         HBox hbox = new HBox(label, textfield, button);
         hbox.setAlignment(Pos.CENTER);
 
+        VBox vbox = new VBox(hbox, errorMessage);
+        vbox.setAlignment(Pos.CENTER);
         BorderPane pane = new BorderPane();
         pane.setTop(headerText);
-        pane.setCenter(hbox);
+        pane.setCenter(vbox);
         BorderPane.setAlignment(headerText, Pos.CENTER);
         BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
-        BorderPane.setMargin(hbox, new Insets(0, 0, 50, 0));
+        BorderPane.setMargin(vbox, new Insets(0, 0, 50, 0));
         pane.setBottom(goBackButton);
         BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
         return new Scene(pane);
@@ -279,6 +286,7 @@ public class BattleshipUi extends Application {
         Label label = new Label("Name:");
         TextField textfield = new TextField();
         Button button = new Button("Login");
+        Text errorMessage = new Text("");
         button.setOnMouseClicked(event -> {
             boolean success = userService.playerTwoLogin(textfield.getText());
             if (success) {
@@ -294,6 +302,8 @@ public class BattleshipUi extends Application {
                     stage.setScene(setUpScene);
                     stage.show();
                 }
+            } else {
+                errorMessage.setText("User not found");
             }
         });
         Button goBackButton = new Button("Go back");
@@ -309,9 +319,11 @@ public class BattleshipUi extends Application {
         });
         HBox hbox = new HBox(label, textfield, button);
         hbox.setAlignment(Pos.CENTER);
+        VBox vbox = new VBox(hbox, errorMessage);
+        vbox.setAlignment(Pos.CENTER);
         BorderPane pane = new BorderPane();
         pane.setTop(headerText);
-        VBox centerContent = new VBox(hbox, newUserButton);
+        VBox centerContent = new VBox(vbox, newUserButton);
         centerContent.setAlignment(Pos.CENTER);
         VBox.setMargin(newUserButton, new Insets(120, 0, 0, 0));
         pane.setCenter(centerContent);
