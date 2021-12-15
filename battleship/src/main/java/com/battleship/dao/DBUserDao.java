@@ -28,6 +28,24 @@ public class DBUserDao implements UserDao {
         return list;
     }
 
+    public User getUser(String databaseAdress, String username) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
+
+        try {
+            PreparedStatement p = db.prepareStatement("SELECT * FROM Users WHERE username = ?");
+            p.setString(1, username);
+            ResultSet r = p.executeQuery();
+            if (!r.next()) {
+                return null;
+            }
+            int id = Integer.valueOf(r.getString("id"));
+            return new User(r.getString("username"), id);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
     public User login(String databaseAdress, String username) throws SQLException {
         Connection db = DriverManager.getConnection(databaseAdress);
 

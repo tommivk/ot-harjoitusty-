@@ -95,6 +95,14 @@ public class UserService {
         }
     }
 
+    public User getUser(String username) {
+        try {
+            return userDao.getUser(this.databaseAdress, username);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     /**
      * Gets all users that are stored in database
      */

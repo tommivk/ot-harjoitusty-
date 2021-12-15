@@ -93,55 +93,68 @@ public class BattleshipUi extends Application {
     public Scene statisticsScene(Stage stage) {
         Text headerText = new Text(10, 20, "Stats");
         headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
-        User player = userService.getLoggedPlayerOne();
         Text yourStatsText = new Text("Your stats");
         yourStatsText.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
 
-        DecimalFormat df = new DecimalFormat("#.##");
-
-        int computerShots = gameService.getPlayerShotCount(1);
-        int computerHits = gameService.getPlayerHitCount(1);
-        Text totalComputerShotsText = new Text("Total shots: " + Integer.toString(computerShots));
-        Text totalComputerHitsText = new Text("Total hits: " + Integer.toString(computerHits));
-
-        float computerHitPercentage;
-        if (computerHits == 0 || computerShots == 0) {
-            computerHitPercentage = 0;
-        } else {
-            computerHitPercentage = ((float) computerHits / computerShots) * 100;
-        }
-        Text computerHitPercentageText = new Text("Hit %: " + df.format(computerHitPercentage));
-
-        int totalShots = gameService.getPlayerShotCount(player.getId());
-        int totalHits = gameService.getPlayerHitCount(player.getId());
-        Text totalShotsText = new Text("Total shots: " + Integer.toString(totalShots));
-        Text totalHitsText = new Text("Total hits: " + Integer.toString(totalHits));
-
-        float hitPercentage;
-        if (totalHits == 0 || totalShots == 0) {
-            hitPercentage = 0;
-        } else {
-            hitPercentage = ((float) totalHits / totalShots) * 100;
-        }
-        Text hitPercentageText = new Text("Hit %: " + df.format(hitPercentage));
         Button goBackButton = new Button("Go back");
         goBackButton.setOnMouseClicked(event -> {
             stage.setScene(gameSelectionScene(stage));
             stage.show();
         });
+        VBox usersStats = getPlayersStats(userService.getLoggedPlayerOne().getId());
         BorderPane pane = new BorderPane();
-        VBox userStats = new VBox(yourStatsText, totalShotsText, totalHitsText, hitPercentageText, goBackButton);
+
+        VBox userStatsContainer = new VBox(yourStatsText, usersStats, goBackButton);
         VBox.setMargin(yourStatsText, new Insets(0, 0, 10, 0));
+
         Text computerText = new Text("Computer");
         computerText.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
-        VBox computerStats = new VBox(computerText, totalComputerShotsText, totalComputerHitsText,
-                computerHitPercentageText, goBackButton);
+
+        VBox computersStats = getPlayersStats(1);
+        VBox computerStatsContainer = new VBox(computerText, computersStats);
         VBox.setMargin(computerText, new Insets(0, 0, 10, 0));
-        HBox statisticsTable = new HBox(userStats, computerStats);
+
+        HBox statisticsTable = new HBox(userStatsContainer, computerStatsContainer);
         statisticsTable.setAlignment(Pos.CENTER);
         statisticsTable.setSpacing(50);
 
-        pane.setCenter(statisticsTable);
+        TextField userSearch = new TextField();
+        userSearch.setPromptText("Search by username");
+        userSearch.setFocusTraversable(false);
+
+        Button searchButton = new Button("Search");
+
+        Text searchUserText = new Text("");
+        searchUserText.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
+
+        VBox searchResult = new VBox();
+        searchResult.setAlignment(Pos.CENTER);
+
+        searchButton.setOnMouseClicked(event -> {
+            User user = userService.getUser(userSearch.getText());
+            if (user != null) {
+                searchResult.getChildren().clear();
+                VBox data = getPlayersStats(user.getId());
+
+                data.setAlignment(Pos.CENTER);
+                searchResult.getChildren().addAll(data);
+                searchUserText.setText(user.getName());
+            } else {
+                Text errorMessage = new Text("User not found");
+                searchUserText.setText("");
+                searchResult.getChildren().clear();
+                searchResult.getChildren().addAll(errorMessage);
+            }
+        });
+
+        HBox searchField = new HBox(userSearch, searchButton);
+        searchField.setAlignment(Pos.CENTER);
+
+        VBox centerContent = new VBox(statisticsTable, searchField, searchUserText, searchResult);
+        centerContent.setAlignment(Pos.CENTER);
+
+        VBox.setMargin(searchField, new Insets(20, 20, 20, 20));
+        pane.setCenter(centerContent);
         pane.setBottom(goBackButton);
         BorderPane.setMargin(statisticsTable, new Insets(30, 0, 0, 0));
         BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
@@ -154,6 +167,24 @@ public class BattleshipUi extends Application {
         BorderPane.setAlignment(topContent, Pos.CENTER);
 
         return new Scene(pane);
+    }
+
+    public VBox getPlayersStats(int playerId) {
+        int totalShots = gameService.getPlayerShotCount(playerId);
+        int totalHits = gameService.getPlayerHitCount(playerId);
+        Text totalShotsText = new Text("Total shots: " + Integer.toString(totalShots));
+        Text totalHitsText = new Text("Total hits: " + Integer.toString(totalHits));
+
+        float hitPercentage;
+        if (totalHits == 0 || totalShots == 0) {
+            hitPercentage = 0;
+        } else {
+            hitPercentage = ((float) totalHits / totalShots) * 100;
+        }
+        DecimalFormat df = new DecimalFormat("#.##");
+        Text hitPercentageText = new Text("Hit %: " + df.format(hitPercentage));
+
+        return new VBox(totalShotsText, totalHitsText, hitPercentageText);
     }
 
     public Scene signUpScene(Stage stage) {

@@ -8,5 +8,7 @@ public interface UserDao {
 
     User login(String databaseAdress, String username) throws Exception;
 
+    User getUser(String databaseAddress, String username) throws Exception;
+
     List<User> getAll(String databaseAdress) throws Exception;
 }
