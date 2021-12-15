@@ -25,17 +25,17 @@ public class Computer {
         Random random = new Random();
 
         while (true) {
-            if (this.game.player2ShipsIsEmpty()) {
+            if (this.game.playerTwoShipsIsEmpty()) {
                 break;
             }
-            Ship ship = this.game.peekNextPlayer2Ship();
+            Ship ship = this.game.peekNextPlayerTwoShip();
             if (random.nextInt(2) == 0) {
                 this.game.changeShipDirection();
             }
             int row = random.nextInt(10);
             int column = random.nextInt(10);
 
-            if (this.game.canPlaceShip(ship, row, column, this.game.getPlayer2Squares())) {
+            if (this.game.canPlaceShip(ship, row, column, this.game.getPlayerTwoSquares())) {
                 this.game.placeShip(row, column, 2);
             }
         }
@@ -210,7 +210,7 @@ public class Computer {
      * Checks if square from the left of previous hit is hittable;
      */
     public boolean canHitLeft() {
-        Square[][] squares = this.game.getPlayer1Squares();
+        Square[][] squares = this.game.getPlayerOneSquares();
         if ((this.prevHitCoordinates[1] - 1) >= 0
                 && !squares[this.prevHitCoordinates[0]][this.prevHitCoordinates[1] - 1].getIsHit()) {
             return true;
@@ -222,7 +222,7 @@ public class Computer {
      * Checks if square from the right of previous hit is hittable;
      */
     public boolean canHitRight() {
-        Square[][] squares = this.game.getPlayer1Squares();
+        Square[][] squares = this.game.getPlayerOneSquares();
         if ((this.prevHitCoordinates[1] + 1) < 10
                 && !squares[this.prevHitCoordinates[0]][this.prevHitCoordinates[1] + 1].getIsHit()) {
             return true;
@@ -234,7 +234,7 @@ public class Computer {
      * Checks if square from the top of previous hit is hittable;
      */
     public boolean canHitTop() {
-        Square[][] squares = this.game.getPlayer1Squares();
+        Square[][] squares = this.game.getPlayerOneSquares();
 
         if (this.prevHitCoordinates[0] - 1 >= 0
                 && !squares[this.prevHitCoordinates[0] - 1][this.prevHitCoordinates[1]].getIsHit()) {
@@ -247,7 +247,7 @@ public class Computer {
      * Checks if square from the below of previous hit is hittable;
      */
     public boolean canHitBottom() {
-        Square[][] squares = this.game.getPlayer1Squares();
+        Square[][] squares = this.game.getPlayerOneSquares();
 
         if (this.prevHitCoordinates[0] + 1 < 10
                 && !squares[this.prevHitCoordinates[0] + 1][this.prevHitCoordinates[1]].getIsHit()) {
@@ -261,9 +261,10 @@ public class Computer {
      */
     public boolean canHitRow() {
         if (this.prevHitCoordinates[0] + 1 < 10
-                && !this.game.getPlayer1Squares()[this.prevHitCoordinates[0] + 1][this.prevHitCoordinates[1]].getIsHit()
+                && !this.game.getPlayerOneSquares()[this.prevHitCoordinates[0] + 1][this.prevHitCoordinates[1]]
+                        .getIsHit()
                 || this.prevHitCoordinates[0] - 1 >= 0
-                        && !this.game.getPlayer1Squares()[this.prevHitCoordinates[0] - 1][this.prevHitCoordinates[1]]
+                        && !this.game.getPlayerOneSquares()[this.prevHitCoordinates[0] - 1][this.prevHitCoordinates[1]]
                                 .getIsHit()) {
             return true;
         }
@@ -277,9 +278,9 @@ public class Computer {
         int row = prevHitCoordinates[0];
         int col = prevHitCoordinates[1];
 
-        boolean hit = this.game.getPlayer1Squares()[row][col - 1].hitSquare();
+        boolean hit = this.game.getPlayerOneSquares()[row][col - 1].hitSquare();
 
-        if (hit && this.game.getPlayer1Squares()[row][col - 1].getShip().isDead()) {
+        if (hit && this.game.getPlayerOneSquares()[row][col - 1].getShip().isDead()) {
             this.prevHits = 0;
             return true;
         }
@@ -300,9 +301,9 @@ public class Computer {
         int row = prevHitCoordinates[0];
         int col = prevHitCoordinates[1];
 
-        boolean hit = this.game.getPlayer1Squares()[row][col + 1].hitSquare();
+        boolean hit = this.game.getPlayerOneSquares()[row][col + 1].hitSquare();
 
-        if (hit && this.game.getPlayer1Squares()[row][col + 1].getShip().isDead()) {
+        if (hit && this.game.getPlayerOneSquares()[row][col + 1].getShip().isDead()) {
             this.prevHits = 0;
             return true;
         }
@@ -323,9 +324,9 @@ public class Computer {
         int row = prevHitCoordinates[0];
         int col = prevHitCoordinates[1];
 
-        boolean hit = this.game.getPlayer1Squares()[row - 1][col].hitSquare();
+        boolean hit = this.game.getPlayerOneSquares()[row - 1][col].hitSquare();
 
-        if (hit && this.game.getPlayer1Squares()[row - 1][col].getShip().isDead()) {
+        if (hit && this.game.getPlayerOneSquares()[row - 1][col].getShip().isDead()) {
             this.prevHits = 0;
             return true;
         }
@@ -345,9 +346,9 @@ public class Computer {
     public boolean hitBottom() {
         int row = prevHitCoordinates[0];
         int col = prevHitCoordinates[1];
-        boolean hit = this.game.getPlayer1Squares()[row + 1][col].hitSquare();
+        boolean hit = this.game.getPlayerOneSquares()[row + 1][col].hitSquare();
 
-        if (hit && this.game.getPlayer1Squares()[row + 1][col].getShip().isDead()) {
+        if (hit && this.game.getPlayerOneSquares()[row + 1][col].getShip().isDead()) {
             this.prevHits = 0;
             return true;
         }
@@ -367,7 +368,7 @@ public class Computer {
     public boolean canHitColumnEndRight() {
         int row = prevHitCoordinates[0];
         int col = prevHitCoordinates[1];
-        if ((col + this.prevHits) < 10 && !this.game.getPlayer1Squares()[row][col + this.prevHits].getIsHit()) {
+        if ((col + this.prevHits) < 10 && !this.game.getPlayerOneSquares()[row][col + this.prevHits].getIsHit()) {
             return true;
         }
         return false;
@@ -379,7 +380,7 @@ public class Computer {
     public boolean canHitColumnEndLeft() {
         int row = prevHitCoordinates[0];
         int col = prevHitCoordinates[1];
-        if ((col - this.prevHits) >= 0 && !this.game.getPlayer1Squares()[row][col - this.prevHits].getIsHit()) {
+        if ((col - this.prevHits) >= 0 && !this.game.getPlayerOneSquares()[row][col - this.prevHits].getIsHit()) {
             return true;
         }
         return false;
@@ -391,7 +392,7 @@ public class Computer {
     public boolean canHitRowEndTop() {
         int row = prevHitCoordinates[0];
         int col = prevHitCoordinates[1];
-        if ((row - this.prevHits) >= 0 && !this.game.getPlayer1Squares()[row - prevHits][col].getIsHit()) {
+        if ((row - this.prevHits) >= 0 && !this.game.getPlayerOneSquares()[row - prevHits][col].getIsHit()) {
             return true;
         }
         return false;
@@ -403,7 +404,7 @@ public class Computer {
     public boolean canHitRowEndBottom() {
         int row = prevHitCoordinates[0];
         int col = prevHitCoordinates[1];
-        if ((row + this.prevHits) < 10 && !this.game.getPlayer1Squares()[row + this.prevHits][col].getIsHit()) {
+        if ((row + this.prevHits) < 10 && !this.game.getPlayerOneSquares()[row + this.prevHits][col].getIsHit()) {
             return true;
         }
         return false;
@@ -416,8 +417,8 @@ public class Computer {
         int row = prevHitCoordinates[0];
         int col = prevHitCoordinates[1];
 
-        boolean hit = this.game.getPlayer1Squares()[row + prevHits][col].hitSquare();
-        if (hit && this.game.getPlayer1Squares()[row + prevHits][col].getShip().isDead()) {
+        boolean hit = this.game.getPlayerOneSquares()[row + prevHits][col].hitSquare();
+        if (hit && this.game.getPlayerOneSquares()[row + prevHits][col].getShip().isDead()) {
             this.prevHits = 0;
             return true;
         }
@@ -438,8 +439,8 @@ public class Computer {
         int row = prevHitCoordinates[0];
         int col = prevHitCoordinates[1];
 
-        boolean hit = this.game.getPlayer1Squares()[row - prevHits][col].hitSquare();
-        if (hit && this.game.getPlayer1Squares()[row - prevHits][col].getShip().isDead()) {
+        boolean hit = this.game.getPlayerOneSquares()[row - prevHits][col].hitSquare();
+        if (hit && this.game.getPlayerOneSquares()[row - prevHits][col].getShip().isDead()) {
             this.prevHits = 0;
             return true;
         }
@@ -460,9 +461,9 @@ public class Computer {
         int row = prevHitCoordinates[0];
         int col = prevHitCoordinates[1];
 
-        boolean hit = this.game.getPlayer1Squares()[row][col + this.prevHits].hitSquare();
+        boolean hit = this.game.getPlayerOneSquares()[row][col + this.prevHits].hitSquare();
 
-        if (hit && this.game.getPlayer1Squares()[row][col + this.prevHits].getShip().isDead()) {
+        if (hit && this.game.getPlayerOneSquares()[row][col + this.prevHits].getShip().isDead()) {
             this.prevHits = 0;
             return true;
         }
@@ -485,9 +486,9 @@ public class Computer {
         int row = prevHitCoordinates[0];
         int col = prevHitCoordinates[1];
 
-        boolean hit = this.game.getPlayer1Squares()[row][col - this.prevHits].hitSquare();
+        boolean hit = this.game.getPlayerOneSquares()[row][col - this.prevHits].hitSquare();
 
-        if (hit && this.game.getPlayer1Squares()[row][col - this.prevHits].getShip().isDead()) {
+        if (hit && this.game.getPlayerOneSquares()[row][col - this.prevHits].getShip().isDead()) {
             this.prevHits = 0;
             return true;
         }
@@ -508,7 +509,7 @@ public class Computer {
      */
     public boolean computerHitRandom() {
         Random random = new Random();
-        Square[][] squares = this.game.getPlayer1Squares();
+        Square[][] squares = this.game.getPlayerOneSquares();
         while (true) {
             int row = random.nextInt(10);
             int column = random.nextInt(10);

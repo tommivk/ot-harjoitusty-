@@ -27,13 +27,13 @@ public class ComputerTest {
         game = new Game(10);
         ship = new Ship(5);
         computer = game.getComputer();
-        player1Squares = game.getPlayer1Squares();
+        player1Squares = game.getPlayerOneSquares();
     }
 
     @Test
     public void placeComputerShipsPlacesSixUniqueShips() {
         game.getComputer().placeComputerShips();
-        Square[][] squares = game.getPlayer2Squares();
+        Square[][] squares = game.getPlayerTwoSquares();
         ArrayList<Integer> hashCodes = new ArrayList<Integer>();
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {

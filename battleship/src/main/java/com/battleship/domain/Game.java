@@ -10,11 +10,11 @@ public class Game {
     private Turn turn;
     private boolean gameOver;
     private boolean againstComputer;
-    private Stack<Ship> player1Ships;
-    private Stack<Ship> player2Ships;
+    private Stack<Ship> playerOneShips;
+    private Stack<Ship> playerTwoShips;
     private ShipDirection shipDirection;
-    private Square[][] player1Squares;
-    private Square[][] player2Squares;
+    private Square[][] playerOneSquares;
+    private Square[][] playerTwoSquares;
     private Computer computer;
     private User playerOne;
     private User playerTwo;
@@ -28,11 +28,11 @@ public class Game {
         this.againstComputer = false;
         this.computer = new Computer(this);
 
-        this.player1Squares = initializeBoard(boardSize);
-        this.player2Squares = initializeBoard(boardSize);
+        this.playerOneSquares = initializeBoard(boardSize);
+        this.playerTwoSquares = initializeBoard(boardSize);
 
-        this.player1Ships = initializeShips();
-        this.player2Ships = initializeShips();
+        this.playerOneShips = initializeShips();
+        this.playerTwoShips = initializeShips();
 
         this.playerOne = new User("Player 1");
         this.playerTwo = new User("Player 2");
@@ -49,11 +49,11 @@ public class Game {
         this.againstComputer = false;
         this.computer = new Computer(this);
 
-        this.player1Squares = initializeBoard(boardSize);
-        this.player2Squares = initializeBoard(boardSize);
+        this.playerOneSquares = initializeBoard(boardSize);
+        this.playerTwoSquares = initializeBoard(boardSize);
 
-        this.player1Ships = initializeShips();
-        this.player2Ships = initializeShips();
+        this.playerOneShips = initializeShips();
+        this.playerTwoShips = initializeShips();
     }
 
     public int getGameId() {
@@ -117,11 +117,11 @@ public class Game {
      * @param player which players squares will be highlighted
      */
     public void highlightSquares(int row, int column, int player) {
-        if ((player == 1 && !this.player1ShipsIsEmpty()) || (player == 2 && !this.player2ShipsIsEmpty())) {
+        if ((player == 1 && !this.playerOneShipsIsEmpty()) || (player == 2 && !this.playerTwoShipsIsEmpty())) {
 
-            Ship ship = player == 1 ? this.peekNextPlayer1Ship() : this.peekNextPlayer2Ship();
+            Ship ship = player == 1 ? this.peekNextPlayerOneShip() : this.peekNextPlayerTwoShip();
             int index = this.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
-            Square[][] squares = player == 1 ? this.player1Squares : this.player2Squares;
+            Square[][] squares = player == 1 ? this.playerOneSquares : this.playerTwoSquares;
 
             if (index + ship.getSize() <= 10) {
                 for (int j = ship.getSize(); j > 0; j--) {
@@ -144,7 +144,7 @@ public class Game {
     public void clearButtonColors(int player) {
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
-                Square square = player == 1 ? this.player1Squares[i][k] : this.player2Squares[i][k];
+                Square square = player == 1 ? this.playerOneSquares[i][k] : this.playerTwoSquares[i][k];
                 square.removeButtonImage();
             }
         }
@@ -156,11 +156,11 @@ public class Game {
      * @param player which players squares will be cleared
      */
     public void removeButtonImage(int row, int column, int player) {
-        if ((player == 1 && !this.player1ShipsIsEmpty()) || (player == 2 && !this.player2ShipsIsEmpty())) {
-            Ship ship = player == 1 ? this.peekNextPlayer1Ship() : this.peekNextPlayer2Ship();
+        if ((player == 1 && !this.playerOneShipsIsEmpty()) || (player == 2 && !this.playerTwoShipsIsEmpty())) {
+            Ship ship = player == 1 ? this.peekNextPlayerOneShip() : this.peekNextPlayerTwoShip();
 
             int index = this.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
-            Square[][] squares = player == 1 ? this.player1Squares : this.player2Squares;
+            Square[][] squares = player == 1 ? this.playerOneSquares : this.playerTwoSquares;
 
             if (index + ship.getSize() <= 10) {
                 for (int j = ship.getSize(); j > 0; j--) {
@@ -179,13 +179,13 @@ public class Game {
      * Places new ship to the coordinates
      */
     public void placeShip(int row, int column, int player) {
-        if ((player == 1 && !this.player1ShipsIsEmpty()) || (player == 2 && !this.player2ShipsIsEmpty())) {
+        if ((player == 1 && !this.playerOneShipsIsEmpty()) || (player == 2 && !this.playerTwoShipsIsEmpty())) {
             int index = this.shipDirection == ShipDirection.HORIZONTAL ? column : row;
-            Ship nextShip = player == 1 ? this.peekNextPlayer1Ship() : this.peekNextPlayer2Ship();
-            Square[][] squares = player == 1 ? this.player1Squares : this.player2Squares;
+            Ship nextShip = player == 1 ? this.peekNextPlayerOneShip() : this.peekNextPlayerTwoShip();
+            Square[][] squares = player == 1 ? this.playerOneSquares : this.playerTwoSquares;
 
             if ((index + nextShip.getSize()) <= 10 && canPlaceShip(nextShip, row, column, squares)) {
-                Ship ship = player == 1 ? this.getNewPlayer1Ship() : this.getNewPlayer2Ship();
+                Ship ship = player == 1 ? this.getNewPlayerOneShip() : this.getNewPlayerTwoShip();
                 for (int l = ship.getSize(); l > 0; l--) {
                     Square activeSquare = this.shipDirection == ShipDirection.HORIZONTAL
                             ? squares[row][(column - 1) + l]
@@ -226,11 +226,11 @@ public class Game {
     /*
      * Returns true if all player one ships are dead
      */
-    public boolean allPlayer1ShipsDead() {
+    public boolean allPlayerOneShipsDead() {
         boolean allShipsDead = true;
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
-                if (this.player1Squares[i][k].hasShip() && !this.player1Squares[i][k].getShip().isDead()) {
+                if (this.playerOneSquares[i][k].hasShip() && !this.playerOneSquares[i][k].getShip().isDead()) {
                     allShipsDead = false;
                 }
             }
@@ -241,11 +241,11 @@ public class Game {
     /*
      * Returns true if all player two ships are dead
      */
-    public boolean allPlayer2ShipsDead() {
+    public boolean allPlayerTwoShipsDead() {
         boolean allShipsDead = true;
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
-                if (this.player2Squares[i][k].hasShip() && !this.player2Squares[i][k].getShip().isDead()) {
+                if (this.playerTwoSquares[i][k].hasShip() && !this.playerTwoSquares[i][k].getShip().isDead()) {
                     allShipsDead = false;
                 }
             }
@@ -273,20 +273,20 @@ public class Game {
         return this.gameOver;
     }
 
-    public Square[][] getPlayer1Squares() {
-        return this.player1Squares;
+    public Square[][] getPlayerOneSquares() {
+        return this.playerOneSquares;
     }
 
-    public Square[][] getPlayer2Squares() {
-        return this.player2Squares;
+    public Square[][] getPlayerTwoSquares() {
+        return this.playerTwoSquares;
     }
 
     /**
      * Gets all the player one ships that haven't been placed on the board yet
      * 
      */
-    public Stack<Ship> getPlayer1Ships() {
-        return this.player1Ships;
+    public Stack<Ship> getPlayerOneShips() {
+        return this.playerOneShips;
     }
 
     /**
@@ -294,8 +294,8 @@ public class Game {
      * 
      * @return Ship
      */
-    public Ship getNewPlayer1Ship() {
-        return this.player1Ships.pop();
+    public Ship getNewPlayerOneShip() {
+        return this.playerOneShips.pop();
     }
 
     /**
@@ -303,15 +303,15 @@ public class Game {
      * 
      * @return Ship
      */
-    public Ship peekNextPlayer1Ship() {
-        return this.player1Ships.peek();
+    public Ship peekNextPlayerOneShip() {
+        return this.playerOneShips.peek();
     }
 
     /**
      * Checks if all player two ships are placed on the board
      */
-    public boolean player1ShipsIsEmpty() {
-        return this.player1Ships.isEmpty();
+    public boolean playerOneShipsIsEmpty() {
+        return this.playerOneShips.isEmpty();
     }
 
     /**
@@ -319,8 +319,8 @@ public class Game {
      * 
      * @return Ship
      */
-    public Ship getNewPlayer2Ship() {
-        return this.player2Ships.pop();
+    public Ship getNewPlayerTwoShip() {
+        return this.playerTwoShips.pop();
     }
 
     /**
@@ -328,15 +328,15 @@ public class Game {
      * 
      * @return Ship
      */
-    public Ship peekNextPlayer2Ship() {
-        return this.player2Ships.peek();
+    public Ship peekNextPlayerTwoShip() {
+        return this.playerTwoShips.peek();
     }
 
     /**
      * Checks if all player two ships are placed on the board
      */
-    public boolean player2ShipsIsEmpty() {
-        return this.player2Ships.isEmpty();
+    public boolean playerTwoShipsIsEmpty() {
+        return this.playerTwoShips.isEmpty();
     }
 
     public ShipDirection getShipDirection() {

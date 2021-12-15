@@ -385,36 +385,36 @@ public class BattleshipUi extends Application {
     }
 
     public Scene setUpScene(Stage stage) {
-        GridPane player1Grid = new GridPane();
-        GridPane player2Grid = new GridPane();
+        GridPane playerOneGrid = new GridPane();
+        GridPane playerTwoGrid = new GridPane();
 
-        Square[][] player1Squares = game.getPlayer1Squares();
-        Square[][] player2Squares = game.getPlayer2Squares();
+        Square[][] playerOneSquares = game.getPlayerOneSquares();
+        Square[][] playerTwoSquares = game.getPlayerTwoSquares();
 
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
                 int row = i;
                 int column = k;
 
-                Rectangle player1Button = player1Squares[i][k].getButton();
-                Rectangle player2Button = player2Squares[i][k].getButton();
+                Rectangle playerOneButton = playerOneSquares[i][k].getButton();
+                Rectangle playerTwoButton = playerTwoSquares[i][k].getButton();
 
-                player1Button.setOnMouseEntered(event -> {
+                playerOneButton.setOnMouseEntered(event -> {
                     game.highlightSquares(row, column, 1);
                 });
 
-                player1Button.setOnMouseExited(event -> {
+                playerOneButton.setOnMouseExited(event -> {
                     game.removeButtonImage(row, column, 1);
                 });
 
-                player1Button.setOnMouseClicked(event -> {
+                playerOneButton.setOnMouseClicked(event -> {
                     if (event.getButton() == MouseButton.PRIMARY) {
                         game.placeShip(row, column, 1);
 
-                        if (game.player1ShipsIsEmpty()) {
+                        if (game.playerOneShipsIsEmpty()) {
                             game.clearButtonColors(1);
                         }
-                        if (game.getIsAgainstComputer() && game.player1ShipsIsEmpty()) {
+                        if (game.getIsAgainstComputer() && game.playerOneShipsIsEmpty()) {
                             stage.setScene(playScene(stage));
                             stage.show();
                         }
@@ -423,8 +423,8 @@ public class BattleshipUi extends Application {
                     if (event.getButton() == MouseButton.SECONDARY) {
                         for (int m = 0; m < 10; m++) {
                             for (int n = 0; n < 10; n++) {
-                                if (!player1Squares[n][m].hasShip()) {
-                                    player1Squares[n][m].removeButtonImage();
+                                if (!playerOneSquares[n][m].hasShip()) {
+                                    playerOneSquares[n][m].removeButtonImage();
                                 }
                             }
                         }
@@ -434,26 +434,26 @@ public class BattleshipUi extends Application {
 
                 });
 
-                player1Grid.add(player1Button, k, i);
+                playerOneGrid.add(playerOneButton, k, i);
 
                 if (!game.getIsAgainstComputer()) {
 
-                    player2Button.setOnMouseEntered(event -> {
-                        if (game.player1ShipsIsEmpty()) {
+                    playerTwoButton.setOnMouseEntered(event -> {
+                        if (game.playerOneShipsIsEmpty()) {
                             game.highlightSquares(row, column, 2);
                         }
                     });
 
-                    player2Button.setOnMouseExited(event -> {
+                    playerTwoButton.setOnMouseExited(event -> {
                         game.removeButtonImage(row, column, 2);
                     });
 
-                    player2Button.setOnMouseClicked(event -> {
-                        if (game.player1ShipsIsEmpty()) {
+                    playerTwoButton.setOnMouseClicked(event -> {
+                        if (game.playerOneShipsIsEmpty()) {
                             if (event.getButton() == MouseButton.PRIMARY) {
                                 game.placeShip(row, column, 2);
 
-                                if (game.player2ShipsIsEmpty()) {
+                                if (game.playerTwoShipsIsEmpty()) {
                                     stage.setScene(playScene(stage));
                                     stage.show();
                                 }
@@ -462,8 +462,8 @@ public class BattleshipUi extends Application {
                             if (event.getButton() == MouseButton.SECONDARY) {
                                 for (int m = 0; m < 10; m++) {
                                     for (int n = 0; n < 10; n++) {
-                                        if (!player2Squares[n][m].hasShip()) {
-                                            player2Squares[n][m].removeButtonImage();
+                                        if (!playerTwoSquares[n][m].hasShip()) {
+                                            playerTwoSquares[n][m].removeButtonImage();
                                         }
                                     }
                                 }
@@ -476,7 +476,7 @@ public class BattleshipUi extends Application {
                     game.getComputer().placeComputerShips();
                     game.clearButtonColors(2);
                 }
-                player2Grid.add(player2Button, k, i);
+                playerTwoGrid.add(playerTwoButton, k, i);
             }
         }
         Label player1Label = new Label(game.getPlayerOne().getName());
@@ -485,8 +485,8 @@ public class BattleshipUi extends Application {
         Label player2Label = new Label(game.getPlayerTwo().getName());
         player2Label.setPadding(new Insets(10, 0, 10, 0));
 
-        HBox player1Setup = getBoard(player1Grid);
-        HBox player2Setup = getBoard(player2Grid);
+        HBox player1Setup = getBoard(playerOneGrid);
+        HBox player2Setup = getBoard(playerTwoGrid);
 
         VBox player1Board = new VBox(player1Label, player1Setup);
         player1Board.setAlignment(Pos.CENTER);
@@ -523,8 +523,8 @@ public class BattleshipUi extends Application {
         GridPane gridpane1 = new GridPane();
         GridPane gridpane2 = new GridPane();
 
-        Square[][] player1Squares = game.getPlayer1Squares();
-        Square[][] player2Squares = game.getPlayer2Squares();
+        Square[][] playerOneSquares = game.getPlayerOneSquares();
+        Square[][] playerTwoSquares = game.getPlayerTwoSquares();
 
         Label turnLabel = new Label("TURN: " + (game.getIsAgainstComputer() ? "You" : game.getPlayerOne().getName()));
         turnLabel.setPadding(new Insets(20, 0, 0, 0));
@@ -554,7 +554,7 @@ public class BattleshipUi extends Application {
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
 
-                Square square = player1Squares[i][k];
+                Square square = playerOneSquares[i][k];
                 Rectangle button = square.getButton();
                 button.setOnMouseClicked(null);
                 square.removeButtonImage();
@@ -570,7 +570,7 @@ public class BattleshipUi extends Application {
                                 gameService.addPlayerTwoHit();
                             }
                         }
-                        if (game.allPlayer1ShipsDead()) {
+                        if (game.allPlayerOneShipsDead()) {
                             game.setGameOver();
                             turnLabel.setText(game.getPlayerTwo().getName() + " WINS!");
                             newGame.setVisible(true);
@@ -585,7 +585,7 @@ public class BattleshipUi extends Application {
 
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
-                Square square = player2Squares[i][k];
+                Square square = playerTwoSquares[i][k];
                 Rectangle button = square.getButton();
 
                 square.removeButtonImage();
@@ -608,12 +608,12 @@ public class BattleshipUi extends Application {
                         } else {
                             gameService.addPlayerOneHit();
                         }
-                        if (game.getIsAgainstComputer() && game.allPlayer1ShipsDead()) {
+                        if (game.getIsAgainstComputer() && game.allPlayerOneShipsDead()) {
                             game.setGameOver();
                             turnLabel.setText("COMPUTER WINS!");
                             newGame.setVisible(true);
                         }
-                        if (game.allPlayer2ShipsDead()) {
+                        if (game.allPlayerTwoShipsDead()) {
                             game.setGameOver();
                             turnLabel.setText(game.getIsAgainstComputer() ? "YOU WIN!"
                                     : game.getPlayerOne().getName() + " WINS!");
