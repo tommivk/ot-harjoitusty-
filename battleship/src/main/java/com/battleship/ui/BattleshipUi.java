@@ -195,10 +195,12 @@ public class BattleshipUi extends Application {
         Label label = new Label("Name:");
         TextField textfield = new TextField();
         Button button = new Button("Add");
+        Text errorMessage = new Text("");
         button.setOnMouseClicked(event -> {
             boolean success = userService.createUser(textfield.getText());
             userService.getAllUsers();
             if (success) {
+                errorMessage.setText("");
                 if (userService.getLoggedPlayerOne() == null) {
                     stage.setScene(loginScene(stage));
                     stage.show();
@@ -206,6 +208,8 @@ public class BattleshipUi extends Application {
                     stage.setScene(gameSelectionScene(stage));
                     stage.show();
                 }
+            } else {
+                errorMessage.setText("Username taken");
             }
         });
 
@@ -228,7 +232,8 @@ public class BattleshipUi extends Application {
         });
         HBox hbox = new HBox(label, textfield, button);
         hbox.setAlignment(Pos.CENTER);
-        VBox vbox = new VBox(hbox, randomButton);
+
+        VBox vbox = new VBox(hbox, errorMessage, randomButton);
         vbox.setSpacing(20.0);
         vbox.setAlignment(Pos.CENTER);
         BorderPane pane = new BorderPane();
