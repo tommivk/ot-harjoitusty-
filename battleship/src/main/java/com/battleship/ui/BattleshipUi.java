@@ -209,7 +209,7 @@ public class BattleshipUi extends Application {
                     stage.show();
                 }
             } else {
-                errorMessage.setText("Username taken");
+                errorMessage.setText("Username is taken");
             }
         });
 

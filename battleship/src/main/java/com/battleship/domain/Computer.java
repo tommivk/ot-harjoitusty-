@@ -517,19 +517,28 @@ public class Computer {
             if (square.getIsHit()) {
                 continue;
             }
-            boolean hit = square.hitSquare();
-            if (!hit) {
-                this.game.setTurn(Turn.PLAYER1);
-                return false;
-            }
-            if (square.getShip().isDead()) {
-                this.prevHits = 0;
-            } else {
-                this.prevHits++;
-                this.prevHitCoordinates[0] = row;
-                this.prevHitCoordinates[1] = column;
-            }
-            return true;
+            boolean isHit = hitSquare(row, column);
+            return isHit;
         }
+    }
+
+    /**
+     * Hits player one's square
+     */
+    public boolean hitSquare(int row, int column) {
+        Square square = this.game.getPlayerOneSquares()[row][column];
+        boolean hit = square.hitSquare();
+        if (!hit) {
+            this.game.setTurn(Turn.PLAYER1);
+            return false;
+        }
+        if (square.getShip().isDead()) {
+            this.prevHits = 0;
+        } else {
+            this.prevHits++;
+            this.prevHitCoordinates[0] = row;
+            this.prevHitCoordinates[1] = column;
+        }
+        return true;
     }
 }
