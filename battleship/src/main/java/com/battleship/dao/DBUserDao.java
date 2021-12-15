@@ -43,6 +43,8 @@ public class DBUserDao implements UserDao {
         } catch (Exception e) {
             System.out.println(e);
             return null;
+        } finally {
+            db.close();
         }
     }
 
