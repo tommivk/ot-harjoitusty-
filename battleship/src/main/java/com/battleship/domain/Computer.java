@@ -53,18 +53,22 @@ public class Computer {
         this.prevHits++;
     }
 
+    /**
+     * returns how many continuous hits computer has
+     */
     public int getPrevHits() {
         return this.prevHits;
     }
 
+    /**
+     * gets the coodinates of previous shot that hit a ship
+     */
     public int[] getPrevHitCoordinates() {
         return this.prevHitCoordinates;
     }
 
     /**
-     * Hits random square if previous hits is 0. If previous hits is 1 it tries to
-     * hit squares around it. If previous hits is > 1
-     * it tries to hit squares depending on what the last two hits direction was
+     * Stores computers hits and shots to database
      */
     private void storeHit(boolean hit, GameService gameService) {
         if (hit) {
@@ -73,6 +77,11 @@ public class Computer {
         gameService.addPlayerTwoShot();
     }
 
+    /**
+     * Hits random square if previous hits is 0. If previous hits is 1 it tries to
+     * hit squares around it. If previous hits is > 1
+     * it tries to hit squares depending on what the last two hits direction was
+     */
     public void computersTurn(GameService gameService) {
         while (true) {
             if (prevHits == 0) {

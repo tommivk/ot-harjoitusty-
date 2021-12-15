@@ -178,7 +178,7 @@ public class GameTest {
 
         Square[][] squares = game.getPlayer1Squares();
 
-        game.removeHighlight(0, 0, 1);
+        game.removeButtonImage(0, 0, 1);
         assertEquals(Color.WHITESMOKE, squares[0][0].getButton().getFill());
         assertEquals(Color.WHITESMOKE, squares[4][0].getButton().getFill());
     }

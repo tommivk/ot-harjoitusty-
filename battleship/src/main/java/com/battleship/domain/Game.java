@@ -80,6 +80,9 @@ public class Game {
         return this.computer;
     }
 
+    /**
+     * Initializes new Square object to all squares in the array
+     */
     public Square[][] initializeBoard(int size) {
         Square[][] squares = new Square[size][size];
         for (int i = 0; i < size; i++) {
@@ -90,6 +93,11 @@ public class Game {
         return squares;
     }
 
+    /**
+     * Creates new ships
+     * 
+     * @return stack containing all the players ships
+     */
     public Stack<Ship> initializeShips() {
         Stack<Ship> ships = new Stack<Ship>();
 
@@ -103,6 +111,11 @@ public class Game {
         return ships;
     }
 
+    /**
+     * Highlights squares based on the next ships size and orientation
+     * 
+     * @param player which players squares will be highlighted
+     */
     public void highlightSquares(int row, int column, int player) {
         if ((player == 1 && !this.player1ShipsIsEmpty()) || (player == 2 && !this.player2ShipsIsEmpty())) {
 
@@ -123,6 +136,11 @@ public class Game {
         }
     }
 
+    /**
+     * Removes images from all the squares
+     * 
+     * @param player which players squares will be cleared
+     */
     public void clearButtonColors(int player) {
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
@@ -132,7 +150,12 @@ public class Game {
         }
     }
 
-    public void removeHighlight(int row, int column, int player) {
+    /**
+     * Removes images from all the squares that do not contain a ship
+     * 
+     * @param player which players squares will be cleared
+     */
+    public void removeButtonImage(int row, int column, int player) {
         if ((player == 1 && !this.player1ShipsIsEmpty()) || (player == 2 && !this.player2ShipsIsEmpty())) {
             Ship ship = player == 1 ? this.peekNextPlayer1Ship() : this.peekNextPlayer2Ship();
 
@@ -258,30 +281,60 @@ public class Game {
         return this.player2Squares;
     }
 
+    /**
+     * Gets all the player one ships that haven't been placed on the board yet
+     * 
+     */
     public Stack<Ship> getPlayer1Ships() {
         return this.player1Ships;
     }
 
+    /**
+     * Removes one ship of the player one's ships and returns it
+     * 
+     * @return Ship
+     */
     public Ship getNewPlayer1Ship() {
         return this.player1Ships.pop();
     }
 
+    /**
+     * Peeks the next player one'sship that will be placed on the board
+     * 
+     * @return Ship
+     */
     public Ship peekNextPlayer1Ship() {
         return this.player1Ships.peek();
     }
 
+    /**
+     * Checks if all player two ships are placed on the board
+     */
     public boolean player1ShipsIsEmpty() {
         return this.player1Ships.isEmpty();
     }
 
+    /**
+     * Removes one ship of the player twos's ships and returns it
+     * 
+     * @return Ship
+     */
     public Ship getNewPlayer2Ship() {
         return this.player2Ships.pop();
     }
 
+    /**
+     * Peeks the next player two's ship that will be placed on the board
+     * 
+     * @return Ship
+     */
     public Ship peekNextPlayer2Ship() {
         return this.player2Ships.peek();
     }
 
+    /**
+     * Checks if all player two ships are placed on the board
+     */
     public boolean player2ShipsIsEmpty() {
         return this.player2Ships.isEmpty();
     }
@@ -302,6 +355,10 @@ public class Game {
         this.againstComputer = bool;
     }
 
+    /**
+     * 
+     * @return true if the game is against computer
+     */
     public boolean getIsAgainstComputer() {
         return this.againstComputer;
     }

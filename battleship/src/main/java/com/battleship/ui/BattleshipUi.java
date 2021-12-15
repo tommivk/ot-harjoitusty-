@@ -404,7 +404,7 @@ public class BattleshipUi extends Application {
                 });
 
                 player1Button.setOnMouseExited(event -> {
-                    game.removeHighlight(row, column, 1);
+                    game.removeButtonImage(row, column, 1);
                 });
 
                 player1Button.setOnMouseClicked(event -> {
@@ -445,7 +445,7 @@ public class BattleshipUi extends Application {
                     });
 
                     player2Button.setOnMouseExited(event -> {
-                        game.removeHighlight(row, column, 2);
+                        game.removeButtonImage(row, column, 2);
                     });
 
                     player2Button.setOnMouseClicked(event -> {
