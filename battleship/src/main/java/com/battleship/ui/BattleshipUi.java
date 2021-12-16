@@ -605,8 +605,8 @@ public class BattleshipUi extends Application {
             stage.show();
         });
 
-        Button newGame = new Button("New game");
-        newGame.setOnMouseClicked(event -> {
+        Button newGameButton = new Button("New game");
+        newGameButton.setOnMouseClicked(event -> {
             boolean success = gameService.createGame(game.getPlayerOne(), game.getPlayerTwo());
             boolean isAgainstComputer = game.getIsAgainstComputer();
             if (success) {
@@ -619,7 +619,7 @@ public class BattleshipUi extends Application {
             }
 
         });
-        newGame.setVisible(false);
+        newGameButton.setVisible(false);
 
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
@@ -644,7 +644,7 @@ public class BattleshipUi extends Application {
                             game.setGameOver();
                             gameService.setWinner(game.getPlayerTwo().getId());
                             turnLabel.setText(game.getPlayerTwo().getName() + " WINS!");
-                            newGame.setVisible(true);
+                            newGameButton.setVisible(true);
                         }
                     });
                 }
@@ -681,14 +681,14 @@ public class BattleshipUi extends Application {
                             game.setGameOver();
                             gameService.setWinner(1);
                             turnLabel.setText("COMPUTER WINS!");
-                            newGame.setVisible(true);
+                            newGameButton.setVisible(true);
                         }
                         if (game.allPlayerTwoShipsDead()) {
                             game.setGameOver();
                             gameService.setWinner(game.getPlayerOne().getId());
                             turnLabel.setText(game.getIsAgainstComputer() ? "YOU WIN!"
                                     : game.getPlayerOne().getName() + " WINS!");
-                            newGame.setVisible(true);
+                            newGameButton.setVisible(true);
                         }
                     }
                 });
@@ -715,12 +715,29 @@ public class BattleshipUi extends Application {
         hbox.setAlignment(Pos.CENTER);
         hbox.setSpacing(30);
 
-        VBox container = new VBox(hbox, turnLabel, newGame);
+        VBox container = new VBox(hbox, turnLabel);
         container.setAlignment(Pos.TOP_CENTER);
 
+        StackPane bottomLeft = new StackPane();
+        bottomLeft.setPrefWidth(100);
+        bottomLeft.getChildren().addAll(quitButton);
+        StackPane.setAlignment(quitButton, Pos.BOTTOM_LEFT);
+
+        StackPane bottomRight = new StackPane();
+        bottomRight.setPrefWidth(100);
+
+        Region spacer = new Region();
+        Region spacerTwo = new Region();
+
+        HBox bottomContent = new HBox(bottomLeft, spacerTwo, newGameButton, spacer, bottomRight);
+        HBox.setMargin(bottomLeft, new Insets(0, 0, 10, 10));
+        HBox.setMargin(newGameButton, new Insets(0, 0, 10, 0));
+
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        HBox.setHgrow(spacerTwo, Priority.ALWAYS);
         BorderPane pane = new BorderPane();
         pane.setCenter(container);
-        pane.setBottom(quitButton);
+        pane.setBottom(bottomContent);
 
         BorderPane.setMargin(quitButton, new Insets(0, 0, 10, 10));
 
