@@ -290,6 +290,7 @@ public class BattleshipUi extends Application {
         hbox.setAlignment(Pos.CENTER);
 
         VBox vbox = new VBox(hbox, errorMessage);
+        VBox.setMargin(errorMessage, new Insets(10, 10, 10, 10));
         vbox.setAlignment(Pos.CENTER);
         BorderPane pane = new BorderPane();
         pane.setTop(headerText);
@@ -342,6 +343,7 @@ public class BattleshipUi extends Application {
         HBox hbox = new HBox(label, textfield, button);
         hbox.setAlignment(Pos.CENTER);
         VBox vbox = new VBox(hbox, errorMessage);
+        VBox.setMargin(errorMessage, new Insets(10, 10, 10, 10));
         vbox.setAlignment(Pos.CENTER);
         BorderPane pane = new BorderPane();
         pane.setTop(headerText);
