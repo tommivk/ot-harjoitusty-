@@ -3,7 +3,7 @@ package com.battleship.domain;
 import java.util.Random;
 
 import com.battleship.enums.ShipDirection;
-import com.battleship.enums.Turn;
+import com.battleship.enums.Player;
 
 /**
  * AI opponent
@@ -39,7 +39,7 @@ public class Computer {
             int column = random.nextInt(10);
 
             if (this.game.canPlaceShip(ship, row, column, this.game.getPlayerTwoSquares())) {
-                this.game.placeShip(row, column, Turn.PLAYER2);
+                this.game.placeShip(row, column, Player.PLAYER2);
             }
         }
     }
@@ -92,7 +92,7 @@ public class Computer {
             boolean hit = hitAvailableSquare();
             this.storeHit(hit, gameService);
             if (!hit) {
-                this.game.setTurn(Turn.PLAYER1);
+                this.game.setTurn(Player.PLAYER1);
                 break;
             }
         }

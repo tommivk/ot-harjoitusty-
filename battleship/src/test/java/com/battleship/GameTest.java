@@ -9,7 +9,7 @@ import com.battleship.domain.Ship;
 import com.battleship.domain.Square;
 import com.battleship.domain.User;
 import com.battleship.enums.ShipDirection;
-import com.battleship.enums.Turn;
+import com.battleship.enums.Player;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -54,16 +54,16 @@ public class GameTest {
 
     @Test
     public void initialGameTurnIsCorrect() {
-        assertEquals(Turn.PLAYER1, game.getTurn());
+        assertEquals(Player.PLAYER1, game.getTurn());
     }
 
     @Test
     public void changingTurnWorks() {
-        assertEquals(Turn.PLAYER1, game.getTurn());
+        assertEquals(Player.PLAYER1, game.getTurn());
         game.changeTurn();
-        assertEquals(Turn.PLAYER2, game.getTurn());
+        assertEquals(Player.PLAYER2, game.getTurn());
         game.changeTurn();
-        assertEquals(Turn.PLAYER1, game.getTurn());
+        assertEquals(Player.PLAYER1, game.getTurn());
     }
 
     @Test
@@ -136,7 +136,7 @@ public class GameTest {
 
     @Test
     public void placingNewPlayer1ShipWorks() {
-        game.placeShip(0, 0, Turn.PLAYER1);
+        game.placeShip(0, 0, Player.PLAYER1);
         assertEquals(true, game.getPlayerOneSquares()[0][0].hasShip());
         assertEquals(true, game.getPlayerOneSquares()[4][0].hasShip());
         assertEquals(false, game.getPlayerOneSquares()[5][0].hasShip());
@@ -145,7 +145,7 @@ public class GameTest {
 
     @Test
     public void placingNewPlayer2ShipWorks() {
-        game.placeShip(0, 0, Turn.PLAYER2);
+        game.placeShip(0, 0, Player.PLAYER2);
         assertEquals(true, game.getPlayerTwoSquares()[0][0].hasShip());
         assertEquals(true, game.getPlayerTwoSquares()[4][0].hasShip());
         assertEquals(false, game.getPlayerTwoSquares()[5][0].hasShip());
@@ -154,7 +154,7 @@ public class GameTest {
 
     @Test
     public void hittingPlacedShipWorks() {
-        game.placeShip(0, 0, Turn.PLAYER1);
+        game.placeShip(0, 0, Player.PLAYER1);
         assertEquals(false, game.getPlayerTwoSquares()[5][0].hitSquare());
         assertEquals(false, game.getPlayerTwoSquares()[0][1].hitSquare());
         assertEquals(true, game.getPlayerOneSquares()[0][0].hitSquare());
@@ -164,7 +164,7 @@ public class GameTest {
 
     @Test
     public void highlightingSquaresWorks() {
-        game.highlightSquares(0, 0, Turn.PLAYER1);
+        game.highlightSquares(0, 0, Player.PLAYER1);
 
         Square[][] squares = game.getPlayerOneSquares();
 
@@ -174,18 +174,18 @@ public class GameTest {
 
     @Test
     public void removingHighlightFromSquaresWorks() {
-        game.highlightSquares(0, 0, Turn.PLAYER1);
+        game.highlightSquares(0, 0, Player.PLAYER1);
 
         Square[][] squares = game.getPlayerOneSquares();
 
-        game.removeButtonImage(0, 0, Turn.PLAYER1);
+        game.removeButtonImage(0, 0, Player.PLAYER1);
         assertEquals(Color.WHITESMOKE, squares[0][0].getRectangle().getFill());
         assertEquals(Color.WHITESMOKE, squares[4][0].getRectangle().getFill());
     }
 
     @Test
     public void allPlayerOneShipsDeadWorks() {
-        game.placeShip(0, 0, Turn.PLAYER1);
+        game.placeShip(0, 0, Player.PLAYER1);
         assertEquals(false, game.allPlayerOneShipsDead());
         Square[][] squares = game.getPlayerOneSquares();
         squares[0][0].hitSquare();
@@ -198,7 +198,7 @@ public class GameTest {
 
     @Test
     public void allPlayerTwoShipsDeadWorks() {
-        game.placeShip(0, 0, Turn.PLAYER2);
+        game.placeShip(0, 0, Player.PLAYER2);
         assertEquals(false, game.allPlayerTwoShipsDead());
         Square[][] squares = game.getPlayerTwoSquares();
         squares[0][0].hitSquare();
@@ -248,7 +248,7 @@ public class GameTest {
             }
         }
         assertEquals(Color.GREY, game.getPlayerOneSquares()[5][5].getRectangle().getFill());
-        game.clearButtonColors(Turn.PLAYER1);
+        game.clearButtonColors(Player.PLAYER1);
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
                 assertEquals(Color.WHITESMOKE, game.getPlayerOneSquares()[5][5].getRectangle().getFill());

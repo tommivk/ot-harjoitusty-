@@ -1,5 +1,5 @@
 package com.battleship.enums;
 
-public enum Turn {
+public enum Player {
     PLAYER1, PLAYER2
 }

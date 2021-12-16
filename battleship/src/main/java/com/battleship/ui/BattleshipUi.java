@@ -29,7 +29,7 @@ import com.battleship.domain.GameService;
 import com.battleship.domain.Square;
 import com.battleship.domain.User;
 import com.battleship.domain.UserService;
-import com.battleship.enums.Turn;
+import com.battleship.enums.Player;
 import com.github.javafaker.Faker;
 
 public class BattleshipUi extends Application {
@@ -480,19 +480,19 @@ public class BattleshipUi extends Application {
                 Rectangle playerTwoButton = playerTwoSquares[i][k].getRectangle();
 
                 playerOneButton.setOnMouseEntered(event -> {
-                    game.highlightSquares(row, column, Turn.PLAYER1);
+                    game.highlightSquares(row, column, Player.PLAYER1);
                 });
 
                 playerOneButton.setOnMouseExited(event -> {
-                    game.removeButtonImage(row, column, Turn.PLAYER1);
+                    game.removeButtonImage(row, column, Player.PLAYER1);
                 });
 
                 playerOneButton.setOnMouseClicked(event -> {
                     if (event.getButton() == MouseButton.PRIMARY) {
-                        game.placeShip(row, column, Turn.PLAYER1);
+                        game.placeShip(row, column, Player.PLAYER1);
 
                         if (game.playerOneShipsIsEmpty()) {
-                            game.clearButtonColors(Turn.PLAYER1);
+                            game.clearButtonColors(Player.PLAYER1);
                         }
                         if (game.getIsAgainstComputer() && game.playerOneShipsIsEmpty()) {
                             stage.setScene(playScene(stage));
@@ -509,7 +509,7 @@ public class BattleshipUi extends Application {
                             }
                         }
                         game.changeShipDirection();
-                        game.highlightSquares(row, column, Turn.PLAYER1);
+                        game.highlightSquares(row, column, Player.PLAYER1);
                     }
 
                 });
@@ -520,18 +520,18 @@ public class BattleshipUi extends Application {
 
                     playerTwoButton.setOnMouseEntered(event -> {
                         if (game.playerOneShipsIsEmpty()) {
-                            game.highlightSquares(row, column, Turn.PLAYER2);
+                            game.highlightSquares(row, column, Player.PLAYER2);
                         }
                     });
 
                     playerTwoButton.setOnMouseExited(event -> {
-                        game.removeButtonImage(row, column, Turn.PLAYER2);
+                        game.removeButtonImage(row, column, Player.PLAYER2);
                     });
 
                     playerTwoButton.setOnMouseClicked(event -> {
                         if (game.playerOneShipsIsEmpty()) {
                             if (event.getButton() == MouseButton.PRIMARY) {
-                                game.placeShip(row, column, Turn.PLAYER2);
+                                game.placeShip(row, column, Player.PLAYER2);
 
                                 if (game.playerTwoShipsIsEmpty()) {
                                     stage.setScene(playScene(stage));
@@ -548,13 +548,13 @@ public class BattleshipUi extends Application {
                                     }
                                 }
                                 game.changeShipDirection();
-                                game.highlightSquares(row, column, Turn.PLAYER2);
+                                game.highlightSquares(row, column, Player.PLAYER2);
                             }
                         }
                     });
                 } else {
                     game.getComputer().placeComputerShips();
-                    game.clearButtonColors(Turn.PLAYER2);
+                    game.clearButtonColors(Player.PLAYER2);
                 }
                 playerTwoGrid.add(playerTwoButton, k, i);
             }
@@ -641,7 +641,7 @@ public class BattleshipUi extends Application {
                 square.removeButtonImage();
                 if (!game.getIsAgainstComputer()) {
                     button.setOnMouseClicked(event -> {
-                        if (!game.isGameOver() && game.getTurn() == Turn.PLAYER2 && !square.getHasBeenHit()) {
+                        if (!game.isGameOver() && game.getTurn() == Player.PLAYER2 && !square.getHasBeenHit()) {
                             boolean hasShip = square.hitSquare();
                             gameService.addPlayerTwoShot();
                             if (!hasShip) {
@@ -674,7 +674,7 @@ public class BattleshipUi extends Application {
                 button.setOnMouseClicked(null);
 
                 button.setOnMouseClicked(event -> {
-                    if (!game.isGameOver() && game.getTurn() == Turn.PLAYER1 && !square.getHasBeenHit()) {
+                    if (!game.isGameOver() && game.getTurn() == Player.PLAYER1 && !square.getHasBeenHit()) {
                         boolean hasShip = square.hitSquare();
                         gameService.addPlayerOneShot();
 
