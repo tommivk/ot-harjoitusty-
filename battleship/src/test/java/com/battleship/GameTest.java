@@ -239,4 +239,28 @@ public class GameTest {
         game.setPlayerTwo(user);
         assertEquals("test", game.getPlayerTwo().getName());
     }
+
+    @Test
+    public void clearingButtonColorsWorks() {
+        for (int i = 0; i < 10; i++) {
+            for (int k = 0; k < 10; k++) {
+                game.getPlayerOneSquares()[i][k].setGreyButtonColor();
+            }
+        }
+        assertEquals(Color.GREY, game.getPlayerOneSquares()[5][5].getButton().getFill());
+        game.clearButtonColors(1);
+        for (int i = 0; i < 10; i++) {
+            for (int k = 0; k < 10; k++) {
+                assertEquals(Color.WHITESMOKE, game.getPlayerOneSquares()[5][5].getButton().getFill());
+            }
+        }
+    }
+
+    @Test
+    public void setAndGetAgainstComputerWorks() {
+        game.setIsAgainstComputer(true);
+        assertEquals(true, game.getIsAgainstComputer());
+        game.setIsAgainstComputer(false);
+        assertEquals(false, game.getIsAgainstComputer());
+    }
 }

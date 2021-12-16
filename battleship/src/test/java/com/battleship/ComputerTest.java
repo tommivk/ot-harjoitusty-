@@ -93,10 +93,60 @@ public class ComputerTest {
     }
 
     @Test
+    public void hitLeftReturnsTrueAndResetsPrevHitsWhenShipDies() {
+        game.changeShipDirection();
+        game.placeShip(5, 5, 1);
+        player1Squares[5][6].hitSquare();
+        player1Squares[5][7].hitSquare();
+        player1Squares[5][8].hitSquare();
+        player1Squares[5][9].hitSquare();
+
+        computer.setPrevHitCoordinates(5, 6);
+        boolean res = computer.hitLeft();
+        assertEquals(true, res);
+        assertEquals(0, computer.getPrevHits());
+    }
+
+    @Test
+    public void hitLeftReturnsTrueAndAddsPrevHitsWhenHit() {
+        game.changeShipDirection();
+        game.placeShip(5, 5, 1);
+        computer.setPrevHitCoordinates(5, 6);
+        boolean res = computer.hitLeft();
+        assertEquals(true, res);
+        assertEquals(1, computer.getPrevHits());
+    }
+
+    @Test
     public void hitRightWorks() {
         computer.setPrevHitCoordinates(5, 5);
         computer.hitRight();
         assertEquals(true, player1Squares[5][6].getIsHit());
+    }
+
+    @Test
+    public void hitRightReturnsTrueAndResetsPrevHitsWhenShipDies() {
+        game.changeShipDirection();
+        game.placeShip(5, 5, 1);
+        player1Squares[5][5].hitSquare();
+        player1Squares[5][6].hitSquare();
+        player1Squares[5][7].hitSquare();
+        player1Squares[5][8].hitSquare();
+
+        computer.setPrevHitCoordinates(5, 8);
+        boolean res = computer.hitRight();
+        assertEquals(true, res);
+        assertEquals(0, computer.getPrevHits());
+    }
+
+    @Test
+    public void hitRightReturnsTrueAndAddsPrevHitsWhenHit() {
+        game.changeShipDirection();
+        game.placeShip(5, 5, 1);
+        computer.setPrevHitCoordinates(5, 5);
+        boolean res = computer.hitRight();
+        assertEquals(true, res);
+        assertEquals(1, computer.getPrevHits());
     }
 
     @Test
@@ -107,10 +157,56 @@ public class ComputerTest {
     }
 
     @Test
+    public void hitBottomReturnsTrueAndAddsPrevHitsWhenHit() {
+        game.placeShip(5, 5, 1);
+        computer.setPrevHitCoordinates(5, 5);
+        boolean res = computer.hitBottom();
+        assertEquals(true, res);
+        assertEquals(1, computer.getPrevHits());
+    }
+
+    @Test
+    public void hitBottomReturnsTrueAndResetsPrevHitsWhenShipDies() {
+        game.placeShip(5, 5, 1);
+        player1Squares[5][5].hitSquare();
+        player1Squares[6][5].hitSquare();
+        player1Squares[7][5].hitSquare();
+        player1Squares[8][5].hitSquare();
+
+        computer.setPrevHitCoordinates(8, 5);
+        boolean res = computer.hitBottom();
+        assertEquals(true, res);
+        assertEquals(0, computer.getPrevHits());
+    }
+
+    @Test
     public void hitTopWorks() {
         computer.setPrevHitCoordinates(5, 5);
         computer.hitTop();
         assertEquals(true, player1Squares[4][5].getIsHit());
+    }
+
+    @Test
+    public void hitTopReturnsTrueAndAddsPrevHitsWhenHit() {
+        game.placeShip(5, 5, 1);
+        computer.setPrevHitCoordinates(6, 5);
+        boolean res = computer.hitTop();
+        assertEquals(true, res);
+        assertEquals(1, computer.getPrevHits());
+    }
+
+    @Test
+    public void hitTopReturnsTrueAndResetsPrevHitsWhenShipDies() {
+        game.placeShip(5, 5, 1);
+        player1Squares[6][5].hitSquare();
+        player1Squares[7][5].hitSquare();
+        player1Squares[8][5].hitSquare();
+        player1Squares[9][5].hitSquare();
+
+        computer.setPrevHitCoordinates(6, 5);
+        boolean res = computer.hitTop();
+        assertEquals(true, res);
+        assertEquals(0, computer.getPrevHits());
     }
 
     @Test
@@ -356,5 +452,13 @@ public class ComputerTest {
 
         computer.computerHitRowOrColumn();
         assertEquals(true, player1Squares[6][5].getIsHit());
+    }
+
+    @Test
+    public void setAndGetPrevHitCoordinatesWorks() {
+        computer.setPrevHitCoordinates(3, 5);
+        int[] coordinates = computer.getPrevHitCoordinates();
+        assertEquals(3, coordinates[0]);
+        assertEquals(5, coordinates[1]);
     }
 }

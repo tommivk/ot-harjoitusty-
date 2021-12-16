@@ -26,9 +26,6 @@ public class GameService {
     public boolean createGame(User playerOne, User playerTwo) {
         try {
             Game game = gameDao.createGame(this.databaseAdress, playerOne, playerTwo);
-            if (game == null) {
-                return false;
-            }
             this.currentGame = game;
             return true;
         } catch (Exception e) {

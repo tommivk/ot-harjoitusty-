@@ -110,4 +110,33 @@ public class GameServiceTest {
         gameService.addPlayerTwoHit();
         assertEquals(2, gameService.getPlayerHitCount(1));
     }
+
+    @Test
+    public void settingWinnerAndGettingWinCountWorks() {
+        gameService.createGame(new User("user", 2), new User("userTwo", 3));
+        int wins = gameService.getPlayerWinCount(2);
+        assertEquals(0, wins);
+        gameService.getGame().getGameId();
+        gameService.setWinner(2);
+
+        int playerOneWins = gameService.getPlayerWinCount(2);
+        assertEquals(1, playerOneWins);
+        int playerTwoWins = gameService.getPlayerWinCount(3);
+        assertEquals(0, playerTwoWins);
+    }
+
+    @Test
+    public void gettingPlayersGameCountWorks() {
+        assertEquals(0, gameService.getPlayerGameCount(2));
+
+        gameService.createGame(new User("user", 2), new User("userTwo", 3));
+        gameService.setWinner(2);
+        assertEquals(1, gameService.getPlayerGameCount(2));
+
+        gameService.createGame(new User("user", 2), new User("userTwo", 3));
+        gameService.setWinner(3);
+
+        assertEquals(2, gameService.getPlayerGameCount(2));
+        assertEquals(2, gameService.getPlayerGameCount(3));
+    }
 }
