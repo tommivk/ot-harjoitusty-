@@ -91,8 +91,6 @@ public class BattleshipUi extends Application {
     }
 
     public Scene statisticsScene(Stage stage) {
-        Text headerText = new Text(10, 20, "Stats");
-        headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
         Text yourStatsText = new Text("Your stats");
         yourStatsText.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
 
@@ -160,9 +158,7 @@ public class BattleshipUi extends Application {
         BorderPane.setMargin(statisticsTable, new Insets(30, 0, 0, 0));
         BorderPane.setMargin(goBackButton, new Insets(0, 0, 10, 10));
 
-        HBox loggedInContainer = getTopContainer(stage);
-
-        VBox topContent = new VBox(loggedInContainer, headerText);
+        HBox topContent = getTopContainer(stage, "Stats");
         pane.setTop(topContent);
         topContent.setAlignment(Pos.CENTER);
         BorderPane.setAlignment(topContent, Pos.CENTER);
@@ -353,8 +349,7 @@ public class BattleshipUi extends Application {
     }
 
     public Scene gameSelectionScene(Stage stage) {
-        Text headerText = new Text(10, 20, "Play Battleships");
-        headerText.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
+
         StackPane stackpane = new StackPane();
         StackPane stackpane2 = new StackPane();
         StackPane statsStackpane = new StackPane();
@@ -416,18 +411,20 @@ public class BattleshipUi extends Application {
         BorderPane pane = new BorderPane();
         pane.setCenter(vbox);
 
-        HBox loggedInContainer = getTopContainer(stage);
+        HBox loggedInContainer = getTopContainer(stage, "Play Battleships");
 
-        VBox topContent = new VBox(loggedInContainer, headerText);
+        VBox topContent = new VBox(loggedInContainer);
         pane.setTop(topContent);
         topContent.setAlignment(Pos.CENTER);
         BorderPane.setAlignment(topContent, Pos.CENTER);
-        BorderPane.setMargin(headerText, new Insets(20, 0, 0, 0));
 
         return new Scene(pane);
     }
 
-    public HBox getTopContainer(Stage stage) {
+    public HBox getTopContainer(Stage stage, String headerText) {
+        Text title = new Text(headerText);
+        title.setStyle("-fx-font-size: 24; -fx-font-weight: bolder;");
+
         Text loggedInText = new Text("Logged in as " + userService.getLoggedPlayerOne().getName());
         Button logOutButton = new Button("logout");
         logOutButton.setOnMouseClicked(event -> {
@@ -436,11 +433,23 @@ public class BattleshipUi extends Application {
             stage.show();
         });
         Region spacer = new Region();
+        Region spacerTwo = new Region();
+        StackPane leftBox = new StackPane();
+        leftBox.setPrefWidth(200);
+        leftBox.getChildren().addAll(loggedInText);
+        StackPane.setAlignment(loggedInText, Pos.TOP_LEFT);
+        StackPane rightBox = new StackPane();
+        rightBox.setPrefWidth(200);
+        rightBox.getChildren().addAll(logOutButton);
+        StackPane.setAlignment(logOutButton, Pos.TOP_RIGHT);
 
-        HBox hbox = new HBox(loggedInText, spacer, logOutButton);
-        HBox.setMargin(loggedInText, new Insets(10, 10, 0, 10));
-        HBox.setMargin(logOutButton, new Insets(10, 10, 0, 10));
+        HBox hbox = new HBox(leftBox, spacer, title, spacerTwo, rightBox);
+        HBox.setMargin(leftBox, new Insets(10, 10, 0, 10));
+        HBox.setMargin(rightBox, new Insets(10, 10, 0, 10));
+        HBox.setMargin(title, new Insets(10, 10, 0, 10));
         HBox.setHgrow(spacer, Priority.ALWAYS);
+        HBox.setHgrow(spacerTwo, Priority.ALWAYS);
+
         return hbox;
     }
 
