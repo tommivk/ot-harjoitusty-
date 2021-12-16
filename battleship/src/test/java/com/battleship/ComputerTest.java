@@ -3,8 +3,12 @@ package com.battleship;
 import static org.junit.Assert.assertEquals;
 
 import com.battleship.domain.Game;
+import com.battleship.domain.GameService;
 import com.battleship.domain.Ship;
+import com.battleship.domain.ShipDirection;
 import com.battleship.domain.Square;
+import com.battleship.domain.Turn;
+import com.battleship.dao.DBGameDao;
 import com.battleship.domain.Computer;
 
 import org.junit.Before;
@@ -156,6 +160,21 @@ public class ComputerTest {
         computer.setPrevHitCoordinates(0, 0);
         computer.hitColumnEndRight();
         assertEquals(true, player1Squares[0][2].getIsHit());
+
+        game.changeShipDirection();
+        assertEquals(ShipDirection.HORIZONTAL, game.getShipDirection());
+
+        game.placeShip(1, 1, 1);
+        player1Squares[1][1].hitSquare();
+        player1Squares[1][2].hitSquare();
+        player1Squares[1][3].hitSquare();
+        player1Squares[1][4].hitSquare();
+
+        computer.setPrevHitCoordinates(1, 1);
+
+        computer.setPrevHits(4);
+        computer.hitColumnEndRight();
+        assertEquals(true, player1Squares[1][5].getShip().isDead());
     }
 
     @Test
@@ -166,6 +185,20 @@ public class ComputerTest {
         computer.setPrevHitCoordinates(0, 5);
         computer.hitColumnEndLeft();
         assertEquals(true, player1Squares[0][2].getIsHit());
+
+        game.changeShipDirection();
+        assertEquals(ShipDirection.HORIZONTAL, game.getShipDirection());
+        game.placeShip(1, 1, 1);
+        player1Squares[1][2].hitSquare();
+        player1Squares[1][3].hitSquare();
+        player1Squares[1][4].hitSquare();
+        player1Squares[1][5].hitSquare();
+
+        computer.setPrevHitCoordinates(1, 5);
+
+        computer.setPrevHits(4);
+        computer.hitColumnEndLeft();
+        assertEquals(true, player1Squares[1][1].getShip().isDead());
     }
 
     @Test
@@ -175,6 +208,18 @@ public class ComputerTest {
         computer.setPrevHitCoordinates(5, 5);
         computer.hitRowEndTop();
         assertEquals(true, player1Squares[3][5].getIsHit());
+
+        game.placeShip(1, 6, 1);
+        player1Squares[2][6].hitSquare();
+        player1Squares[3][6].hitSquare();
+        player1Squares[4][6].hitSquare();
+        player1Squares[5][6].hitSquare();
+
+        computer.setPrevHitCoordinates(5, 6);
+
+        computer.setPrevHits(4);
+        computer.hitRowEndTop();
+        assertEquals(true, player1Squares[1][6].getShip().isDead());
     }
 
     @Test
@@ -184,6 +229,19 @@ public class ComputerTest {
         computer.setPrevHitCoordinates(2, 5);
         computer.hitRowEndBottom();
         assertEquals(true, player1Squares[4][5].getIsHit());
+
+        game.placeShip(1, 6, 1);
+        player1Squares[4][6].hitSquare();
+        player1Squares[3][6].hitSquare();
+        player1Squares[2][6].hitSquare();
+        player1Squares[1][6].hitSquare();
+
+        computer.setPrevHitCoordinates(1, 6);
+
+        computer.setPrevHits(4);
+        computer.hitRowEndBottom();
+        assertEquals(true, player1Squares[5][6].getShip().isDead());
+
     }
 
     @Test
@@ -213,5 +271,90 @@ public class ComputerTest {
     public void computerHitRandomReturnsFalseWhenNoHit() {
         boolean res = computer.computerHitRandom();
         assertEquals(false, res);
+    }
+
+    @Test
+    public void turnChangesAfterComputersTurn() {
+        DBGameDao dbGameDao = new DBGameDao();
+        GameService gameService = new GameService(dbGameDao, "");
+        game.setTurn(Turn.PLAYER2);
+        computer.computersTurn(gameService);
+        assertEquals(Turn.PLAYER1, game.getTurn());
+    }
+
+    @Test
+    public void canHitRowWorks() {
+        computer.setPrevHitCoordinates(5, 5);
+        assertEquals(true, computer.canHitRow());
+        player1Squares[4][5].hitSquare();
+        assertEquals(true, computer.canHitRow());
+        player1Squares[6][5].hitSquare();
+        assertEquals(false, computer.canHitRow());
+    }
+
+    @Test
+    public void hitRowWorks() {
+        computer.setPrevHitCoordinates(5, 5);
+        computer.hitRow();
+        boolean rowHit = false;
+        if (player1Squares[6][5].getIsHit() || player1Squares[4][5].getIsHit()) {
+            rowHit = true;
+        }
+        assertEquals(true, rowHit);
+
+        player1Squares[6][5].hitSquare();
+        player1Squares[4][5].hitSquare();
+        computer.addPrevHit();
+        computer.addPrevHit();
+        computer.hitRow();
+
+        boolean hasHit = false;
+        if (player1Squares[7][5].getIsHit() || player1Squares[3][5].getIsHit()) {
+            hasHit = true;
+        }
+
+        assertEquals(true, hasHit);
+
+    }
+
+    @Test
+    public void hitColumnWorks() {
+        computer.setPrevHitCoordinates(5, 5);
+        computer.hitColumn();
+        boolean rowHit = false;
+        if (player1Squares[5][6].getIsHit() || player1Squares[5][4].getIsHit()) {
+            rowHit = true;
+        }
+        assertEquals(true, rowHit);
+
+        player1Squares[5][6].hitSquare();
+        player1Squares[5][4].hitSquare();
+        computer.addPrevHit();
+        computer.addPrevHit();
+        computer.hitColumn();
+
+        boolean hasHit = false;
+        if (player1Squares[5][3].getIsHit() || player1Squares[5][7].getIsHit()) {
+            hasHit = true;
+        }
+
+        assertEquals(true, hasHit);
+    }
+
+    @Test
+    public void hitRowOrColumnWorks() {
+        computer.setPrevHitCoordinates(5, 5);
+
+        computer.computerHitRowOrColumn();
+        assertEquals(true, player1Squares[5][4].getIsHit());
+
+        computer.computerHitRowOrColumn();
+        assertEquals(true, player1Squares[4][5].getIsHit());
+
+        computer.computerHitRowOrColumn();
+        assertEquals(true, player1Squares[5][6].getIsHit());
+
+        computer.computerHitRowOrColumn();
+        assertEquals(true, player1Squares[6][5].getIsHit());
     }
 }

@@ -53,6 +53,10 @@ public class Computer {
         this.prevHits++;
     }
 
+    public void setPrevHits(int num) {
+        this.prevHits = num;
+    }
+
     /**
      * returns how many continuous hits computer has
      */
