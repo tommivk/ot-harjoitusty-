@@ -68,7 +68,7 @@ public class Computer {
     }
 
     /**
-     * Stores computers hits and shots to database
+     * Stores computers hit and shot count to the database
      */
     private void storeHit(boolean hit, GameService gameService) {
         if (hit) {
@@ -78,110 +78,72 @@ public class Computer {
     }
 
     /**
-     * Hits random square if previous hits is 0. If previous hits is 1 it tries to
-     * hit squares around it. If previous hits is > 1
-     * it tries to hit squares depending on what the last two hits direction was
+     * Starts while loop where computer tries to hit squares
      */
     public void computersTurn(GameService gameService) {
         while (true) {
-            if (prevHits == 0) {
-                boolean hit = this.computerHitRandom();
-                this.storeHit(hit, gameService);
-                if (!hit) {
-                    break;
-                }
-            }
-
-            if (prevHits == 1) {
-                boolean hit = this.computerHitRowOrColumn();
-                this.storeHit(hit, gameService);
-                if (!hit) {
-                    break;
-                }
-                continue;
-            }
-
-            if (prevHits > 1 && this.prevHitDir == ShipDirection.HORIZONTAL) {
-                if (this.canHitLeft()) {
-                    boolean hit = this.hitLeft();
-                    this.storeHit(hit, gameService);
-                    if (!hit) {
-                        break;
-                    }
-                    continue;
-                }
-                if (this.canHitRight()) {
-                    boolean hit = this.hitRight();
-                    this.storeHit(hit, gameService);
-                    if (!hit) {
-                        break;
-                    }
-                    continue;
-                }
-
-                if (this.canHitColumnEndLeft()) {
-                    boolean hit = this.hitColumnEndLeft();
-                    this.storeHit(hit, gameService);
-                    if (!hit) {
-                        break;
-                    }
-                    continue;
-                }
-                if (this.canHitColumnEndRight()) {
-                    boolean hit = this.hitColumnEndRight();
-                    this.storeHit(hit, gameService);
-                    if (!hit) {
-                        break;
-                    }
-                    continue;
-                }
-
-            }
-            if (this.prevHits > 1 && this.prevHitDir == ShipDirection.VERTICAL) {
-                if (this.canHitTop()) {
-                    boolean hit = this.hitTop();
-                    this.storeHit(hit, gameService);
-                    if (!hit) {
-                        break;
-                    }
-                    continue;
-                }
-                if (this.canHitBottom()) {
-                    boolean hit = this.hitBottom();
-                    this.storeHit(hit, gameService);
-                    if (!hit) {
-                        break;
-                    }
-                    continue;
-                }
-
-                if (this.canHitRowEndBottom()) {
-                    boolean hit = hitRowEndBottom();
-                    this.storeHit(hit, gameService);
-                    if (!hit) {
-                        break;
-                    }
-                    continue;
-                }
-
-                if (this.canHitRowEndTop()) {
-                    boolean hit = hitRowEndTop();
-                    this.storeHit(hit, gameService);
-                    if (!hit) {
-                        break;
-                    }
-                    continue;
-                }
-            }
-
-            boolean hit = this.computerHitRandom();
+            boolean hit = hitAvailableSquare();
             this.storeHit(hit, gameService);
             if (!hit) {
+                this.game.setTurn(Turn.PLAYER1);
                 break;
             }
-
         }
+    }
 
+    /**
+     * Hits random square if previous hits is 0. If previous hits is 1 it tries to
+     * hit squares around the previous hit coordinates. If previous hits is > 1
+     * it tries to hit squares depending on what the last two hits direction was
+     */
+    public boolean hitAvailableSquare() {
+        if (prevHits == 1) {
+            return this.computerHitRowOrColumn();
+        }
+        if (prevHits > 1) {
+            boolean hit = this.prevHitDir == ShipDirection.HORIZONTAL ? this.hitColumn()
+                    : this.hitRow();
+            return hit;
+        }
+        return this.computerHitRandom();
+    }
+
+    /**
+     * Tries to hit squares on the row of the previous hits
+     */
+    public boolean hitRow() {
+        if (this.canHitTop()) {
+            boolean hit = this.hitTop();
+            return hit;
+        }
+        if (this.canHitBottom()) {
+            boolean hit = this.hitBottom();
+            return hit;
+        }
+        if (this.canHitRowEndBottom()) {
+            boolean hit = hitRowEndBottom();
+            return hit;
+        }
+        return hitRowEndTop();
+    }
+
+    /**
+     * Tries to hit squares on the column of the previous hits
+     */
+    public boolean hitColumn() {
+        if (this.canHitLeft()) {
+            boolean hit = this.hitLeft();
+            return hit;
+        }
+        if (this.canHitRight()) {
+            boolean hit = this.hitRight();
+            return hit;
+        }
+        if (this.canHitColumnEndLeft()) {
+            boolean hit = this.hitColumnEndLeft();
+            return hit;
+        }
+        return this.hitColumnEndRight();
     }
 
     /**
@@ -290,7 +252,6 @@ public class Computer {
             this.prevHitDir = ShipDirection.HORIZONTAL;
             return true;
         }
-        this.game.setTurn(Turn.PLAYER1);
         return false;
     }
 
@@ -313,7 +274,6 @@ public class Computer {
             this.prevHitDir = ShipDirection.HORIZONTAL;
             return true;
         }
-        this.game.setTurn(Turn.PLAYER1);
         return false;
     }
 
@@ -336,7 +296,6 @@ public class Computer {
             this.prevHitDir = ShipDirection.VERTICAL;
             return true;
         }
-        this.game.setTurn(Turn.PLAYER1);
         return false;
     }
 
@@ -358,7 +317,6 @@ public class Computer {
             this.prevHitDir = ShipDirection.VERTICAL;
             return true;
         }
-        this.game.setTurn(Turn.PLAYER1);
         return false;
     }
 
@@ -428,7 +386,6 @@ public class Computer {
             this.prevHitDir = ShipDirection.VERTICAL;
             return true;
         }
-        this.game.setTurn(Turn.PLAYER1);
         return false;
     }
 
@@ -450,7 +407,6 @@ public class Computer {
             this.prevHitDir = ShipDirection.VERTICAL;
             return true;
         }
-        this.game.setTurn(Turn.PLAYER1);
         return false;
     }
 
@@ -473,10 +429,7 @@ public class Computer {
             this.prevHitDir = ShipDirection.HORIZONTAL;
             return true;
         }
-
-        this.game.setTurn(Turn.PLAYER1);
         return false;
-
     }
 
     /**
@@ -498,7 +451,6 @@ public class Computer {
             this.prevHitDir = ShipDirection.HORIZONTAL;
             return true;
         } else {
-            this.game.setTurn(Turn.PLAYER1);
             return false;
         }
 
@@ -524,12 +476,13 @@ public class Computer {
 
     /**
      * Hits player one's square
+     * 
+     * @param row,column coordinates of the square that are going to be hit
      */
     public boolean hitSquare(int row, int column) {
         Square square = this.game.getPlayerOneSquares()[row][column];
         boolean hit = square.hitSquare();
         if (!hit) {
-            this.game.setTurn(Turn.PLAYER1);
             return false;
         }
         if (square.getShip().isDead()) {
