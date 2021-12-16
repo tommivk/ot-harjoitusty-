@@ -116,6 +116,32 @@ public class GameService {
         }
     }
 
+    public void setWinner(int playerId) {
+        try {
+            gameDao.setWinner(this.databaseAdress, currentGame.getGameId(), playerId);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public int getPlayerWinCount(int playerId) {
+        try {
+            return gameDao.getPlayerWinCount(this.databaseAdress, playerId);
+        } catch (Exception e) {
+            System.out.println(e);
+            return 0;
+        }
+    }
+
+    public int getPlayerGameCount(int playerId) {
+        try {
+            return gameDao.getPlayerGameCount(this.databaseAdress, playerId);
+        } catch (Exception e) {
+            System.out.println(e);
+            return 0;
+        }
+    }
+
     public Game getGame() {
         return this.currentGame;
     }

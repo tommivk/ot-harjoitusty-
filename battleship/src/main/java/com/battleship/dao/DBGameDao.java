@@ -105,12 +105,63 @@ public class DBGameDao implements GameDao {
         }
     }
 
+    public void setWinner(String databaseAdress, int gameId, int playerId) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
+        try {
+            PreparedStatement p = db
+                    .prepareStatement("UPDATE Games SET winner = ? WHERE id=?");
+            p.setInt(1, playerId);
+            p.setInt(2, gameId);
+
+            p.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            db.close();
+        }
+    }
+
+    public int getPlayerWinCount(String databaseAdress, int playerId) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
+        try {
+            PreparedStatement p = db.prepareStatement(
+                    "SELECT COUNT(winner) as wins FROM Games WHERE winner = ?");
+            p.setInt(1, playerId);
+            ResultSet r = p.executeQuery();
+            return r.getInt("wins");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return 0;
+        } finally {
+            db.close();
+        }
+    }
+
+    public int getPlayerGameCount(String databaseAdress, int playerId) throws SQLException {
+        Connection db = DriverManager.getConnection(databaseAdress);
+        try {
+            PreparedStatement p = db.prepareStatement(
+                    "SELECT((SELECT COUNT(playerone) FROM Games WHERE playerone = ? AND winner IS NOT NULL) + (SELECT COUNT(playertwo) FROM Games WHERE playertwo = ? AND winner IS NOT NULL)) as gameCount;");
+            p.setInt(1, playerId);
+            p.setInt(2, playerId);
+            ResultSet r = p.executeQuery();
+            return r.getInt("gameCount");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return 0;
+        } finally {
+            db.close();
+        }
+    }
+
     public Game createGame(String databaseAdress, User playerOne, User playerTwo) throws SQLException {
         Connection db = DriverManager.getConnection(databaseAdress);
 
         try {
             PreparedStatement p = db.prepareStatement(
-                    "INSERT INTO Games(playerone, playertwo, playeroneshots, playertwoshots, playeronehits, playertwohits, finished) VALUES (?, ?, ?, ?, ?, ? ,?)",
+                    "INSERT INTO Games(playerone, playertwo, playeroneshots, playertwoshots, playeronehits, playertwohits) VALUES (?, ?, ?, ?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             p.setInt(1, playerOne.getId());
             p.setInt(2, playerTwo.getId());
@@ -118,7 +169,6 @@ public class DBGameDao implements GameDao {
             p.setInt(4, 0);
             p.setInt(5, 0);
             p.setInt(6, 0);
-            p.setBoolean(7, false);
 
             p.executeUpdate();
 

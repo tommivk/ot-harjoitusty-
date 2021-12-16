@@ -17,4 +17,10 @@ public interface GameDao {
     void addPlayerOneHit(String databaseAdress, int gameId) throws Exception;
 
     void addPlayerTwoHit(String databaseAdress, int gameId) throws Exception;
+
+    int getPlayerWinCount(String databaseAdress, int playerId) throws Exception;
+
+    void setWinner(String databaseAdress, int gameId, int playerId) throws Exception;
+
+    int getPlayerGameCount(String databaseAdress, int playerId) throws Exception;
 }

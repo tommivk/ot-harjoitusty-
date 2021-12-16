@@ -173,8 +173,12 @@ public class BattleshipUi extends Application {
     public VBox getPlayersStats(int playerId) {
         int totalShots = gameService.getPlayerShotCount(playerId);
         int totalHits = gameService.getPlayerHitCount(playerId);
+        int wins = gameService.getPlayerWinCount(playerId);
+        int totalGames = gameService.getPlayerGameCount(playerId);
         Text totalShotsText = new Text("Total shots: " + Integer.toString(totalShots));
         Text totalHitsText = new Text("Total hits: " + Integer.toString(totalHits));
+        Text winsText = new Text("Wins: " + Integer.toString(wins));
+        Text gamesPlayedText = new Text("Games played: " + Integer.toString(totalGames));
 
         float hitPercentage;
         if (totalHits == 0 || totalShots == 0) {
@@ -182,10 +186,18 @@ public class BattleshipUi extends Application {
         } else {
             hitPercentage = ((float) totalHits / totalShots) * 100;
         }
-        DecimalFormat df = new DecimalFormat("#.##");
-        Text hitPercentageText = new Text("Hit %: " + df.format(hitPercentage));
 
-        return new VBox(totalShotsText, totalHitsText, hitPercentageText);
+        float winPercentage;
+        if (wins == 0 || totalGames == 0) {
+            winPercentage = 0;
+        } else {
+            winPercentage = ((float) wins / totalGames) * 100;
+        }
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        Text hitPercentageText = new Text("Hit percentage: " + df.format(hitPercentage) + "%");
+        Text winPercentageText = new Text("Win percentage: " + df.format(winPercentage) + "%");
+        return new VBox(gamesPlayedText, winsText, winPercentageText, totalShotsText, totalHitsText, hitPercentageText);
     }
 
     public Scene signUpScene(Stage stage) {
@@ -574,7 +586,8 @@ public class BattleshipUi extends Application {
         Square[][] playerOneSquares = game.getPlayerOneSquares();
         Square[][] playerTwoSquares = game.getPlayerTwoSquares();
 
-        Label turnLabel = new Label("TURN: " + (game.getIsAgainstComputer() ? "You" : game.getPlayerOne().getName()));
+        Label turnLabel = new Label(
+                game.getIsAgainstComputer() ? "It's your turn" : "TURN: " + game.getPlayerOne().getName());
         turnLabel.setPadding(new Insets(20, 0, 0, 0));
 
         Button quitButton = new Button("Quit");
@@ -620,6 +633,7 @@ public class BattleshipUi extends Application {
                         }
                         if (game.allPlayerOneShipsDead()) {
                             game.setGameOver();
+                            gameService.setWinner(game.getPlayerTwo().getId());
                             turnLabel.setText(game.getPlayerTwo().getName() + " WINS!");
                             newGame.setVisible(true);
                         }
@@ -650,19 +664,19 @@ public class BattleshipUi extends Application {
                                 turnLabel.setText("TURN: " + game.getPlayerTwo().getName());
                             } else {
                                 game.getComputer().computersTurn(gameService);
-                                turnLabel.setText("TURN: You");
-
                             }
                         } else {
                             gameService.addPlayerOneHit();
                         }
                         if (game.getIsAgainstComputer() && game.allPlayerOneShipsDead()) {
                             game.setGameOver();
+                            gameService.setWinner(1);
                             turnLabel.setText("COMPUTER WINS!");
                             newGame.setVisible(true);
                         }
                         if (game.allPlayerTwoShipsDead()) {
                             game.setGameOver();
+                            gameService.setWinner(game.getPlayerOne().getId());
                             turnLabel.setText(game.getIsAgainstComputer() ? "YOU WIN!"
                                     : game.getPlayerOne().getName() + " WINS!");
                             newGame.setVisible(true);
