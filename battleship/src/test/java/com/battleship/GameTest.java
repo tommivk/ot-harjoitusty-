@@ -6,10 +6,10 @@ import java.util.Stack;
 
 import com.battleship.domain.Game;
 import com.battleship.domain.Ship;
-import com.battleship.domain.ShipDirection;
 import com.battleship.domain.Square;
-import com.battleship.domain.Turn;
 import com.battleship.domain.User;
+import com.battleship.enums.ShipDirection;
+import com.battleship.enums.Turn;
 
 import org.junit.Before;
 import org.junit.Test;

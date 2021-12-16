@@ -2,6 +2,9 @@ package com.battleship.domain;
 
 import java.util.Random;
 
+import com.battleship.enums.ShipDirection;
+import com.battleship.enums.Turn;
+
 /**
  * AI opponent
  */

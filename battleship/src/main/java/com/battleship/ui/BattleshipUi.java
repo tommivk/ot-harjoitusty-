@@ -27,9 +27,9 @@ import com.battleship.dao.DBUserDao;
 import com.battleship.domain.Game;
 import com.battleship.domain.GameService;
 import com.battleship.domain.Square;
-import com.battleship.domain.Turn;
 import com.battleship.domain.User;
 import com.battleship.domain.UserService;
+import com.battleship.enums.Turn;
 import com.github.javafaker.Faker;
 
 public class BattleshipUi extends Application {

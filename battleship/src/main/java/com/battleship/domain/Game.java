@@ -2,6 +2,9 @@ package com.battleship.domain;
 
 import java.util.Stack;
 
+import com.battleship.enums.ShipDirection;
+import com.battleship.enums.Turn;
+
 /**
  * Game state
  */

@@ -1,4 +1,4 @@
-package com.battleship.domain;
+package com.battleship.enums;
 
 public enum ShipDirection {
     HORIZONTAL, VERTICAL

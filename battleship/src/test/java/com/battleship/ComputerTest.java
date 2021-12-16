@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import com.battleship.domain.Game;
 import com.battleship.domain.GameService;
 import com.battleship.domain.Ship;
-import com.battleship.domain.ShipDirection;
 import com.battleship.domain.Square;
-import com.battleship.domain.Turn;
+import com.battleship.enums.ShipDirection;
+import com.battleship.enums.Turn;
 import com.battleship.dao.DBGameDao;
 import com.battleship.domain.Computer;
 
