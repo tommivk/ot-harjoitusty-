@@ -122,34 +122,39 @@ public class BattleshipUi extends Application {
 
         Button searchButton = new Button("Search");
 
-        Text searchUserText = new Text("");
-        searchUserText.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
-
-        VBox searchResult = new VBox();
-        searchResult.setAlignment(Pos.CENTER);
-        VBox.setMargin(searchResult, new Insets(10, 0, 0, 0));
+        BorderPane searchResult = new BorderPane();
+        BorderPane.setMargin(searchResult, new Insets(10, 0, 0, 0));
 
         searchButton.setOnMouseClicked(event -> {
             User user = userService.getUser(userSearch.getText());
             if (user != null) {
                 searchResult.getChildren().clear();
                 VBox data = getPlayersStats(user.getId());
+                Text searchUserText = new Text(user.getName());
+                searchUserText.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
+                HBox container = new HBox(data);
+                HBox.setMargin(data, new Insets(0, 0, 0, 30));
 
-                data.setAlignment(Pos.CENTER);
-                searchResult.getChildren().addAll(data);
-                searchUserText.setText(user.getName());
+                container.setAlignment(Pos.CENTER);
+                data.setPrefWidth(200);
+
+                searchResult.setTop(searchUserText);
+                searchResult.setCenter(container);
+                BorderPane.setAlignment(searchUserText, Pos.CENTER);
+                BorderPane.setMargin(searchUserText, new Insets(10, 10, 10, 10));
+                BorderPane.setAlignment(container, Pos.CENTER);
+
             } else {
                 Text errorMessage = new Text("User not found");
-                searchUserText.setText("");
                 searchResult.getChildren().clear();
-                searchResult.getChildren().addAll(errorMessage);
+                searchResult.setCenter(errorMessage);
             }
         });
 
         HBox searchField = new HBox(userSearch, searchButton);
         searchField.setAlignment(Pos.CENTER);
 
-        VBox centerContent = new VBox(statisticsTable, searchField, searchUserText, searchResult);
+        VBox centerContent = new VBox(statisticsTable, searchField, searchResult);
         centerContent.setAlignment(Pos.TOP_CENTER);
         VBox.setMargin(statisticsTable, new Insets(20, 0, 0, 0));
         VBox.setMargin(searchField, new Insets(20, 20, 20, 20));
@@ -171,10 +176,11 @@ public class BattleshipUi extends Application {
         int totalHits = gameService.getPlayerHitCount(playerId);
         int wins = gameService.getPlayerWinCount(playerId);
         int totalGames = gameService.getPlayerGameCount(playerId);
-        Text totalShotsText = new Text("Total shots: " + Integer.toString(totalShots));
-        Text totalHitsText = new Text("Total hits: " + Integer.toString(totalHits));
-        Text winsText = new Text("Wins: " + Integer.toString(wins));
-        Text gamesPlayedText = new Text("Games played: " + Integer.toString(totalGames));
+
+        Text totalShotsText = new Text(String.format("%-26s%-20s", "Total shots:", Integer.toString(totalShots)));
+        Text totalHitsText = new Text(String.format("%-28s%-20s", "Total hits: ", Integer.toString(totalHits)));
+        Text winsText = new Text(String.format("%-30s%-20s", "Wins: ", Integer.toString(wins)));
+        Text gamesPlayedText = new Text(String.format("%-22s%-20s", "Games played: ", Integer.toString(totalGames)));
 
         float hitPercentage;
         if (totalHits == 0 || totalShots == 0) {
@@ -191,8 +197,11 @@ public class BattleshipUi extends Application {
         }
 
         DecimalFormat df = new DecimalFormat("#.##");
-        Text hitPercentageText = new Text("Hit percentage: " + df.format(hitPercentage) + "%");
-        Text winPercentageText = new Text("Win percentage: " + df.format(winPercentage) + "%");
+        Text hitPercentageText = new Text(
+                String.format("%-22s%-20s", "Hit percentage: ", df.format(hitPercentage) + "%"));
+        Text winPercentageText = new Text(
+                String.format("%-21s%-20s", "Win percentage: ", df.format(winPercentage) + "%"));
+
         return new VBox(gamesPlayedText, winsText, winPercentageText, totalShotsText, totalHitsText, hitPercentageText);
     }
 
