@@ -168,8 +168,8 @@ public class GameTest {
 
         Square[][] squares = game.getPlayerOneSquares();
 
-        assertEquals(Color.GREY, squares[0][0].getButton().getFill());
-        assertEquals(Color.GREY, squares[4][0].getButton().getFill());
+        assertEquals(Color.GREY, squares[0][0].getRectangle().getFill());
+        assertEquals(Color.GREY, squares[4][0].getRectangle().getFill());
     }
 
     @Test
@@ -179,8 +179,8 @@ public class GameTest {
         Square[][] squares = game.getPlayerOneSquares();
 
         game.removeButtonImage(0, 0, 1);
-        assertEquals(Color.WHITESMOKE, squares[0][0].getButton().getFill());
-        assertEquals(Color.WHITESMOKE, squares[4][0].getButton().getFill());
+        assertEquals(Color.WHITESMOKE, squares[0][0].getRectangle().getFill());
+        assertEquals(Color.WHITESMOKE, squares[4][0].getRectangle().getFill());
     }
 
     @Test
@@ -247,11 +247,11 @@ public class GameTest {
                 game.getPlayerOneSquares()[i][k].setGreyButtonColor();
             }
         }
-        assertEquals(Color.GREY, game.getPlayerOneSquares()[5][5].getButton().getFill());
+        assertEquals(Color.GREY, game.getPlayerOneSquares()[5][5].getRectangle().getFill());
         game.clearButtonColors(1);
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
-                assertEquals(Color.WHITESMOKE, game.getPlayerOneSquares()[5][5].getButton().getFill());
+                assertEquals(Color.WHITESMOKE, game.getPlayerOneSquares()[5][5].getRectangle().getFill());
             }
         }
     }

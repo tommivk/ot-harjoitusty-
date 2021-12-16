@@ -192,7 +192,7 @@ public class Game {
                             : squares[(row - 1) + l][column];
 
                     activeSquare.addShip(ship);
-                    ship.addButton(activeSquare.getButton());
+                    ship.addRectangle(activeSquare.getRectangle());
                     ship.setShipDirection(this.shipDirection);
                     ship.setShipImage();
                 }

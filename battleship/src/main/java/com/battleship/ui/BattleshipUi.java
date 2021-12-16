@@ -476,8 +476,8 @@ public class BattleshipUi extends Application {
                 int row = i;
                 int column = k;
 
-                Rectangle playerOneButton = playerOneSquares[i][k].getButton();
-                Rectangle playerTwoButton = playerTwoSquares[i][k].getButton();
+                Rectangle playerOneButton = playerOneSquares[i][k].getRectangle();
+                Rectangle playerTwoButton = playerTwoSquares[i][k].getRectangle();
 
                 playerOneButton.setOnMouseEntered(event -> {
                     game.highlightSquares(row, column, 1);
@@ -636,12 +636,12 @@ public class BattleshipUi extends Application {
             for (int k = 0; k < 10; k++) {
 
                 Square square = playerOneSquares[i][k];
-                Rectangle button = square.getButton();
+                Rectangle button = square.getRectangle();
                 button.setOnMouseClicked(null);
                 square.removeButtonImage();
                 if (!game.getIsAgainstComputer()) {
                     button.setOnMouseClicked(event -> {
-                        if (!game.isGameOver() && game.getTurn() == Turn.PLAYER2 && !square.getIsHit()) {
+                        if (!game.isGameOver() && game.getTurn() == Turn.PLAYER2 && !square.getHasBeenHit()) {
                             boolean hasShip = square.hitSquare();
                             gameService.addPlayerTwoShot();
                             if (!hasShip) {
@@ -668,13 +668,13 @@ public class BattleshipUi extends Application {
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
                 Square square = playerTwoSquares[i][k];
-                Rectangle button = square.getButton();
+                Rectangle button = square.getRectangle();
 
                 square.removeButtonImage();
                 button.setOnMouseClicked(null);
 
                 button.setOnMouseClicked(event -> {
-                    if (!game.isGameOver() && game.getTurn() == Turn.PLAYER1 && !square.getIsHit()) {
+                    if (!game.isGameOver() && game.getTurn() == Turn.PLAYER1 && !square.getHasBeenHit()) {
                         boolean hasShip = square.hitSquare();
                         gameService.addPlayerOneShot();
 

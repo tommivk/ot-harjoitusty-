@@ -51,45 +51,45 @@ public class ComputerTest {
 
     @Test
     public void canHitLeftWorks() {
-        computer.setPrevHitCoordinates(5, 6);
+        computer.setPreviousHitCoordinates(5, 6);
         player1Squares[5][5].hitSquare();
         assertEquals(false, computer.canHitLeft());
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         assertEquals(true, computer.canHitLeft());
     }
 
     @Test
     public void canHitRightWorks() {
-        computer.setPrevHitCoordinates(5, 6);
+        computer.setPreviousHitCoordinates(5, 6);
         player1Squares[5][7].hitSquare();
         assertEquals(false, computer.canHitRight());
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         assertEquals(true, computer.canHitRight());
     }
 
     @Test
     public void canHitTopWorks() {
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         player1Squares[4][5].hitSquare();
         assertEquals(false, computer.canHitTop());
-        computer.setPrevHitCoordinates(3, 5);
+        computer.setPreviousHitCoordinates(3, 5);
         assertEquals(true, computer.canHitTop());
     }
 
     @Test
     public void canHitBottomWorks() {
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         player1Squares[6][5].hitSquare();
         assertEquals(false, computer.canHitBottom());
-        computer.setPrevHitCoordinates(2, 5);
+        computer.setPreviousHitCoordinates(2, 5);
         assertEquals(true, computer.canHitBottom());
     }
 
     @Test
     public void hitLeftWorks() {
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         computer.hitLeft();
-        assertEquals(true, player1Squares[5][4].getIsHit());
+        assertEquals(true, player1Squares[5][4].getHasBeenHit());
     }
 
     @Test
@@ -101,27 +101,27 @@ public class ComputerTest {
         player1Squares[5][8].hitSquare();
         player1Squares[5][9].hitSquare();
 
-        computer.setPrevHitCoordinates(5, 6);
+        computer.setPreviousHitCoordinates(5, 6);
         boolean res = computer.hitLeft();
         assertEquals(true, res);
-        assertEquals(0, computer.getPrevHits());
+        assertEquals(0, computer.getPreviousHits());
     }
 
     @Test
     public void hitLeftReturnsTrueAndAddsPrevHitsWhenHit() {
         game.changeShipDirection();
         game.placeShip(5, 5, 1);
-        computer.setPrevHitCoordinates(5, 6);
+        computer.setPreviousHitCoordinates(5, 6);
         boolean res = computer.hitLeft();
         assertEquals(true, res);
-        assertEquals(1, computer.getPrevHits());
+        assertEquals(1, computer.getPreviousHits());
     }
 
     @Test
     public void hitRightWorks() {
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         computer.hitRight();
-        assertEquals(true, player1Squares[5][6].getIsHit());
+        assertEquals(true, player1Squares[5][6].getHasBeenHit());
     }
 
     @Test
@@ -133,36 +133,36 @@ public class ComputerTest {
         player1Squares[5][7].hitSquare();
         player1Squares[5][8].hitSquare();
 
-        computer.setPrevHitCoordinates(5, 8);
+        computer.setPreviousHitCoordinates(5, 8);
         boolean res = computer.hitRight();
         assertEquals(true, res);
-        assertEquals(0, computer.getPrevHits());
+        assertEquals(0, computer.getPreviousHits());
     }
 
     @Test
     public void hitRightReturnsTrueAndAddsPrevHitsWhenHit() {
         game.changeShipDirection();
         game.placeShip(5, 5, 1);
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         boolean res = computer.hitRight();
         assertEquals(true, res);
-        assertEquals(1, computer.getPrevHits());
+        assertEquals(1, computer.getPreviousHits());
     }
 
     @Test
     public void hitBottomWorks() {
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         computer.hitBottom();
-        assertEquals(true, player1Squares[6][5].getIsHit());
+        assertEquals(true, player1Squares[6][5].getHasBeenHit());
     }
 
     @Test
     public void hitBottomReturnsTrueAndAddsPrevHitsWhenHit() {
         game.placeShip(5, 5, 1);
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         boolean res = computer.hitBottom();
         assertEquals(true, res);
-        assertEquals(1, computer.getPrevHits());
+        assertEquals(1, computer.getPreviousHits());
     }
 
     @Test
@@ -173,26 +173,26 @@ public class ComputerTest {
         player1Squares[7][5].hitSquare();
         player1Squares[8][5].hitSquare();
 
-        computer.setPrevHitCoordinates(8, 5);
+        computer.setPreviousHitCoordinates(8, 5);
         boolean res = computer.hitBottom();
         assertEquals(true, res);
-        assertEquals(0, computer.getPrevHits());
+        assertEquals(0, computer.getPreviousHits());
     }
 
     @Test
     public void hitTopWorks() {
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         computer.hitTop();
-        assertEquals(true, player1Squares[4][5].getIsHit());
+        assertEquals(true, player1Squares[4][5].getHasBeenHit());
     }
 
     @Test
     public void hitTopReturnsTrueAndAddsPrevHitsWhenHit() {
         game.placeShip(5, 5, 1);
-        computer.setPrevHitCoordinates(6, 5);
+        computer.setPreviousHitCoordinates(6, 5);
         boolean res = computer.hitTop();
         assertEquals(true, res);
-        assertEquals(1, computer.getPrevHits());
+        assertEquals(1, computer.getPreviousHits());
     }
 
     @Test
@@ -203,17 +203,17 @@ public class ComputerTest {
         player1Squares[8][5].hitSquare();
         player1Squares[9][5].hitSquare();
 
-        computer.setPrevHitCoordinates(6, 5);
+        computer.setPreviousHitCoordinates(6, 5);
         boolean res = computer.hitTop();
         assertEquals(true, res);
-        assertEquals(0, computer.getPrevHits());
+        assertEquals(0, computer.getPreviousHits());
     }
 
     @Test
     public void canHitColumnEndRightWorks() {
-        computer.addPrevHit();
-        computer.addPrevHit();
-        computer.setPrevHitCoordinates(0, 0);
+        computer.addPreviousHit();
+        computer.addPreviousHit();
+        computer.setPreviousHitCoordinates(0, 0);
         assertEquals(true, computer.canHitColumnEndRight());
         player1Squares[0][2].hitSquare();
         assertEquals(false, computer.canHitColumnEndRight());
@@ -221,9 +221,9 @@ public class ComputerTest {
 
     @Test
     public void canHitColumnEndLeftWorks() {
-        computer.addPrevHit();
-        computer.addPrevHit();
-        computer.setPrevHitCoordinates(0, 5);
+        computer.addPreviousHit();
+        computer.addPreviousHit();
+        computer.setPreviousHitCoordinates(0, 5);
         assertEquals(true, computer.canHitColumnEndLeft());
         player1Squares[0][3].hitSquare();
         assertEquals(false, computer.canHitColumnEndLeft());
@@ -231,9 +231,9 @@ public class ComputerTest {
 
     @Test
     public void canHitRowEndTopWorks() {
-        computer.addPrevHit();
-        computer.addPrevHit();
-        computer.setPrevHitCoordinates(5, 5);
+        computer.addPreviousHit();
+        computer.addPreviousHit();
+        computer.setPreviousHitCoordinates(5, 5);
         assertEquals(true, computer.canHitRowEndTop());
         player1Squares[3][5].hitSquare();
         assertEquals(false, computer.canHitRowEndTop());
@@ -241,9 +241,9 @@ public class ComputerTest {
 
     @Test
     public void canHitRowEndBottomWorks() {
-        computer.addPrevHit();
-        computer.addPrevHit();
-        computer.setPrevHitCoordinates(5, 5);
+        computer.addPreviousHit();
+        computer.addPreviousHit();
+        computer.setPreviousHitCoordinates(5, 5);
         assertEquals(true, computer.canHitRowEndBottom());
         player1Squares[7][5].hitSquare();
         assertEquals(false, computer.canHitRowEndBottom());
@@ -251,11 +251,11 @@ public class ComputerTest {
 
     @Test
     public void hitColumnEndRightWorks() {
-        computer.addPrevHit();
-        computer.addPrevHit();
-        computer.setPrevHitCoordinates(0, 0);
+        computer.addPreviousHit();
+        computer.addPreviousHit();
+        computer.setPreviousHitCoordinates(0, 0);
         computer.hitColumnEndRight();
-        assertEquals(true, player1Squares[0][2].getIsHit());
+        assertEquals(true, player1Squares[0][2].getHasBeenHit());
 
         game.changeShipDirection();
         assertEquals(ShipDirection.HORIZONTAL, game.getShipDirection());
@@ -266,21 +266,21 @@ public class ComputerTest {
         player1Squares[1][3].hitSquare();
         player1Squares[1][4].hitSquare();
 
-        computer.setPrevHitCoordinates(1, 1);
+        computer.setPreviousHitCoordinates(1, 1);
 
-        computer.setPrevHits(4);
+        computer.setPreviousHits(4);
         computer.hitColumnEndRight();
         assertEquals(true, player1Squares[1][5].getShip().isDead());
     }
 
     @Test
     public void hitColumnEndLeftWorks() {
-        computer.addPrevHit();
-        computer.addPrevHit();
-        computer.addPrevHit();
-        computer.setPrevHitCoordinates(0, 5);
+        computer.addPreviousHit();
+        computer.addPreviousHit();
+        computer.addPreviousHit();
+        computer.setPreviousHitCoordinates(0, 5);
         computer.hitColumnEndLeft();
-        assertEquals(true, player1Squares[0][2].getIsHit());
+        assertEquals(true, player1Squares[0][2].getHasBeenHit());
 
         game.changeShipDirection();
         assertEquals(ShipDirection.HORIZONTAL, game.getShipDirection());
@@ -290,20 +290,20 @@ public class ComputerTest {
         player1Squares[1][4].hitSquare();
         player1Squares[1][5].hitSquare();
 
-        computer.setPrevHitCoordinates(1, 5);
+        computer.setPreviousHitCoordinates(1, 5);
 
-        computer.setPrevHits(4);
+        computer.setPreviousHits(4);
         computer.hitColumnEndLeft();
         assertEquals(true, player1Squares[1][1].getShip().isDead());
     }
 
     @Test
     public void hitRowEndTopWorks() {
-        computer.addPrevHit();
-        computer.addPrevHit();
-        computer.setPrevHitCoordinates(5, 5);
+        computer.addPreviousHit();
+        computer.addPreviousHit();
+        computer.setPreviousHitCoordinates(5, 5);
         computer.hitRowEndTop();
-        assertEquals(true, player1Squares[3][5].getIsHit());
+        assertEquals(true, player1Squares[3][5].getHasBeenHit());
 
         game.placeShip(1, 6, 1);
         player1Squares[2][6].hitSquare();
@@ -311,20 +311,20 @@ public class ComputerTest {
         player1Squares[4][6].hitSquare();
         player1Squares[5][6].hitSquare();
 
-        computer.setPrevHitCoordinates(5, 6);
+        computer.setPreviousHitCoordinates(5, 6);
 
-        computer.setPrevHits(4);
+        computer.setPreviousHits(4);
         computer.hitRowEndTop();
         assertEquals(true, player1Squares[1][6].getShip().isDead());
     }
 
     @Test
     public void hitRowEndBottomWorks() {
-        computer.addPrevHit();
-        computer.addPrevHit();
-        computer.setPrevHitCoordinates(2, 5);
+        computer.addPreviousHit();
+        computer.addPreviousHit();
+        computer.setPreviousHitCoordinates(2, 5);
         computer.hitRowEndBottom();
-        assertEquals(true, player1Squares[4][5].getIsHit());
+        assertEquals(true, player1Squares[4][5].getHasBeenHit());
 
         game.placeShip(1, 6, 1);
         player1Squares[4][6].hitSquare();
@@ -332,16 +332,16 @@ public class ComputerTest {
         player1Squares[2][6].hitSquare();
         player1Squares[1][6].hitSquare();
 
-        computer.setPrevHitCoordinates(1, 6);
+        computer.setPreviousHitCoordinates(1, 6);
 
-        computer.setPrevHits(4);
+        computer.setPreviousHits(4);
         computer.hitRowEndBottom();
         assertEquals(true, player1Squares[5][6].getShip().isDead());
 
     }
 
     @Test
-    public void computerHitRandomWorks() {
+    public void hitRandomWorks() {
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
                 this.player1Squares[i][k].addShip(new Ship(5));
@@ -349,13 +349,13 @@ public class ComputerTest {
         }
 
         for (int i = 0; i < 100; i++) {
-            computer.computerHitRandom();
+            computer.hitRandom();
         }
 
         boolean allHit = true;
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
-                if (!player1Squares[i][k].getIsHit()) {
+                if (!player1Squares[i][k].getHasBeenHit()) {
                     allHit = false;
                 }
             }
@@ -364,8 +364,8 @@ public class ComputerTest {
     }
 
     @Test
-    public void computerHitRandomReturnsFalseWhenNoHit() {
-        boolean res = computer.computerHitRandom();
+    public void hitRandomReturnsFalseWhenNoHit() {
+        boolean res = computer.hitRandom();
         assertEquals(false, res);
     }
 
@@ -380,7 +380,7 @@ public class ComputerTest {
 
     @Test
     public void canHitRowWorks() {
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         assertEquals(true, computer.canHitRow());
         player1Squares[4][5].hitSquare();
         assertEquals(true, computer.canHitRow());
@@ -390,22 +390,22 @@ public class ComputerTest {
 
     @Test
     public void hitRowWorks() {
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         computer.hitRow();
         boolean rowHit = false;
-        if (player1Squares[6][5].getIsHit() || player1Squares[4][5].getIsHit()) {
+        if (player1Squares[6][5].getHasBeenHit() || player1Squares[4][5].getHasBeenHit()) {
             rowHit = true;
         }
         assertEquals(true, rowHit);
 
         player1Squares[6][5].hitSquare();
         player1Squares[4][5].hitSquare();
-        computer.addPrevHit();
-        computer.addPrevHit();
+        computer.addPreviousHit();
+        computer.addPreviousHit();
         computer.hitRow();
 
         boolean hasHit = false;
-        if (player1Squares[7][5].getIsHit() || player1Squares[3][5].getIsHit()) {
+        if (player1Squares[7][5].getHasBeenHit() || player1Squares[3][5].getHasBeenHit()) {
             hasHit = true;
         }
 
@@ -415,22 +415,22 @@ public class ComputerTest {
 
     @Test
     public void hitColumnWorks() {
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
         computer.hitColumn();
         boolean rowHit = false;
-        if (player1Squares[5][6].getIsHit() || player1Squares[5][4].getIsHit()) {
+        if (player1Squares[5][6].getHasBeenHit() || player1Squares[5][4].getHasBeenHit()) {
             rowHit = true;
         }
         assertEquals(true, rowHit);
 
         player1Squares[5][6].hitSquare();
         player1Squares[5][4].hitSquare();
-        computer.addPrevHit();
-        computer.addPrevHit();
+        computer.addPreviousHit();
+        computer.addPreviousHit();
         computer.hitColumn();
 
         boolean hasHit = false;
-        if (player1Squares[5][3].getIsHit() || player1Squares[5][7].getIsHit()) {
+        if (player1Squares[5][3].getHasBeenHit() || player1Squares[5][7].getHasBeenHit()) {
             hasHit = true;
         }
 
@@ -439,25 +439,25 @@ public class ComputerTest {
 
     @Test
     public void hitRowOrColumnWorks() {
-        computer.setPrevHitCoordinates(5, 5);
+        computer.setPreviousHitCoordinates(5, 5);
 
-        computer.computerHitRowOrColumn();
-        assertEquals(true, player1Squares[5][4].getIsHit());
+        computer.hitRowOrColumn();
+        assertEquals(true, player1Squares[5][4].getHasBeenHit());
 
-        computer.computerHitRowOrColumn();
-        assertEquals(true, player1Squares[4][5].getIsHit());
+        computer.hitRowOrColumn();
+        assertEquals(true, player1Squares[4][5].getHasBeenHit());
 
-        computer.computerHitRowOrColumn();
-        assertEquals(true, player1Squares[5][6].getIsHit());
+        computer.hitRowOrColumn();
+        assertEquals(true, player1Squares[5][6].getHasBeenHit());
 
-        computer.computerHitRowOrColumn();
-        assertEquals(true, player1Squares[6][5].getIsHit());
+        computer.hitRowOrColumn();
+        assertEquals(true, player1Squares[6][5].getHasBeenHit());
     }
 
     @Test
     public void setAndGetPrevHitCoordinatesWorks() {
-        computer.setPrevHitCoordinates(3, 5);
-        int[] coordinates = computer.getPrevHitCoordinates();
+        computer.setPreviousHitCoordinates(3, 5);
+        int[] coordinates = computer.getPreviousHitCoordinates();
         assertEquals(3, coordinates[0]);
         assertEquals(5, coordinates[1]);
     }

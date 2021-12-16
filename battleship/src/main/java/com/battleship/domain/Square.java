@@ -9,17 +9,17 @@ import javafx.scene.shape.Rectangle;
  * Square that is part of a ship
  */
 public class Square {
-    private boolean isHit;
+    private boolean hasBeenHit;
     private Ship ship = null;
-    private Rectangle button;
+    private Rectangle rectangle;
 
     public Square() {
-        this.isHit = false;
+        this.hasBeenHit = false;
 
         Rectangle rectangle = new Rectangle(30, 30);
         rectangle.setFill(Color.WHITESMOKE);
         rectangle.setStyle("-fx-stroke: dimgray; -fx-stroke-width: 1;");
-        this.button = rectangle;
+        this.rectangle = rectangle;
     }
 
     public void addShip(Ship ship) {
@@ -43,7 +43,7 @@ public class Square {
      * If ship is dead after the hit color is set to black
      */
     public boolean hitSquare() {
-        this.isHit = true;
+        this.hasBeenHit = true;
         if (this.ship == null) {
             this.setMissBackground();
             return false;
@@ -57,16 +57,16 @@ public class Square {
         return true;
     }
 
-    public boolean getIsHit() {
-        return this.isHit;
+    public boolean getHasBeenHit() {
+        return this.hasBeenHit;
     }
 
-    public void addButton(Rectangle button) {
-        this.button = button;
+    public void addRectangle(Rectangle button) {
+        this.rectangle = button;
     }
 
-    public Rectangle getButton() {
-        return this.button;
+    public Rectangle getRectangle() {
+        return this.rectangle;
     }
 
     /**
@@ -74,14 +74,14 @@ public class Square {
      */
     public void setHitBackground() {
         Image image = new Image("file:images/hit.png");
-        this.button.setFill(new ImagePattern(image));
+        this.rectangle.setFill(new ImagePattern(image));
     }
 
     /**
      * Sets grey button color
      */
     public void setGreyButtonColor() {
-        this.button.setFill(Color.GREY);
+        this.rectangle.setFill(Color.GREY);
     }
 
     /**
@@ -89,14 +89,14 @@ public class Square {
      */
     public void setMissBackground() {
         Image image = new Image("file:images/miss.png");
-        this.button.setFill(new ImagePattern(image));
+        this.rectangle.setFill(new ImagePattern(image));
     }
 
     /**
      * Removes button image
      */
     public void removeButtonImage() {
-        this.button.setFill(Color.WHITESMOKE);
-        this.button.setStyle("-fx-stroke: dimgray; -fx-stroke-width: 1;");
+        this.rectangle.setFill(Color.WHITESMOKE);
+        this.rectangle.setStyle("-fx-stroke: dimgray; -fx-stroke-width: 1;");
     }
 }

@@ -35,7 +35,7 @@ public class SquareTest {
 
     @Test
     public void initialSquareIsHitIsFalse() {
-        assertEquals(false, square.getIsHit());
+        assertEquals(false, square.getHasBeenHit());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class SquareTest {
         square.addShip(ship);
         assertEquals(5, square.getShip().getSquaresLeft());
         square.hitSquare();
-        assertEquals(true, square.getIsHit());
+        assertEquals(true, square.getHasBeenHit());
         assertEquals(4, square.getShip().getSquaresLeft());
     }
 
@@ -57,7 +57,7 @@ public class SquareTest {
     public void settingHitBackgroundImageWorks() {
         square.setHitBackground();
         Image image = new Image("file:images/hit.png");
-        Rectangle button = square.getButton();
+        Rectangle button = square.getRectangle();
         Image buttonImage = ((ImagePattern) button.getFill()).getImage();
 
         PixelReader ogReader = image.getPixelReader();
@@ -73,7 +73,7 @@ public class SquareTest {
     public void removingButtonImageWorks() {
         square.setHitBackground();
         square.removeButtonImage();
-        Rectangle button = square.getButton();
+        Rectangle button = square.getRectangle();
         assertEquals(Color.WHITESMOKE, button.getFill());
     }
 

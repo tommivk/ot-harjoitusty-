@@ -12,13 +12,13 @@ import javafx.scene.shape.Rectangle;
 public class Ship {
     private int size;
     private int squaresLeft;
-    private ArrayList<Rectangle> buttons;
+    private ArrayList<Rectangle> rectangles;
     private ShipDirection shipDirection;
 
     public Ship(int size) {
         this.size = size;
         this.squaresLeft = size;
-        this.buttons = new ArrayList<Rectangle>();
+        this.rectangles = new ArrayList<Rectangle>();
     }
 
     /**
@@ -37,8 +37,8 @@ public class Ship {
         return this.squaresLeft;
     }
 
-    public void addButton(Rectangle button) {
-        this.buttons.add(button);
+    public void addRectangle(Rectangle rectangle) {
+        this.rectangles.add(rectangle);
     }
 
     public void setShipDirection(ShipDirection direction) {
@@ -48,8 +48,8 @@ public class Ship {
     /**
      * Returns all the rectangles connected to Ship
      */
-    public ArrayList<Rectangle> getButtons() {
-        return this.buttons;
+    public ArrayList<Rectangle> getRectangles() {
+        return this.rectangles;
     }
 
     /**
@@ -61,19 +61,19 @@ public class Ship {
         Image end = new Image("file:images/ship-end.png");
 
         if (this.shipDirection == ShipDirection.VERTICAL) {
-            this.buttons.get(this.buttons.size() - 1).setFill(new ImagePattern(head));
-            this.buttons.get(0).setFill(new ImagePattern(end));
+            this.rectangles.get(this.rectangles.size() - 1).setFill(new ImagePattern(head));
+            this.rectangles.get(0).setFill(new ImagePattern(end));
         } else {
 
-            this.buttons.get(this.buttons.size() - 1).setFill(new ImagePattern(end));
-            this.buttons.get(this.buttons.size() - 1).setStyle("-fx-rotate: 90");
-            this.buttons.get(0).setFill(new ImagePattern(head));
-            this.buttons.get(0).setStyle("-fx-rotate: 90");
+            this.rectangles.get(this.rectangles.size() - 1).setFill(new ImagePattern(end));
+            this.rectangles.get(this.rectangles.size() - 1).setStyle("-fx-rotate: 90");
+            this.rectangles.get(0).setFill(new ImagePattern(head));
+            this.rectangles.get(0).setStyle("-fx-rotate: 90");
         }
-        for (int i = 1; i < buttons.size() - 1; i++) {
-            buttons.get(i).setFill(new ImagePattern(middle));
+        for (int i = 1; i < rectangles.size() - 1; i++) {
+            rectangles.get(i).setFill(new ImagePattern(middle));
             if (this.shipDirection == ShipDirection.HORIZONTAL) {
-                buttons.get(i).setStyle("-fx-rotate: 90");
+                rectangles.get(i).setStyle("-fx-rotate: 90");
             }
         }
 
