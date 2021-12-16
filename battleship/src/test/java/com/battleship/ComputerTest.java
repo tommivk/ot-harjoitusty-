@@ -95,7 +95,7 @@ public class ComputerTest {
     @Test
     public void hitLeftReturnsTrueAndResetsPrevHitsWhenShipDies() {
         game.changeShipDirection();
-        game.placeShip(5, 5, 1);
+        game.placeShip(5, 5, Turn.PLAYER1);
         player1Squares[5][6].hitSquare();
         player1Squares[5][7].hitSquare();
         player1Squares[5][8].hitSquare();
@@ -110,7 +110,7 @@ public class ComputerTest {
     @Test
     public void hitLeftReturnsTrueAndAddsPrevHitsWhenHit() {
         game.changeShipDirection();
-        game.placeShip(5, 5, 1);
+        game.placeShip(5, 5, Turn.PLAYER1);
         computer.setPreviousHitCoordinates(5, 6);
         boolean res = computer.hitLeft();
         assertEquals(true, res);
@@ -127,7 +127,7 @@ public class ComputerTest {
     @Test
     public void hitRightReturnsTrueAndResetsPrevHitsWhenShipDies() {
         game.changeShipDirection();
-        game.placeShip(5, 5, 1);
+        game.placeShip(5, 5, Turn.PLAYER1);
         player1Squares[5][5].hitSquare();
         player1Squares[5][6].hitSquare();
         player1Squares[5][7].hitSquare();
@@ -142,7 +142,7 @@ public class ComputerTest {
     @Test
     public void hitRightReturnsTrueAndAddsPrevHitsWhenHit() {
         game.changeShipDirection();
-        game.placeShip(5, 5, 1);
+        game.placeShip(5, 5, Turn.PLAYER1);
         computer.setPreviousHitCoordinates(5, 5);
         boolean res = computer.hitRight();
         assertEquals(true, res);
@@ -158,7 +158,7 @@ public class ComputerTest {
 
     @Test
     public void hitBottomReturnsTrueAndAddsPrevHitsWhenHit() {
-        game.placeShip(5, 5, 1);
+        game.placeShip(5, 5, Turn.PLAYER1);
         computer.setPreviousHitCoordinates(5, 5);
         boolean res = computer.hitBottom();
         assertEquals(true, res);
@@ -167,7 +167,7 @@ public class ComputerTest {
 
     @Test
     public void hitBottomReturnsTrueAndResetsPrevHitsWhenShipDies() {
-        game.placeShip(5, 5, 1);
+        game.placeShip(5, 5, Turn.PLAYER1);
         player1Squares[5][5].hitSquare();
         player1Squares[6][5].hitSquare();
         player1Squares[7][5].hitSquare();
@@ -188,7 +188,7 @@ public class ComputerTest {
 
     @Test
     public void hitTopReturnsTrueAndAddsPrevHitsWhenHit() {
-        game.placeShip(5, 5, 1);
+        game.placeShip(5, 5, Turn.PLAYER1);
         computer.setPreviousHitCoordinates(6, 5);
         boolean res = computer.hitTop();
         assertEquals(true, res);
@@ -197,7 +197,7 @@ public class ComputerTest {
 
     @Test
     public void hitTopReturnsTrueAndResetsPrevHitsWhenShipDies() {
-        game.placeShip(5, 5, 1);
+        game.placeShip(5, 5, Turn.PLAYER1);
         player1Squares[6][5].hitSquare();
         player1Squares[7][5].hitSquare();
         player1Squares[8][5].hitSquare();
@@ -260,7 +260,7 @@ public class ComputerTest {
         game.changeShipDirection();
         assertEquals(ShipDirection.HORIZONTAL, game.getShipDirection());
 
-        game.placeShip(1, 1, 1);
+        game.placeShip(1, 1, Turn.PLAYER1);
         player1Squares[1][1].hitSquare();
         player1Squares[1][2].hitSquare();
         player1Squares[1][3].hitSquare();
@@ -284,7 +284,7 @@ public class ComputerTest {
 
         game.changeShipDirection();
         assertEquals(ShipDirection.HORIZONTAL, game.getShipDirection());
-        game.placeShip(1, 1, 1);
+        game.placeShip(1, 1, Turn.PLAYER1);
         player1Squares[1][2].hitSquare();
         player1Squares[1][3].hitSquare();
         player1Squares[1][4].hitSquare();
@@ -305,7 +305,7 @@ public class ComputerTest {
         computer.hitRowEndTop();
         assertEquals(true, player1Squares[3][5].getHasBeenHit());
 
-        game.placeShip(1, 6, 1);
+        game.placeShip(1, 6, Turn.PLAYER1);
         player1Squares[2][6].hitSquare();
         player1Squares[3][6].hitSquare();
         player1Squares[4][6].hitSquare();
@@ -326,7 +326,7 @@ public class ComputerTest {
         computer.hitRowEndBottom();
         assertEquals(true, player1Squares[4][5].getHasBeenHit());
 
-        game.placeShip(1, 6, 1);
+        game.placeShip(1, 6, Turn.PLAYER1);
         player1Squares[4][6].hitSquare();
         player1Squares[3][6].hitSquare();
         player1Squares[2][6].hitSquare();

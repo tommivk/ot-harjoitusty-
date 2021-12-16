@@ -39,7 +39,7 @@ public class Computer {
             int column = random.nextInt(10);
 
             if (this.game.canPlaceShip(ship, row, column, this.game.getPlayerTwoSquares())) {
-                this.game.placeShip(row, column, 2);
+                this.game.placeShip(row, column, Turn.PLAYER2);
             }
         }
     }

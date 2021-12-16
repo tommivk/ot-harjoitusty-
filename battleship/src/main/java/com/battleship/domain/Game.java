@@ -119,12 +119,13 @@ public class Game {
      * 
      * @param player which players squares will be highlighted
      */
-    public void highlightSquares(int row, int column, int player) {
-        if ((player == 1 && !this.playerOneShipsIsEmpty()) || (player == 2 && !this.playerTwoShipsIsEmpty())) {
+    public void highlightSquares(int row, int column, Turn player) {
+        if ((player == Turn.PLAYER1 && !this.playerOneShipsIsEmpty())
+                || (player == Turn.PLAYER2 && !this.playerTwoShipsIsEmpty())) {
 
-            Ship ship = player == 1 ? this.peekNextPlayerOneShip() : this.peekNextPlayerTwoShip();
+            Ship ship = player == Turn.PLAYER1 ? this.peekNextPlayerOneShip() : this.peekNextPlayerTwoShip();
             int index = this.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
-            Square[][] squares = player == 1 ? this.playerOneSquares : this.playerTwoSquares;
+            Square[][] squares = player == Turn.PLAYER1 ? this.playerOneSquares : this.playerTwoSquares;
 
             if (index + ship.getSize() <= 10) {
                 for (int j = ship.getSize(); j > 0; j--) {
@@ -144,10 +145,10 @@ public class Game {
      * 
      * @param player which players squares will be cleared
      */
-    public void clearButtonColors(int player) {
+    public void clearButtonColors(Turn player) {
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
-                Square square = player == 1 ? this.playerOneSquares[i][k] : this.playerTwoSquares[i][k];
+                Square square = player == Turn.PLAYER1 ? this.playerOneSquares[i][k] : this.playerTwoSquares[i][k];
                 square.removeButtonImage();
             }
         }
@@ -158,12 +159,13 @@ public class Game {
      * 
      * @param player which players squares will be cleared
      */
-    public void removeButtonImage(int row, int column, int player) {
-        if ((player == 1 && !this.playerOneShipsIsEmpty()) || (player == 2 && !this.playerTwoShipsIsEmpty())) {
-            Ship ship = player == 1 ? this.peekNextPlayerOneShip() : this.peekNextPlayerTwoShip();
+    public void removeButtonImage(int row, int column, Turn player) {
+        if ((player == Turn.PLAYER1 && !this.playerOneShipsIsEmpty())
+                || (player == Turn.PLAYER2 && !this.playerTwoShipsIsEmpty())) {
+            Ship ship = player == Turn.PLAYER1 ? this.peekNextPlayerOneShip() : this.peekNextPlayerTwoShip();
 
             int index = this.getShipDirection() == ShipDirection.HORIZONTAL ? column : row;
-            Square[][] squares = player == 1 ? this.playerOneSquares : this.playerTwoSquares;
+            Square[][] squares = player == Turn.PLAYER1 ? this.playerOneSquares : this.playerTwoSquares;
 
             if (index + ship.getSize() <= 10) {
                 for (int j = ship.getSize(); j > 0; j--) {
@@ -181,14 +183,15 @@ public class Game {
     /*
      * Places new ship to the coordinates
      */
-    public void placeShip(int row, int column, int player) {
-        if ((player == 1 && !this.playerOneShipsIsEmpty()) || (player == 2 && !this.playerTwoShipsIsEmpty())) {
+    public void placeShip(int row, int column, Turn player) {
+        if ((player == Turn.PLAYER1 && !this.playerOneShipsIsEmpty())
+                || (player == Turn.PLAYER2 && !this.playerTwoShipsIsEmpty())) {
             int index = this.shipDirection == ShipDirection.HORIZONTAL ? column : row;
-            Ship nextShip = player == 1 ? this.peekNextPlayerOneShip() : this.peekNextPlayerTwoShip();
-            Square[][] squares = player == 1 ? this.playerOneSquares : this.playerTwoSquares;
+            Ship nextShip = player == Turn.PLAYER1 ? this.peekNextPlayerOneShip() : this.peekNextPlayerTwoShip();
+            Square[][] squares = player == Turn.PLAYER1 ? this.playerOneSquares : this.playerTwoSquares;
 
             if ((index + nextShip.getSize()) <= 10 && canPlaceShip(nextShip, row, column, squares)) {
-                Ship ship = player == 1 ? this.getNewPlayerOneShip() : this.getNewPlayerTwoShip();
+                Ship ship = player == Turn.PLAYER1 ? this.getNewPlayerOneShip() : this.getNewPlayerTwoShip();
                 for (int l = ship.getSize(); l > 0; l--) {
                     Square activeSquare = this.shipDirection == ShipDirection.HORIZONTAL
                             ? squares[row][(column - 1) + l]

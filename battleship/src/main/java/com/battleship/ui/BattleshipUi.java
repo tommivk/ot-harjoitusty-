@@ -480,19 +480,19 @@ public class BattleshipUi extends Application {
                 Rectangle playerTwoButton = playerTwoSquares[i][k].getRectangle();
 
                 playerOneButton.setOnMouseEntered(event -> {
-                    game.highlightSquares(row, column, 1);
+                    game.highlightSquares(row, column, Turn.PLAYER1);
                 });
 
                 playerOneButton.setOnMouseExited(event -> {
-                    game.removeButtonImage(row, column, 1);
+                    game.removeButtonImage(row, column, Turn.PLAYER1);
                 });
 
                 playerOneButton.setOnMouseClicked(event -> {
                     if (event.getButton() == MouseButton.PRIMARY) {
-                        game.placeShip(row, column, 1);
+                        game.placeShip(row, column, Turn.PLAYER1);
 
                         if (game.playerOneShipsIsEmpty()) {
-                            game.clearButtonColors(1);
+                            game.clearButtonColors(Turn.PLAYER1);
                         }
                         if (game.getIsAgainstComputer() && game.playerOneShipsIsEmpty()) {
                             stage.setScene(playScene(stage));
@@ -509,7 +509,7 @@ public class BattleshipUi extends Application {
                             }
                         }
                         game.changeShipDirection();
-                        game.highlightSquares(row, column, 1);
+                        game.highlightSquares(row, column, Turn.PLAYER1);
                     }
 
                 });
@@ -520,18 +520,18 @@ public class BattleshipUi extends Application {
 
                     playerTwoButton.setOnMouseEntered(event -> {
                         if (game.playerOneShipsIsEmpty()) {
-                            game.highlightSquares(row, column, 2);
+                            game.highlightSquares(row, column, Turn.PLAYER2);
                         }
                     });
 
                     playerTwoButton.setOnMouseExited(event -> {
-                        game.removeButtonImage(row, column, 2);
+                        game.removeButtonImage(row, column, Turn.PLAYER2);
                     });
 
                     playerTwoButton.setOnMouseClicked(event -> {
                         if (game.playerOneShipsIsEmpty()) {
                             if (event.getButton() == MouseButton.PRIMARY) {
-                                game.placeShip(row, column, 2);
+                                game.placeShip(row, column, Turn.PLAYER2);
 
                                 if (game.playerTwoShipsIsEmpty()) {
                                     stage.setScene(playScene(stage));
@@ -548,13 +548,13 @@ public class BattleshipUi extends Application {
                                     }
                                 }
                                 game.changeShipDirection();
-                                game.highlightSquares(row, column, 2);
+                                game.highlightSquares(row, column, Turn.PLAYER2);
                             }
                         }
                     });
                 } else {
                     game.getComputer().placeComputerShips();
-                    game.clearButtonColors(2);
+                    game.clearButtonColors(Turn.PLAYER2);
                 }
                 playerTwoGrid.add(playerTwoButton, k, i);
             }
