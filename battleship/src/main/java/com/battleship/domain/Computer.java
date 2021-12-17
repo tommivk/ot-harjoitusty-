@@ -31,8 +31,8 @@ public class Computer {
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream("config.properties"));
-            int AIShotDelay = Integer.valueOf(properties.getProperty("AIShotDelay"));
-            this.computerShotDelay = AIShotDelay;
+            int computerShotDelay = Integer.valueOf(properties.getProperty("AIShotDelay"));
+            this.computerShotDelay = computerShotDelay;
         } catch (IOException e) {
         }
 
