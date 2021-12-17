@@ -20,7 +20,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.input.MouseButton;
 
+import java.io.FileInputStream;
 import java.text.DecimalFormat;
+import java.util.Properties;
 
 import com.battleship.dao.DBGameDao;
 import com.battleship.dao.DBUserDao;
@@ -39,10 +41,15 @@ public class BattleshipUi extends Application {
 
     @Override
     public void init() throws Exception {
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("config.properties"));
+        String databaseFile = properties.getProperty("databaseFile");
+        String databaseAddress = "jdbc:sqlite:" + databaseFile;
+
         DBUserDao dbUserDao = new DBUserDao();
-        userService = new UserService(dbUserDao, "jdbc:sqlite:data.db");
+        userService = new UserService(dbUserDao, databaseAddress);
         DBGameDao dbGameDao = new DBGameDao();
-        gameService = new GameService(dbGameDao, "jdbc:sqlite:data.db");
+        gameService = new GameService(dbGameDao, databaseAddress);
     }
 
     @Override

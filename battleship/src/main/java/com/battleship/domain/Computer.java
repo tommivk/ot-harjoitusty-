@@ -1,5 +1,8 @@
 package com.battleship.domain;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.Random;
 
 import com.battleship.enums.ShipDirection;
@@ -22,8 +25,17 @@ public class Computer {
     private int previousHits;
     private Game game;
     private boolean lastShotWasHit;
+    private int computerShotDelay = 500;
 
     public Computer(Game game) {
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream("config.properties"));
+            int AIShotDelay = Integer.valueOf(properties.getProperty("AIShotDelay"));
+            this.computerShotDelay = AIShotDelay;
+        } catch (IOException e) {
+        }
+
         this.previousHitDirection = ShipDirection.VERTICAL;
         this.previousHits = 0;
         this.previousHitCoordinates = new int[2];
@@ -107,7 +119,7 @@ public class Computer {
      * Starts javafx timeline loop where computer tries to hit squares
      */
     public void computersTurn(GameService gameService, Label turnLabel, Button newGameButton) {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(700), (ActionEvent event) -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(this.computerShotDelay), (ActionEvent event) -> {
             boolean hit = hitAvailableSquare();
             this.storeHit(hit, gameService);
         }));
