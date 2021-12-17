@@ -683,7 +683,8 @@ public class BattleshipUi extends Application {
                             if (!game.getIsAgainstComputer()) {
                                 turnLabel.setText("TURN: " + game.getPlayerTwo().getName());
                             } else {
-                                game.getComputer().computersTurn(gameService);
+                                turnLabel.setText("Computers turn");
+                                game.getComputer().computersTurn(gameService, turnLabel, newGameButton);
                             }
                         } else {
                             gameService.addPlayerOneHit();

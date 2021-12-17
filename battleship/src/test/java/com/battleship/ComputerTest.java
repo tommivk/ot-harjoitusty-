@@ -6,6 +6,7 @@ import com.battleship.domain.Game;
 import com.battleship.domain.GameService;
 import com.battleship.domain.Ship;
 import com.battleship.domain.Square;
+import com.battleship.domain.User;
 import com.battleship.enums.ShipDirection;
 import com.battleship.enums.Player;
 import com.battleship.dao.DBGameDao;
@@ -16,6 +17,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 
@@ -30,7 +33,7 @@ public class ComputerTest {
     public void setup() {
         game = new Game(10);
         ship = new Ship(5);
-        computer = game.getComputer();
+        computer = new Computer(game);
         player1Squares = game.getPlayerOneSquares();
     }
 
@@ -370,11 +373,15 @@ public class ComputerTest {
     }
 
     @Test
-    public void turnChangesAfterComputersTurn() {
+    public void turnChangesAfterComputersTurn() throws InterruptedException {
         DBGameDao dbGameDao = new DBGameDao();
         GameService gameService = new GameService(dbGameDao, "");
+        gameService.createGame(new User("p1"), new User("p2"));
         game.setTurn(Player.PLAYER2);
-        computer.computersTurn(gameService);
+
+        computer.computersTurn(gameService, new Label(), new Button());
+        Thread.sleep(1000);
+
         assertEquals(Player.PLAYER1, game.getTurn());
     }
 

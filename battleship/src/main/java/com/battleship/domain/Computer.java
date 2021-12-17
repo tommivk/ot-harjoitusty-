@@ -3,6 +3,14 @@ package com.battleship.domain;
 import java.util.Random;
 
 import com.battleship.enums.ShipDirection;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
+
 import com.battleship.enums.Player;
 
 /**
@@ -13,6 +21,7 @@ public class Computer {
     private ShipDirection previousHitDirection;
     private int previousHits;
     private Game game;
+    private boolean lastShotWasHit;
 
     public Computer(Game game) {
         this.previousHitDirection = ShipDirection.VERTICAL;
@@ -75,27 +84,67 @@ public class Computer {
     }
 
     /**
-     * Stores computers hit and shot count to the database
+     * Stores computers hit and shot count to the database, saves the previous hit
+     * result to lastShotWasHit variable
      */
     private void storeHit(boolean hit, GameService gameService) {
+        setLastShotWasHit(hit);
         if (hit) {
             gameService.addPlayerTwoHit();
         }
         gameService.addPlayerTwoShot();
     }
 
+    private void setLastShotWasHit(boolean bool) {
+        this.lastShotWasHit = bool;
+    }
+
+    private boolean getLastShotWasHit() {
+        return this.lastShotWasHit;
+    }
+
     /**
-     * Starts while loop where computer tries to hit squares
+     * Starts javafx timeline loop where computer tries to hit squares
      */
-    public void computersTurn(GameService gameService) {
-        while (true) {
+    public void computersTurn(GameService gameService, Label turnLabel, Button newGameButton) {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(700), (ActionEvent event) -> {
             boolean hit = hitAvailableSquare();
             this.storeHit(hit, gameService);
-            if (!hit) {
-                this.game.setTurn(Player.PLAYER1);
-                break;
+        }));
+        timeline.play();
+        timeline.setOnFinished(event -> {
+            if (game.allPlayerOneShipsDead()) {
+                setGameOver(gameService, turnLabel, newGameButton);
+                timeline.pause();
             }
-        }
+            if (getLastShotWasHit() && !game.allPlayerOneShipsDead()) {
+                timeline.play();
+            }
+            if (!getLastShotWasHit() && !game.allPlayerOneShipsDead()) {
+                changeTurn(turnLabel);
+                timeline.pause();
+            }
+        });
+    }
+
+    /**
+     * Changes the game turn back to Player 1 and changes turn label text
+     */
+    public void changeTurn(Label turnLabel) {
+        turnLabel.setText("It's your turn");
+        this.game.setTurn(Player.PLAYER1);
+    }
+
+    /**
+     * Sets the game over, stores winner to database and makes new game button
+     * visible
+     */
+    public void setGameOver(GameService gameService, Label turnLabel, Button newGameButton) {
+        this.game.setTurn(Player.PLAYER1);
+        this.game.setGameOver();
+        gameService.setWinner(1);
+        turnLabel.setText("COMPUTER WINS!");
+        newGameButton.setVisible(true);
     }
 
     /**
@@ -120,18 +169,18 @@ public class Computer {
      */
     public boolean hitRow() {
         if (this.canHitTop()) {
-            boolean hit = this.hitTop();
-            return hit;
+            return this.hitTop();
         }
         if (this.canHitBottom()) {
-            boolean hit = this.hitBottom();
-            return hit;
+            return this.hitBottom();
         }
         if (this.canHitRowEndBottom()) {
-            boolean hit = hitRowEndBottom();
-            return hit;
+            return this.hitRowEndBottom();
         }
-        return hitRowEndTop();
+        if (this.canHitRowEndTop()) {
+            return hitRowEndTop();
+        }
+        return this.hitRandom();
     }
 
     /**
@@ -139,18 +188,18 @@ public class Computer {
      */
     public boolean hitColumn() {
         if (this.canHitLeft()) {
-            boolean hit = this.hitLeft();
-            return hit;
+            return this.hitLeft();
         }
         if (this.canHitRight()) {
-            boolean hit = this.hitRight();
-            return hit;
+            return this.hitRight();
         }
         if (this.canHitColumnEndLeft()) {
-            boolean hit = this.hitColumnEndLeft();
-            return hit;
+            return this.hitColumnEndLeft();
         }
-        return this.hitColumnEndRight();
+        if (this.canHitColumnEndRight()) {
+            return this.hitColumnEndRight();
+        }
+        return this.hitRandom();
     }
 
     /**
