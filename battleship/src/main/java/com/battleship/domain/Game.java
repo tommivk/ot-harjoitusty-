@@ -85,6 +85,9 @@ public class Game {
 
     /**
      * Initializes new Square object to all squares in the array
+     * 
+     * @param size size of the board
+     * @return returns two dimentional array of Square objects
      */
     public Square[][] initializeBoard(int size) {
         Square[][] squares = new Square[size][size];
@@ -118,6 +121,8 @@ public class Game {
      * Highlights squares based on the next ships size and orientation
      * 
      * @param player which players squares will be highlighted
+     * @param row    row of the square
+     * @param column column of the square
      */
     public void highlightSquares(int row, int column, Player player) {
         if ((player == Player.PLAYER1 && !this.playerOneShipsIsEmpty())
@@ -158,6 +163,8 @@ public class Game {
      * Removes images from all the squares that do not contain a ship
      * 
      * @param player which players squares will be cleared
+     * @param row    row
+     * @param column column
      */
     public void removeButtonImage(int row, int column, Player player) {
         if ((player == Player.PLAYER1 && !this.playerOneShipsIsEmpty())
@@ -180,8 +187,13 @@ public class Game {
         }
     }
 
-    /*
+    /**
      * Places new ship to the coordinates
+     * 
+     * @param row    row where the ship is placed
+     * 
+     * @param column column where the ship is placed
+     * @param player player whose ship will be placed
      */
     public void placeShip(int row, int column, Player player) {
         if ((player == Player.PLAYER1 && !this.playerOneShipsIsEmpty())
@@ -206,8 +218,15 @@ public class Game {
         }
     }
 
-    /*
+    /**
      * Checks if placing ship is allowed to the coordinates
+     * 
+     * @param ship    ship object
+     * @param row     row where the ship would be placed
+     * 
+     * @param column  column where the ship would be placed
+     * @param squares squares where the ship would be placed
+     * @return returns true if placing ship is allowed
      */
     public boolean canPlaceShip(Ship ship, int row, int column, Square[][] squares) {
         int shipSize = ship.getSize();
@@ -229,8 +248,10 @@ public class Game {
         return isOk;
     }
 
-    /*
+    /**
      * Returns true if all player one ships are dead
+     * 
+     * @return returns true if they are
      */
     public boolean allPlayerOneShipsDead() {
         boolean allShipsDead = true;
@@ -244,8 +265,10 @@ public class Game {
         return allShipsDead;
     }
 
-    /*
+    /**
      * Returns true if all player two ships are dead
+     * 
+     * @return returns true if they are
      */
     public boolean allPlayerTwoShipsDead() {
         boolean allShipsDead = true;
@@ -290,6 +313,7 @@ public class Game {
     /**
      * Gets all the player one ships that haven't been placed on the board yet
      * 
+     * @return returns stack of Ship objects
      */
     public Stack<Ship> getPlayerOneShips() {
         return this.playerOneShips;
@@ -315,6 +339,8 @@ public class Game {
 
     /**
      * Checks if all player two ships are placed on the board
+     * 
+     * @return returns true if they are
      */
     public boolean playerOneShipsIsEmpty() {
         return this.playerOneShips.isEmpty();
@@ -340,6 +366,8 @@ public class Game {
 
     /**
      * Checks if all player two ships are placed on the board
+     * 
+     * @return returns true if they are
      */
     public boolean playerTwoShipsIsEmpty() {
         return this.playerTwoShips.isEmpty();

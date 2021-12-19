@@ -67,6 +67,9 @@ public class Computer {
 
     /**
      * Stores the coodinates of previous shot that hit a ship
+     * 
+     * @param row    row of the hit
+     * @param column column of the hit
      */
     public void setPreviousHitCoordinates(int row, int column) {
         this.previousHitCoordinates[0] = row;
@@ -83,6 +86,8 @@ public class Computer {
 
     /**
      * returns how many continuous hits computer has
+     * 
+     * @return returns the amount of previous hits
      */
     public int getPreviousHits() {
         return this.previousHits;
@@ -90,6 +95,9 @@ public class Computer {
 
     /**
      * gets the coodinates of previous shot that hit a ship
+     * 
+     * @return reuturns int array with the coordinates. Array index 0 = row, index 1
+     *         = column
      */
     public int[] getPreviousHitCoordinates() {
         return this.previousHitCoordinates;
@@ -98,6 +106,9 @@ public class Computer {
     /**
      * Stores computers hit and shot count to the database, saves the previous hit
      * result to lastShotWasHit variable
+     * 
+     * @param hit         result of the last computers hit
+     * @param gameService GameService object
      */
     private void storeHit(boolean hit, GameService gameService) {
         setLastShotWasHit(hit);
@@ -117,6 +128,10 @@ public class Computer {
 
     /**
      * Starts javafx timeline loop where computer tries to hit squares
+     * 
+     * @param gameService   GameService object
+     * @param turnLabel     label that indicates a turn in a game
+     * @param newGameButton button that starts a new game
      */
     public void computersTurn(GameService gameService, Label turnLabel, Button newGameButton) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(this.computerShotDelay), (ActionEvent event) -> {
@@ -141,6 +156,8 @@ public class Computer {
 
     /**
      * Changes the game turn back to Player 1 and changes turn label text
+     * 
+     * @param turnLabel label that indicates a turn in a game
      */
     public void changeTurn(Label turnLabel) {
         turnLabel.setText("It's your turn");
@@ -150,6 +167,10 @@ public class Computer {
     /**
      * Sets the game over, stores winner to database and makes new game button
      * visible
+     * 
+     * @param gameService   GameService object
+     * @param turnLabel     label that indicates a turn in a game
+     * @param newGameButton button that starts a new game
      */
     public void setGameOver(GameService gameService, Label turnLabel, Button newGameButton) {
         this.game.setTurn(Player.PLAYER1);
@@ -161,8 +182,11 @@ public class Computer {
 
     /**
      * Hits random square if previous hits is 0. If previous hits is 1 it tries to
-     * hit squares around the previous hit coordinates. If previous hits is > 1
+     * hit squares around the previous hit coordinates. If previous hits is more
+     * than 1
      * it tries to hit squares depending on what the last two hits direction was
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitAvailableSquare() {
         if (previousHits == 1) {
@@ -178,6 +202,8 @@ public class Computer {
 
     /**
      * Tries to hit squares on the row of the previous hits
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitRow() {
         if (this.canHitTop()) {
@@ -197,6 +223,8 @@ public class Computer {
 
     /**
      * Tries to hit squares on the column of the previous hits
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitColumn() {
         if (this.canHitLeft()) {
@@ -215,7 +243,9 @@ public class Computer {
     }
 
     /**
-     * Checks if squares arounds previous hit square are hittable
+     * Hits a square around the previous hit
+     * 
+     * @return returns true if hits a ship
      */
     public boolean hitRowOrColumn() {
         if (this.canHitLeft()) {
@@ -238,6 +268,8 @@ public class Computer {
 
     /**
      * Checks if square from the left of previous hit is hittable;
+     * 
+     * @return returns true if the square is hittable
      */
     public boolean canHitLeft() {
         Square[][] squares = this.game.getPlayerOneSquares();
@@ -250,6 +282,8 @@ public class Computer {
 
     /**
      * Checks if square from the right of previous hit is hittable;
+     * 
+     * @return returns true if the square is hittable
      */
     public boolean canHitRight() {
         Square[][] squares = this.game.getPlayerOneSquares();
@@ -262,6 +296,8 @@ public class Computer {
 
     /**
      * Checks if square from the top of previous hit is hittable;
+     * 
+     * @return returns true if the square is hittable
      */
     public boolean canHitTop() {
         Square[][] squares = this.game.getPlayerOneSquares();
@@ -275,6 +311,8 @@ public class Computer {
 
     /**
      * Checks if square from the below of previous hit is hittable;
+     * 
+     * @return returns true if the square is hittable
      */
     public boolean canHitBottom() {
         Square[][] squares = this.game.getPlayerOneSquares();
@@ -288,6 +326,8 @@ public class Computer {
 
     /**
      * Checks if either square from the top or bottom of previous hit are hittable;
+     * 
+     * @return returns true if there is a square that is hittable
      */
     public boolean canHitRow() {
         if (this.previousHitCoordinates[0] + 1 < 10
@@ -304,6 +344,8 @@ public class Computer {
 
     /**
      * Hits the square from the left of the previous hit
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitLeft() {
         int row = previousHitCoordinates[0];
@@ -326,6 +368,8 @@ public class Computer {
 
     /**
      * Hits the square from the right of the previous hit
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitRight() {
         int row = previousHitCoordinates[0];
@@ -348,6 +392,8 @@ public class Computer {
 
     /**
      * Hits the square from the top of the previous hit
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitTop() {
         int row = previousHitCoordinates[0];
@@ -370,6 +416,8 @@ public class Computer {
 
     /**
      * Hits the square from the bottom of the previous hit
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitBottom() {
         int row = previousHitCoordinates[0];
@@ -391,6 +439,8 @@ public class Computer {
 
     /**
      * Checks if either square from the left or right of previous hit are hittable;
+     * 
+     * @return returns true if there is a square that is hittable
      */
     public boolean canHitColumnEndRight() {
         int row = previousHitCoordinates[0];
@@ -404,6 +454,8 @@ public class Computer {
 
     /**
      * Checks if column from index - prevHits is hittable
+     * 
+     * @return returns true if the square is hittable
      */
     public boolean canHitColumnEndLeft() {
         int row = previousHitCoordinates[0];
@@ -417,6 +469,8 @@ public class Computer {
 
     /**
      * Checks if row from index - prevHits is hittable
+     * 
+     * @return returns true if the square is hittable
      */
     public boolean canHitRowEndTop() {
         int row = previousHitCoordinates[0];
@@ -430,6 +484,8 @@ public class Computer {
 
     /**
      * Checks if row from index + prevHits is hittable
+     * 
+     * @return returns true if the square is hittable
      */
     public boolean canHitRowEndBottom() {
         int row = previousHitCoordinates[0];
@@ -443,6 +499,8 @@ public class Computer {
 
     /**
      * Hits the Square in row index + prevHits
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitRowEndBottom() {
         int row = previousHitCoordinates[0];
@@ -464,6 +522,8 @@ public class Computer {
 
     /**
      * Hits the Square in row index - prevHits
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitRowEndTop() {
         int row = previousHitCoordinates[0];
@@ -485,6 +545,8 @@ public class Computer {
 
     /**
      * Hits the Square in column index + prevHits
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitColumnEndRight() {
         int row = previousHitCoordinates[0];
@@ -507,6 +569,8 @@ public class Computer {
 
     /**
      * Hits the Square in column index - prevHits
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitColumnEndLeft() {
         int row = previousHitCoordinates[0];
@@ -531,6 +595,8 @@ public class Computer {
 
     /**
      * Uses brute force to hit a random square
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitRandom() {
         Random random = new Random();
@@ -550,7 +616,9 @@ public class Computer {
     /**
      * Hits player one's square
      * 
-     * @param row,column coordinates of the square that are going to be hit
+     * @param row    row of the square that are going to be hit
+     * @param column column of the square that are going to be hit
+     * @return returns true if it hits a ship
      */
     public boolean hitSquare(int row, int column) {
         Square square = this.game.getPlayerOneSquares()[row][column];

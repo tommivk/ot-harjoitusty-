@@ -31,7 +31,7 @@ public class Square {
     }
 
     /**
-     * returns true if Square has a ship
+     * @return returns true if Square has a ship
      */
     public boolean hasShip() {
         return this.ship == null ? false : true;
@@ -41,6 +41,8 @@ public class Square {
      * Hits square. If square does not contain ship it sets square color to blue. If
      * Square contains ship it sets ship color to red.
      * If ship is dead after the hit color is set to black
+     * 
+     * @return returns true if it hits a ship
      */
     public boolean hitSquare() {
         this.hasBeenHit = true;

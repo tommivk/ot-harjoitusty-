@@ -33,7 +33,7 @@ public class Ship {
     }
 
     /**
-     * Returns how many unhit squares the ship has
+     * @return Returns how many unhit squares the ship has
      */
     public int getSquaresLeft() {
         return this.squaresLeft;
@@ -48,7 +48,7 @@ public class Ship {
     }
 
     /**
-     * Returns all the rectangles connected to Ship
+     * @return Returns all the rectangles connected to Ship in ArrayList
      */
     public ArrayList<Rectangle> getRectangles() {
         return this.rectangles;
@@ -89,7 +89,7 @@ public class Ship {
     }
 
     /**
-     * Returns ships size
+     * @return Returns ships size
      */
     public int getSize() {
         return this.size;

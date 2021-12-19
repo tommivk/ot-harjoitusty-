@@ -36,13 +36,13 @@ public class UserService {
     /**
      * Stores new user in database
      * 
-     * @param userName users name that will be stored
+     * @param username users name that will be stored
      * 
      * @return returns true if succesfull
      */
-    public boolean createUser(String userName) {
+    public boolean createUser(String username) {
         try {
-            User user = userDao.create(this.databaseAdress, userName);
+            User user = userDao.create(this.databaseAdress, username);
             if (user == null) {
                 return false;
             }
@@ -55,7 +55,7 @@ public class UserService {
     /**
      * logs in player one
      * 
-     * @param userName users name will be logged in
+     * @param username users name will be logged in
      * 
      * @return returns true if succesfull
      */
@@ -76,7 +76,7 @@ public class UserService {
     /**
      * logs in player two
      * 
-     * @param userName users name will be logged in
+     * @param username users name will be logged in
      * 
      * @return returns true if succesfull
      */
@@ -104,6 +104,8 @@ public class UserService {
 
     /**
      * Gets all users that are stored in database
+     * 
+     * @return List of User objects
      */
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<User>();
