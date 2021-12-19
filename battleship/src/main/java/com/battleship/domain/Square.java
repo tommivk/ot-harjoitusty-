@@ -31,6 +31,8 @@ public class Square {
     }
 
     /**
+     * Checks if square has a ship
+     * 
      * @return returns true if Square has a ship
      */
     public boolean hasShip() {
@@ -59,20 +61,34 @@ public class Square {
         return true;
     }
 
+    /**
+     * Checks if square has been hit already
+     * 
+     * @return returns true if the square has been hit already
+     */
     public boolean getHasBeenHit() {
         return this.hasBeenHit;
     }
 
-    public void addRectangle(Rectangle button) {
-        this.rectangle = button;
+    /**
+     * Adds rectangle to the square
+     * 
+     * @param rectangle javafx rectangle object
+     */
+    public void addRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
     }
 
+    /**
+     * 
+     * @return javafx rectangle object
+     */
     public Rectangle getRectangle() {
         return this.rectangle;
     }
 
     /**
-     * Sets background image
+     * Sets "hit" background image
      */
     public void setHitBackground() {
         Image image = new Image("file:images/hit.png");
@@ -87,7 +103,7 @@ public class Square {
     }
 
     /**
-     * Sets background image
+     * Sets "miss" background image
      */
     public void setMissBackground() {
         Image image = new Image("file:images/miss.png");

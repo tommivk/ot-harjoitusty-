@@ -113,6 +113,11 @@ public class GameService {
         }
     }
 
+    /**
+     * Sets a winner to the game
+     * 
+     * @param playerId id of the player who won
+     */
     public void setWinner(int playerId) {
         try {
             gameDao.setWinner(this.databaseAdress, currentGame.getGameId(), playerId);
@@ -121,6 +126,12 @@ public class GameService {
         }
     }
 
+    /**
+     * Gets players win count
+     * 
+     * @param playerId id of the player
+     * @return win count
+     */
     public int getPlayerWinCount(int playerId) {
         try {
             return gameDao.getPlayerWinCount(this.databaseAdress, playerId);
@@ -130,6 +141,12 @@ public class GameService {
         }
     }
 
+    /**
+     * Gets players game count
+     * 
+     * @param playerId id of the player
+     * @return game count
+     */
     public int getPlayerGameCount(int playerId) {
         try {
             return gameDao.getPlayerGameCount(this.databaseAdress, playerId);
@@ -139,6 +156,11 @@ public class GameService {
         }
     }
 
+    /**
+     * Gets current game
+     * 
+     * @return Game object
+     */
     public Game getGame() {
         return this.currentGame;
     }

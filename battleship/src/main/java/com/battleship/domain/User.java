@@ -16,10 +16,20 @@ public class User {
         this.name = name;
     }
 
+    /**
+     * Gets users username
+     * 
+     * @return username of the user
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Gets users id
+     * 
+     * @return id of the user
+     */
     public int getId() {
         return this.id;
     }

@@ -20,14 +20,27 @@ public class UserService {
         this.databaseAdress = databaseAdress;
     }
 
+    /**
+     * Gets logged in player one
+     * 
+     * @return returns User object
+     */
     public User getLoggedPlayerOne() {
         return this.loggedPlayerOne;
     }
 
+    /**
+     * Gets logged in player two
+     * 
+     * @return returns User object
+     */
     public User getLoggedPlayerTwo() {
         return this.loggedPlayerTwo;
     }
 
+    /**
+     * Logs players out
+     */
     public void logout() {
         this.loggedPlayerOne = null;
         this.loggedPlayerTwo = null;
@@ -94,6 +107,12 @@ public class UserService {
         }
     }
 
+    /**
+     * Gets user by username from database
+     * 
+     * @param username username of the user
+     * @return User object
+     */
     public User getUser(String username) {
         try {
             return userDao.getUser(this.databaseAdress, username);
