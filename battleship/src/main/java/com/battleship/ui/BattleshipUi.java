@@ -503,12 +503,15 @@ public class BattleshipUi extends Application {
 
                         if (game.playerOneShipsIsEmpty()) {
                             game.clearButtonColors(Player.PLAYER1);
-                            turnLabel.setText("Place your ships, " + userService.getLoggedPlayerTwo().getName());
+                            if (!game.getIsAgainstComputer()) {
+                                turnLabel.setText("Place your ships, " + userService.getLoggedPlayerTwo().getName());
+                            }
                         }
                         if (game.getIsAgainstComputer() && game.playerOneShipsIsEmpty()) {
                             stage.setScene(playScene(stage));
                             stage.show();
                         }
+
                     }
 
                     if (event.getButton() == MouseButton.SECONDARY) {
