@@ -82,6 +82,15 @@ public class UserServiceTest {
     }
 
     @Test
+    public void getUserWorks() {
+        userService.createUser("testUser");
+        User user = userService.getUser("testUser");
+        assertEquals("testUser", user.getName());
+        User userTwo = userService.getUser("user");
+        assertEquals(null, userTwo);
+    }
+
+    @Test
     public void logoutWorks() {
         userService.createUser("testUser");
         userService.playerOneLogin("testUser");

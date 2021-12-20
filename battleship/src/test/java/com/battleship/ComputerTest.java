@@ -373,16 +373,72 @@ public class ComputerTest {
     }
 
     @Test
-    public void turnChangesAfterComputersTurn() throws InterruptedException {
+    public void computersTurnCanSunkAShip() throws InterruptedException {
+        assertEquals(ShipDirection.VERTICAL, game.getShipDirection());
+
+        game.placeShip(0, 0, Player.PLAYER1);
+
+        for (int i = 0; i < 10; i++) {
+            for (int k = 1; k < 10; k++) {
+                game.getPlayerOneSquares()[i][k].hitSquare();
+            }
+        }
+
         DBGameDao dbGameDao = new DBGameDao();
         GameService gameService = new GameService(dbGameDao, "");
-        gameService.createGame(new User("p1"), new User("p2"));
-        game.setTurn(Player.PLAYER2);
 
-        computer.computersTurn(gameService, new Label(), new Button());
-        Thread.sleep(1000);
+        computer.setComputerShotDelay(1);
 
-        assertEquals(Player.PLAYER1, game.getTurn());
+        while (!game.getPlayerOneSquares()[0][0].getShip().isDead()) {
+            computer.computersTurn(gameService, new Label(), new Button());
+            Thread.sleep(100);
+        }
+
+        assertEquals(true, game.getPlayerOneSquares()[0][0].getShip().isDead());
+    }
+
+    @Test
+    public void changeTurnWorks() {
+        Label label = new Label();
+        computer.changeTurn(label);
+        assertEquals("It's your turn", label.getText());
+        Player turn = game.getTurn();
+        assertEquals(Player.PLAYER1, turn);
+    }
+
+    @Test
+    public void hitAvailableSquareHitsWhenPrevHitsIsOne() {
+        computer.addPreviousHit();
+        computer.hitAvailableSquare();
+        Square[][] squares = game.getPlayerOneSquares();
+        boolean hit = false;
+        for (int i = 0; i < 10; i++) {
+            for (int k = 0; k < 10; k++) {
+                if (squares[i][k].getHasBeenHit()) {
+                    hit = true;
+                }
+            }
+        }
+        assertEquals(true, hit);
+    }
+
+    @Test
+    public void hitAvailableSquareHitsWhenPrevHitsMoreThanOne() {
+        computer.addPreviousHit();
+        computer.addPreviousHit();
+        computer.addPreviousHit();
+
+        computer.hitAvailableSquare();
+        Square[][] squares = game.getPlayerOneSquares();
+        boolean hit = false;
+        for (int i = 0; i < 10; i++) {
+            for (int k = 0; k < 10; k++) {
+                if (squares[i][k].getHasBeenHit()) {
+                    hit = true;
+                }
+            }
+        }
+        assertEquals(true, hit);
     }
 
     @Test
@@ -440,8 +496,21 @@ public class ComputerTest {
         if (player1Squares[5][3].getHasBeenHit() || player1Squares[5][7].getHasBeenHit()) {
             hasHit = true;
         }
-
         assertEquals(true, hasHit);
+
+        player1Squares[2][5].hitSquare();
+        computer.setPreviousHitCoordinates(2, 6);
+        computer.hitColumn();
+        assertEquals(true, player1Squares[2][7].getHasBeenHit());
+
+        player1Squares[2][5].hitSquare();
+        computer.setPreviousHitCoordinates(2, 4);
+        computer.hitColumn();
+        assertEquals(true, player1Squares[2][3].getHasBeenHit());
+
+        player1Squares[1][0].hitSquare();
+        player1Squares[1][1].hitSquare();
+        player1Squares[1][2].hitSquare();
     }
 
     @Test

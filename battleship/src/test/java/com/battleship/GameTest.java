@@ -170,6 +170,24 @@ public class GameTest {
 
         assertEquals(Color.GREY, squares[0][0].getRectangle().getFill());
         assertEquals(Color.GREY, squares[4][0].getRectangle().getFill());
+
+        assertEquals(Color.WHITESMOKE, squares[0][1].getRectangle().getFill());
+        assertEquals(Color.WHITESMOKE, squares[5][0].getRectangle().getFill());
+    }
+
+    @Test
+    public void highlightingSquaresWorksWhenShipIsVertical() {
+        game.changeShipDirection();
+        game.highlightSquares(0, 0, Player.PLAYER2);
+
+        Square[][] squares = game.getPlayerTwoSquares();
+
+        assertEquals(Color.GREY, squares[0][0].getRectangle().getFill());
+        assertEquals(Color.GREY, squares[0][4].getRectangle().getFill());
+
+        assertEquals(Color.WHITESMOKE, squares[1][0].getRectangle().getFill());
+        assertEquals(Color.WHITESMOKE, squares[0][5].getRectangle().getFill());
+
     }
 
     @Test
@@ -181,6 +199,14 @@ public class GameTest {
         game.removeButtonImage(0, 0, Player.PLAYER1);
         assertEquals(Color.WHITESMOKE, squares[0][0].getRectangle().getFill());
         assertEquals(Color.WHITESMOKE, squares[4][0].getRectangle().getFill());
+
+        game.changeShipDirection();
+        game.highlightSquares(0, 0, Player.PLAYER2);
+        Square[][] squaresTwo = game.getPlayerTwoSquares();
+        game.removeButtonImage(0, 0, Player.PLAYER2);
+
+        assertEquals(Color.WHITESMOKE, squaresTwo[0][0].getRectangle().getFill());
+        assertEquals(Color.WHITESMOKE, squaresTwo[0][4].getRectangle().getFill());
     }
 
     @Test

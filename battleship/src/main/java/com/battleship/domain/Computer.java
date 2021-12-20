@@ -66,6 +66,15 @@ public class Computer {
     }
 
     /**
+     * Sets delay between computers shots
+     * 
+     * @param delay delay in milliseconds
+     */
+    public void setComputerShotDelay(int delay) {
+        this.computerShotDelay = delay;
+    }
+
+    /**
      * Stores the coodinates of previous shot that hit a ship
      * 
      * @param row    row of the hit
