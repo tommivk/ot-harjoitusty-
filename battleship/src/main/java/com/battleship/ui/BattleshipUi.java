@@ -478,6 +478,9 @@ public class BattleshipUi extends Application {
         Square[][] playerOneSquares = game.getPlayerOneSquares();
         Square[][] playerTwoSquares = game.getPlayerTwoSquares();
 
+        Label turnLabel = new Label("Place your ships, " + userService.getLoggedPlayerOne().getName());
+        turnLabel.setPadding(new Insets(10, 0, 0, 0));
+
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
                 int row = i;
@@ -500,6 +503,7 @@ public class BattleshipUi extends Application {
 
                         if (game.playerOneShipsIsEmpty()) {
                             game.clearButtonColors(Player.PLAYER1);
+                            turnLabel.setText("Place your ships, " + userService.getLoggedPlayerTwo().getName());
                         }
                         if (game.getIsAgainstComputer() && game.playerOneShipsIsEmpty()) {
                             stage.setScene(playScene(stage));
@@ -588,7 +592,7 @@ public class BattleshipUi extends Application {
         Label tipLabel = new Label("Tip: click mouse 2 to change the ships direction");
         tipLabel.setPadding(new Insets(20, 0, 0, 0));
 
-        VBox container = new VBox(setupHbox, tipLabel);
+        VBox container = new VBox(setupHbox, turnLabel, tipLabel);
         container.setAlignment(Pos.TOP_CENTER);
 
         Button quitButton = new Button("Quit");
