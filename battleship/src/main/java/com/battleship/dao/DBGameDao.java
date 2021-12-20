@@ -18,7 +18,6 @@ public class DBGameDao implements GameDao {
             return r.getInt("shots");
 
         } catch (SQLException e) {
-            System.out.println(e);
             return 0;
         } finally {
             db.close();
@@ -36,7 +35,6 @@ public class DBGameDao implements GameDao {
             return r.getInt("hits");
 
         } catch (SQLException e) {
-            System.out.println(e);
             return 0;
         } finally {
             db.close();
@@ -53,7 +51,6 @@ public class DBGameDao implements GameDao {
             p.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println(e);
         } finally {
             db.close();
         }
@@ -69,7 +66,6 @@ public class DBGameDao implements GameDao {
             p.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println(e);
         } finally {
             db.close();
         }
@@ -84,7 +80,6 @@ public class DBGameDao implements GameDao {
 
             p.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e);
         } finally {
             db.close();
         }
@@ -99,7 +94,6 @@ public class DBGameDao implements GameDao {
 
             p.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e);
         } finally {
             db.close();
         }
@@ -115,7 +109,6 @@ public class DBGameDao implements GameDao {
 
             p.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e);
         } finally {
             db.close();
         }
@@ -131,7 +124,6 @@ public class DBGameDao implements GameDao {
             return r.getInt("wins");
 
         } catch (SQLException e) {
-            System.out.println(e);
             return 0;
         } finally {
             db.close();
@@ -149,7 +141,6 @@ public class DBGameDao implements GameDao {
             return r.getInt("gameCount");
 
         } catch (SQLException e) {
-            System.out.println(e);
             return 0;
         } finally {
             db.close();
@@ -178,7 +169,6 @@ public class DBGameDao implements GameDao {
             return new Game(10, gameId, playerOne, playerTwo);
 
         } catch (SQLException e) {
-            System.out.println("Couldn't create new game" + e);
             return null;
         } finally {
             db.close();

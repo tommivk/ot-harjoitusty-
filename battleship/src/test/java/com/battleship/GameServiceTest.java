@@ -33,7 +33,6 @@ public class GameServiceTest {
             s.execute(createUsers);
             s.execute(createGame);
         } catch (SQLException e) {
-            System.out.println("ERROR: " + e);
         } finally {
             db.close();
         }
@@ -55,7 +54,6 @@ public class GameServiceTest {
             s.execute(dropUsers);
             s.execute(dropGame);
         } catch (SQLException e) {
-            System.out.println("ERROR: " + e);
         } finally {
             db.close();
         }

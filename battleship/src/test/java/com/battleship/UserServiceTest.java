@@ -30,7 +30,6 @@ public class UserServiceTest {
             String createUsers = "CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY, username TEXT UNIQUE);";
             s.execute(createUsers);
         } catch (SQLException e) {
-            System.out.println("ERROR: " + e);
         } finally {
             db.close();
         }
@@ -47,7 +46,6 @@ public class UserServiceTest {
                     "DROP TABLE Users;");
             p.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("ERROR: " + e);
         } finally {
             db.close();
         }

@@ -41,7 +41,6 @@ public class DBUserDao implements UserDao {
             int id = Integer.valueOf(r.getString("id"));
             return new User(r.getString("username"), id);
         } catch (Exception e) {
-            System.out.println(e);
             return null;
         } finally {
             db.close();
@@ -64,7 +63,6 @@ public class DBUserDao implements UserDao {
             return new User(r.getString("username"), id);
 
         } catch (SQLException e) {
-            System.out.println("Login error: " + e);
             return null;
         } finally {
             db.close();
@@ -82,7 +80,6 @@ public class DBUserDao implements UserDao {
             p.executeUpdate();
             return new User(username);
         } catch (SQLException e) {
-            System.out.println("Couldn't add new user" + e);
             return null;
         } finally {
             db.close();

@@ -122,7 +122,6 @@ public class GameService {
         try {
             gameDao.setWinner(this.databaseAdress, currentGame.getGameId(), playerId);
         } catch (Exception e) {
-            System.out.println(e);
         }
     }
 
@@ -136,7 +135,6 @@ public class GameService {
         try {
             return gameDao.getPlayerWinCount(this.databaseAdress, playerId);
         } catch (Exception e) {
-            System.out.println(e);
             return 0;
         }
     }
@@ -151,7 +149,6 @@ public class GameService {
         try {
             return gameDao.getPlayerGameCount(this.databaseAdress, playerId);
         } catch (Exception e) {
-            System.out.println(e);
             return 0;
         }
     }

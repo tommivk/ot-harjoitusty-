@@ -26,7 +26,6 @@ public class App {
             s.execute(createGame);
             s.execute(addComputer);
         } catch (SQLException e) {
-            System.out.println(e);
         } finally {
             db.close();
         }
