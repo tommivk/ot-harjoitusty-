@@ -5,11 +5,10 @@
 Sovelluksen testien rivikattavuus on 93% ja haaraumakattavuus 82%. Testaamatta jäi ainakin haaraumakattavuuden osalta joitain haaraumia tietokonevastustajan pelivalintoja
 muodostavissa metodeissa. 
 
-Suurin osa sovelluksen testeistä testaavat enimmäkseen yksittäisiä metodeja, mutta lähes kaikki niistä vaativat ainakin jossain määrin myös muiden luokkien toimintaa, 
-joten sovellusta testataan siis niin  yksikkö, kuin että integraatiotasolla. 
+Suurimmassa osassa sovelluksen testeissä käytetään useita luokkia samaan aikaan. Tosin myös yksikkötestejä on jonkin verran. Sovellusta testataan siis niin  yksikkö, kuin että integraatiotasolla. 
 
 ### DAO luokat
-DAO luokkien `UserServicen` ja  `GameServicen` metodeja testataan integraatiotesteillä tiedostoissa`UserServiceTest` ja `UserServiceTest` 
+DAO luokkien `UserServicen` ja  `GameServicen` metodeja testataan integraatiotesteillä tiedostoissa`UserServiceTest` ja `GameServiceTest` 
 Testeissä luodaan testien alussa testitietokanta, joka tyhjennätään testien lopuksi. 
 
 ### Muut luokat
@@ -18,7 +17,7 @@ Luokkien `Ship` ja `Square` toimintaa testaan sekä yksikkö, että integraatiot
 
 Tietokonevastustajan `Computer` toimintaa testaan tiedostossa `Computertest`. Testit sisältävät sekä yksikkö- että integraatiotestejä.
 
-Pelitilaluokan `GameTest` toimintaa testaan tiedostossa `Gametest`. Testit ovat enimmäkseen integraatiotestejä
+Pelitilaluokan `GameTest` toimintaa testaan tiedostossa `GameTest`. Testit ovat enimmäkseen integraatiotestejä
 
 ### Testeihin jääneet puuteet
 Testien luomaa tietokantatiedostoa ei poisteta testien suorituksen jälkeen
