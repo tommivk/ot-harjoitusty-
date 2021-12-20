@@ -18,7 +18,7 @@ Luokat `DBGameDao` ja `DBUserDao` kommunikoivat tietokannan kanssa.
 
 Sovellus käyttää Sqlite3 tietokantaa, johon se tallettaa tiedot käyttäjistä sekä pelitilastot peleistä. Tietokanta on suunnittelun suhteen yksinkertainen ja siinä on vain kaksi taulua. 
 Taulussa `Users` on kaksi saraketta `id` ja `username` 
-Taulussa `Games` on sarakkeet `id` `finished` `playeroneshots`  `playertwoshots` `playeronehits`  `playertwohits` sekä sarakkeet  `winner`  `playerone` `playertwo`, jotka ovat myös viiteavaimia `Users` tauluun. 
+Taulussa `Games` on sarakkeet `id` `playeroneshots`  `playertwoshots` `playeronehits`  `playertwohits` sekä sarakkeet  `winner`  `playerone` `playertwo`, jotka ovat myös viiteavaimia `Users` tauluun. 
 
 
 ### Sovelluslogiikka
