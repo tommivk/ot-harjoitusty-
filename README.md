@@ -5,15 +5,21 @@ Klassinen laivanupotuspeli
 * [vaatimusmäärittely](https://github.com/tommivk/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 * [arkkitehtuuri](https://github.com/tommivk/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 * [käyttöohje](https://github.com/tommivk/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
+* [testausdokumentti](https://github.com/tommivk/ot-harjoitustyo/blob/master/dokumentaatio/testaus.md)
 
 ## Releaset
 * [Viikko 5](https://github.com/tommivk/ot-harjoitustyo/releases/tag/viikko5)
 * [Viikko 6](https://github.com/tommivk/ot-harjoitustyo/releases/tag/viikko6)
+* [loppupalautus](https://github.com/tommivk/ot-harjoitustyo/releases/tag/loppupalautus)
 
 ## Komentorivitoiminnot
-### Sovelluksen käynnistys
+Kaikki komennot suoritetaan hakemistossa `battleship`
 ```
 cd battleship
+```
+### Sovelluksen käynnistys
+
+```
 mvn compile exec:java -Dexec.mainClass=com.battleship.App
 ```
 
