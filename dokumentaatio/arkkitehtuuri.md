@@ -42,3 +42,11 @@ Jos peli on tietokonetta vastaan luo `Game` luokka olion `Computer` ja tallettaa
 
 ### Sekvenssikaavio koko peliprosessista pääpiirteittäin
 ![sekvenssikaavio](https://user-images.githubusercontent.com/52420413/144903849-8fa947bc-c414-4414-9418-f5d9a3373cd6.png)
+
+### Ohjelmaan jääneet ongelmat
+* ohjelmaan jäi pari checkstyle virhettä
+  * GameDao luokassa sijaitseva metodi `createGame` ylittää metodin maksimipituuden kolmella rivillä. Metodin pituutta lisää lähinnä tietokantaan arvot asettavat `setInt` metodikutsut
+  * Computer luokka ylittää jonkin verran checkstylen määrittämän luokan pituusrajan
+* tietokonevastustajan käyttämä "brute force" menetelmä ei ole kovin tehokas menetelmä ja  sen sijaan olisi parempi pitää kirjaa jäljellä olevista ruuduista
+* käyttöliittymää rakentavaa koodia olisi ehkä voinut refaktoroida hieman enemmän erillisiksi metodeiksi
+* scene näkymät olisi voinut mahdollisesti jakaa omiin luokkiinsa
