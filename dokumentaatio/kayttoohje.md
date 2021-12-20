@@ -10,7 +10,7 @@ Sovellus käynnistetään komennolla `java -jar battleship.jar`
 
 `computerShotDelay` määrittää tietokonepelaajan pelisiirtojen välisen viiveen. Arvo annetaan millisekunteina kokonaislukuna. 
 
-`databaseFile` määrittää sovelluksen käytettämän tietokantatiedoston nimen.
+`databaseFile` määrittää sovelluksen käyttämän tietokantatiedoston nimen.
 
 ### Sovelluksen käyttäminen
 
