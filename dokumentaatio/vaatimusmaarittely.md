@@ -23,7 +23,8 @@ pelitilanäkymä koostuu kahdesta 10x10 kokoisesta ruudukosta, jotka ovat merkit
 * käyttäjä voi kirjautua sisään käyttäjänimellä
 ### Kirjautumisen jälkeen 
 * käyttäjä voi aloittaa uuden pelin tietokonetta tai toista käyttäjää vastaan
-* käyttäjä voi tarkastella pelitilastoja pelitilastonäkymässä
+* käyttäjä voi tarkastella omia pelitilastoja pelitilastonäkymässä
+* käyttäjä voi hakea muiden käyttäjien tilastoja pelitilastonäkymässä
 * käyttäjä voi kirjautua ulos sovelluksesta
 ### Ennen pelikierroksen alkua
 * käyttäjä voi asettaa laivat pelikentälle omalla vuorollaan haluamiinsa sijainteihin, joko vaaka tai pystysuoraan.
