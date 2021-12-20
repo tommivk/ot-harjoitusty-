@@ -17,7 +17,7 @@ Luokkien `Ship` ja `Square` toimintaa testaan sekä yksikkö, että integraatiot
 
 Tietokonevastustajan `Computer` toimintaa testaan tiedostossa `Computertest`. Testit sisältävät sekä yksikkö- että integraatiotestejä.
 
-Pelitilaluokan `GameTest` toimintaa testaan tiedostossa `GameTest`. Testit ovat enimmäkseen integraatiotestejä
+Pelitilaluokan `Game` toimintaa testaan tiedostossa `GameTest`. Testit ovat enimmäkseen integraatiotestejä
 
 ### Testeihin jääneet puuteet
 Testien luomaa tietokantatiedostoa ei poisteta testien suorituksen jälkeen
