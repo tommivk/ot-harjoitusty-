@@ -34,6 +34,6 @@ pelitilanäkymä koostuu kahdesta 10x10 kokoisesta ruudukosta, jotka ovat merkit
   * jos ammus osuu vastustajan laivaan, käyttäjä saa jatkaa omaa vuoroaan. 
   * kaikki vastustajan laivat ensimmäisenä upotettuaan, voittaa käyttäjä pelin ja peli päättyy. 
 ### Pelin jälkeen
-* käyttäjällä on voi aloittaa uusi peli samaa vastustajaa vastaan
-* käyttäjällä on voi poistua pelistä
+* käyttäjä voi aloittaa uuden pelin samaa vastustajaa vastaan
+* käyttäjä voi poistua pelistä
 
