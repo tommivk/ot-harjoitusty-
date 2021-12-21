@@ -51,6 +51,9 @@ public class DBUserDao implements UserDao {
         Connection db = DriverManager.getConnection(databaseAdress);
 
         try {
+            if (username.toLowerCase() == "computer") {
+                return null;
+            }
             PreparedStatement p = db.prepareStatement("SELECT * FROM Users WHERE username = ?");
             p.setString(1, username);
 

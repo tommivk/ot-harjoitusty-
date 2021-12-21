@@ -221,8 +221,11 @@ public class BattleshipUi extends Application {
         Button button = new Button("Add");
         Text errorMessage = new Text("");
         button.setOnMouseClicked(event -> {
-            boolean success = userService.createUser(textfield.getText());
-            userService.getAllUsers();
+            boolean success = false;
+
+            if (textfield.getText().trim().length() > 0) {
+                success = userService.createUser(textfield.getText());
+            }
             if (success) {
                 errorMessage.setText("");
                 if (userService.getLoggedPlayerOne() == null) {
@@ -233,7 +236,12 @@ public class BattleshipUi extends Application {
                     stage.show();
                 }
             } else {
-                errorMessage.setText("Username is taken");
+                if (textfield.getText().trim().length() == 0) {
+                    errorMessage.setText("Username cannot be empty");
+                } else {
+                    errorMessage.setText("Username is taken");
+                }
+
             }
         });
 
