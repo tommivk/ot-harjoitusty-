@@ -1,5 +1,6 @@
 ### Pakkauskaavio
-![pakkauskaavio](https://user-images.githubusercontent.com/52420413/146921492-cae4e6db-1864-4702-83e0-91bcdd51c82d.jpg)
+![pakkauskaavio](https://user-images.githubusercontent.com/52420413/146930045-5d0474d3-c3fd-4b6e-954b-c0c4e1c5a7cb.jpg)
+
 
 `enums` pakkauksesta löytyvät sovelluksen käyttämät enumit, joita on pakkauksessa kaksi, `Shipdirection` ja `Player`. `UI` pakkauksesta löytyy graafisen käyttölittymän rakentava luokka. `Domain` pakkauksesta löytyvät sovelluslogiikkaan liittyvät luokat. `dao` pakkauksesta löytyvät pysyväistiedon hallintaan liittyvät luokat. 
 
