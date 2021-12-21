@@ -1,5 +1,7 @@
 ### Pakkauskaavio
-![pakkauskaavio](https://user-images.githubusercontent.com/52420413/145840477-ce0309b3-a64a-4161-9ae8-8a52e2369876.jpg)
+![pakkauskaavio](https://user-images.githubusercontent.com/52420413/146921492-cae4e6db-1864-4702-83e0-91bcdd51c82d.jpg)
+
+`enums` pakkauksesta löytyvät sovelluksen käyttämät enumit, joita on pakkauksessa kaksi, `Shipdirection` ja `Player`. `UI` pakkauksesta löytyy graafisen käyttölittymän rakentava luokka. `Domain` pakkauksesta löytyvät sovelluslogiikkaan liittyvät luokat. `dao` pakkauksesta löytyvät pysyväistiedon hallintaan liittyvät luokat. 
 
 ### Käyttöliittymä
 Käyttöliittymä sisältää 7 erilaista näkymää
@@ -24,24 +26,45 @@ Taulussa `Games` on sarakkeet `id` `playeroneshots`  `playertwoshots` `playerone
 ### Sovelluslogiikka
 Yhtä pelikentän ruutua kuvastaa ``Square`` olio, jolla on ilmentymämuuttujana javafx olio ``Rectangle``, jonka javafx lopulta renderöi käyttöliittymään. ``Square`` olioon on myös mahdollista lisätä ilmentymämuuttujana olio ``Ship`` joka kuvastaa yhtä laivaa pelikentällä.
 
+### Sekvenssikaavio uuden käyttäjän luomisesta
+![newuser](https://user-images.githubusercontent.com/52420413/146920034-85c4996c-c610-43bc-a765-4f65f7e77c6c.png)
+`DBUserDao` tallettaa tietokantaan uuden käyttäjän, mikäli käyttäjänimeä ei ole vielä olemassa ja onnistuessaan palauttaa `User` olion. 
+Mikäli tietokantaoperaatio epäonnistuu, palauttaa `DBUserDao` `null`. Vastaavasti `UserService` luokka palauttaa `true` onnistuneen operaation jälkeen ja `false` mikäli operaatio epäonnistuu
+
 ### Sekvenssikaavio käyttäjän sisäänkirjautumisesta
 ![login](https://user-images.githubusercontent.com/52420413/145857100-95f4a585-1d3e-4fea-863e-118e1266557a.png)
+`DBUserDao` hakee tietokannasta käyttäjän käyttäjänimen perusteella, ja onnistuessaan palauttaa `User` olion. 
+Mikäli tietokantaoperaatio epäonnistuu, palauttaa `DBUserDao` `null`. Vastaavasti `UserService` luokka palauttaa `true` onnistuneen operaation jälkeen ja `false` mikäli operaatio epäonnistuu
 
 
 ### Sekvenssikaavio siitä mitä tapahtuu,kun uusi peli luodaan
 ![gamecreation](https://user-images.githubusercontent.com/52420413/145845645-9047ddb2-c09d-4898-a9b2-7868536d07e0.png)
 
+`DBGameDao` tallettaa tietokantaan uuden pelin onnistuessaan palauttaa `Game` olion. 
+Mikäli tietokantaoperaatio epäonnistuu, palauttaa `DBGameDao` `null`. Vastaavasti `GameService` luokka palauttaa `true` onnistuneen operaation jälkeen ja `false` mikäli operaatio epäonnistuu
+
+
 ### Sekvenssikaavio siitä mitä Game luokassa tapahtuu, kun uusi peli luodaan
 ![newgame](https://user-images.githubusercontent.com/52420413/145848023-82584b02-a533-4efb-b920-269bbdbbb153.png)
 
-Jos peli on tietokonetta vastaan luo `Game` luokka olion `Computer` ja tallettaa sen ilmentyjämuuttujana. metodia `new Square()` kutsutaan yhteensä 200 kertaa ja oliot tallennetaan ilmentyjämuuttujiin `player1Squares` ja `player2Squares`. Metodia `new Ship()` kutsutaan yhteensä 12 kertaa ja luodut oliot tallennetaan ilmentyjämuuttujiin `player1Ships` ja `player2Ships` 
+Jos peli on tietokonetta vastaan luo `Game` luokka olion `Computer` ja tallettaa sen ilmentyjämuuttujana. metodia `new Square()` kutsutaan yhteensä 200 kertaa ja oliot tallennetaan ilmentyjämuuttujiin `player1Squares` ja `player2Squares` (100 molempiin). Metodia `new Ship()` kutsutaan yhteensä 12 kertaa ja luodut oliot tallennetaan ilmentyjämuuttujiin `player1Ships` ja `player2Ships` (6 molempiin).
+
+### Sekvenssikaavio laivojen asettamisesta kentälle
+![p1ships](https://user-images.githubusercontent.com/52420413/146924310-4740f318-e927-41a4-837b-c58516b8e19f.png)
+
+### Sekvenssikaavio siitä kun pelaaja ampuu ohi ja vuoro vaihtuu
+![player1turn](https://user-images.githubusercontent.com/52420413/146925761-3fa5e1dc-5f01-400c-8ba2-17bb4e9438ca.png)
+
+### Sekvenssikaavio siitä kun pelaaja osuu vastustajan laivaan
+![player1hit](https://user-images.githubusercontent.com/52420413/146926422-5cf3b83f-bda9-4fe4-bf73-c806daa66451.png)
+Käyttöliittymä tarkasta aluksi onko peli vielä käynnissä ja että onko pelivuoro oikea. Sen jälkeen tarkastetaan onko ruutua jo ammuttu, mikäli ei ole, tarkastetaan sen jälkeen onko ruudussa laivaa vai ei. Mikäli ruudussa on laiva, palauttaa square luokka `true` ja muutoin `false`. Sen jälkeen tietokantaan talletetaan tiedot pelivuoron tuloksesta.
+
 
 ### Luokkakaavio
 ![luokkakaavio](https://user-images.githubusercontent.com/52420413/145857688-6a367501-8e45-40a8-96b1-eaa23d2809b9.jpg)
 
+Luokkakaaviosta näkyy luokkien väliset yhteydet
 
-### Sekvenssikaavio koko peliprosessista pääpiirteittäin
-![sekvenssikaavio](https://user-images.githubusercontent.com/52420413/144903849-8fa947bc-c414-4414-9418-f5d9a3373cd6.png)
 
 ### Ohjelmaan jääneet ongelmat
 * ohjelmaan jäi pari checkstyle virhettä
