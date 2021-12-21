@@ -50,18 +50,18 @@ Mikäli tietokantaoperaatio epäonnistuu, palauttaa `DBGameDao` `null`. Vastaava
 ### Sekvenssikaavio siitä mitä Game luokassa tapahtuu, kun uusi peli luodaan
 ![newgame](https://user-images.githubusercontent.com/52420413/145848023-82584b02-a533-4efb-b920-269bbdbbb153.png)
 
-Jos peli on tietokonetta vastaan luo `Game` luokka olion `Computer` ja tallettaa sen ilmentyjämuuttujana. metodia `new Square()` kutsutaan yhteensä 200 kertaa ja oliot tallennetaan ilmentyjämuuttujiin `player1Squares` ja `player2Squares` (100 molempiin). Metodia `new Ship()` kutsutaan yhteensä 12 kertaa ja luodut oliot tallennetaan ilmentyjämuuttujiin `player1Ships` ja `player2Ships` (6 molempiin).
+Jos peli on tietokonetta vastaan luo `Game` luokka olion `Computer` ja tallettaa sen ilmentyjämuuttujana. metodia `new Square()` kutsutaan yhteensä 200 kertaa ja oliot tallennetaan ilmentyjämuuttujiin `playerOneSquares` ja `playerTwoSquares` (100 molempiin). Metodia `new Ship()` kutsutaan yhteensä 12 kertaa ja luodut oliot tallennetaan ilmentyjämuuttujiin `playerOneShips` ja `playerTwoShips` (6 molempiin).
 
 ### Sekvenssikaavio laivan asettamisesta kentälle
 ![p1ships](https://user-images.githubusercontent.com/52420413/146924310-4740f318-e927-41a4-837b-c58516b8e19f.png)
 
 `Game` ottaa seuraavan laivan pelaajan laivojen pinosta ja asettaa sen ilmentymämuuttujaksi niihin `Square` olioihin, joihin laiva asetetaan koordinaattien, laivan pituuden sekä laivan orientaation mukaan. Tämän jälkeen `Ship` oliolle lisätään ilmentymämuuttujaksi `Rectangle` olio `Square` oliosta, johon sitten lopulta vaihdetaan laivan kuva. Kun kaikki pelaajan laivat ovat asetettu kentälle, kutsutaan metodia `clearButtonImages` mikä muuttaa kaikki peliruudut takaisin valkoisiksi.
 
-### Sekvenssikaavio siitä kun pelaaja ampuu ohi ja vuoro vaihtuu
+### Sekvenssikaavio siitä, kun pelaaja ampuu ohi ja vuoro vaihtuu
 ![player1turn](https://user-images.githubusercontent.com/52420413/146925761-3fa5e1dc-5f01-400c-8ba2-17bb4e9438ca.png)
 Käyttöliittymä tarkasta aluksi onko peli vielä käynnissä ja että onko pelivuoro oikea. Sen jälkeen tarkastetaan onko ruutua jo ammuttu, mikäli ei ole, tarkastetaan sen jälkeen onko ruudussa laivaa vai ei. Mikäli ruudussa on laiva, palauttaa square luokka `true` ja muutoin `false`. Sen jälkeen tietokantaan talletetaan tieto uudesta laukauksesta. 
 
-### Sekvenssikaavio siitä kun pelaaja osuu vastustajan laivaan
+### Sekvenssikaavio siitä, kun pelaaja osuu vastustajan laivaan
 ![player1hit](https://user-images.githubusercontent.com/52420413/146926422-5cf3b83f-bda9-4fe4-bf73-c806daa66451.png)
 Prosessi on sama kuin edellisessä kaaviossa, mutta pelivuoro ei vaihdu ja nyt peliruutuun asetetaan laivan kuva sekä tietokantaan talletetaan tieto myös osumasta. 
 
