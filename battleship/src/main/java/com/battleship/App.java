@@ -25,10 +25,13 @@ public class App {
             s.execute(createUsers);
             s.execute(createGame);
             s.execute(addComputer);
+
+            BattleshipUi.main(args);
         } catch (SQLException e) {
+            System.out.println("Something went wrong with the database connection:\n" + e);
         } finally {
             db.close();
         }
-        BattleshipUi.main(args);
+
     }
 }
