@@ -51,7 +51,7 @@ Laivojen asettamisen jälkeen alkaa peli, jossa pelaajat voivat ampua toistensa 
 
 
 Pelin päätyttyä voi aloittaa uuden pelin samaa vastustajaa vastaan ``New game`` napista tai poistua pelistä klikkaamalla ``Quit``
-![game_finished](https://user-images.githubusercontent.com/52420413/145722840-65ec29bc-2ac8-4220-bb81-0d823bd28b93.png)
+![game-end](https://user-images.githubusercontent.com/52420413/146944086-0f45c28b-1057-4567-8e9a-8aa0793ef872.png)
 
 
 ## Pelitilastot
