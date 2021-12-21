@@ -20,5 +20,15 @@
 | 10.12  | 1    | javadoc                                               |
 | 11.12  | 4    | sovelluksen ulkoasun ja käyttäjäkokemuksen parantelua |
 | 12.12  | 1    | ulkoasun parantelua                                   |
-| 13.13  | 1    | testausta                                             |
-|  yht   | 37   |                                                       |
+| 13.12  | 1    | testausta                                             |
+| 14.12  | 1    | testausta                                             |
+| 15.12  | 1    | hakutoiminto pelitilastoille                          |
+| 15.12  | 1    | javadoc                                               |
+| 16.12  | 1    | refaktorointia                                        |
+| 16.12  | 2    | testausta                                             |
+| 17.12  | 2    | konfiguraatiot ja viiveen lisäys tietokonepelaajalle  |
+| 19.12  | 1    | javadoc                                               |
+| 20.12  | 2    | dokumentaatio                                         |
+| 20.12  | 1    | testausta                                             |
+|        |      |                                                       |
+|  yht   | 50   |                                                       |
