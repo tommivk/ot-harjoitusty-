@@ -6,11 +6,11 @@ Tiedostojen `config.properties` ja kuvatiedostot sisältävän kansion `images` 
 
 Sovellus käynnistetään komennolla `java -jar battleship.jar`
 ### Konfiguraatiot
-`config.properties` tiedostossa on kaksi muuttuujaa, joiden avulla voi muuttaa sovelluksen toimintaa.
+`config.properties` tiedostossa on kaksi muuttujaa, joiden avulla voi muuttaa sovelluksen toimintaa.
 
-`computerShotDelay` määrittää tietokonepelaajan pelisiirtojen välisen viiveen. Arvo annetaan millisekunteina kokonaislukuna. 
+  * `computerShotDelay` määrittää tietokonepelaajan pelisiirtojen välisen viiveen. Arvo annetaan millisekunteina kokonaislukuna. 
 
-`databaseFile` määrittää sovelluksen käyttämän tietokantatiedoston nimen.
+  * `databaseFile` määrittää sovelluksen käyttämän tietokantatiedoston nimen.
 
 ### Sovelluksen käyttäminen
 
