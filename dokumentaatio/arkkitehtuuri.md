@@ -29,11 +29,13 @@ Yhtä pelikentän ruutua kuvastaa ``Square`` olio, jolla on ilmentymämuuttujana
 
 ### Sekvenssikaavio uuden käyttäjän luomisesta
 ![newuser](https://user-images.githubusercontent.com/52420413/146920034-85c4996c-c610-43bc-a765-4f65f7e77c6c.png)
+
 `DBUserDao` tallettaa tietokantaan uuden käyttäjän, mikäli käyttäjänimeä ei ole vielä olemassa ja onnistuessaan palauttaa `User` olion. 
 Mikäli tietokantaoperaatio epäonnistuu, palauttaa `DBUserDao` `null`. Vastaavasti `UserService` luokka palauttaa `true` onnistuneen operaation jälkeen ja `false` mikäli operaatio epäonnistuu
 
 ### Sekvenssikaavio käyttäjän sisäänkirjautumisesta
 ![login](https://user-images.githubusercontent.com/52420413/145857100-95f4a585-1d3e-4fea-863e-118e1266557a.png)
+
 `DBUserDao` hakee tietokannasta käyttäjän käyttäjänimen perusteella, ja onnistuessaan palauttaa `User` olion. 
 Mikäli tietokantaoperaatio epäonnistuu, palauttaa `DBUserDao` `null`. Vastaavasti `UserService` luokka palauttaa `true` onnistuneen operaation jälkeen ja `false` mikäli operaatio epäonnistuu
 
@@ -50,15 +52,18 @@ Mikäli tietokantaoperaatio epäonnistuu, palauttaa `DBGameDao` `null`. Vastaava
 
 Jos peli on tietokonetta vastaan luo `Game` luokka olion `Computer` ja tallettaa sen ilmentyjämuuttujana. metodia `new Square()` kutsutaan yhteensä 200 kertaa ja oliot tallennetaan ilmentyjämuuttujiin `player1Squares` ja `player2Squares` (100 molempiin). Metodia `new Ship()` kutsutaan yhteensä 12 kertaa ja luodut oliot tallennetaan ilmentyjämuuttujiin `player1Ships` ja `player2Ships` (6 molempiin).
 
-### Sekvenssikaavio laivojen asettamisesta kentälle
+### Sekvenssikaavio laivan asettamisesta kentälle
 ![p1ships](https://user-images.githubusercontent.com/52420413/146924310-4740f318-e927-41a4-837b-c58516b8e19f.png)
+
+`Game` ottaa seuraavan laivan pelaajan laivojen pinosta ja asettaa sen ilmentymämuuttujaksi niihin `Square` olioihin, joihin laiva asetetaan koordinaattien, laivan pituuden sekä laivan orientaation mukaan. Tämän jälkeen `Ship` oliolle lisätään ilmentymämuuttujaksi `Rectangle` olio `Square` oliosta, johon sitten lopulta vaihdetaan laivan kuva. Kun kaikki pelaajan laivat ovat asetettu kentälle, kutsutaan metodia `clearButtonImages` mikä muuttaa kaikki peliruudut takaisin valkoisiksi.
 
 ### Sekvenssikaavio siitä kun pelaaja ampuu ohi ja vuoro vaihtuu
 ![player1turn](https://user-images.githubusercontent.com/52420413/146925761-3fa5e1dc-5f01-400c-8ba2-17bb4e9438ca.png)
+Käyttöliittymä tarkasta aluksi onko peli vielä käynnissä ja että onko pelivuoro oikea. Sen jälkeen tarkastetaan onko ruutua jo ammuttu, mikäli ei ole, tarkastetaan sen jälkeen onko ruudussa laivaa vai ei. Mikäli ruudussa on laiva, palauttaa square luokka `true` ja muutoin `false`. Sen jälkeen tietokantaan talletetaan tieto uudesta laukauksesta. 
 
 ### Sekvenssikaavio siitä kun pelaaja osuu vastustajan laivaan
 ![player1hit](https://user-images.githubusercontent.com/52420413/146926422-5cf3b83f-bda9-4fe4-bf73-c806daa66451.png)
-Käyttöliittymä tarkasta aluksi onko peli vielä käynnissä ja että onko pelivuoro oikea. Sen jälkeen tarkastetaan onko ruutua jo ammuttu, mikäli ei ole, tarkastetaan sen jälkeen onko ruudussa laivaa vai ei. Mikäli ruudussa on laiva, palauttaa square luokka `true` ja muutoin `false`. Sen jälkeen tietokantaan talletetaan tiedot pelivuoron tuloksesta.
+Prosessi on sama kuin edellisessä kaaviossa, mutta pelivuoro ei vaihdu ja nyt peliruutuun asetetaan laivan kuva sekä tietokantaan talletetaan tieto myös osumasta. 
 
 
 ### Luokkakaavio
