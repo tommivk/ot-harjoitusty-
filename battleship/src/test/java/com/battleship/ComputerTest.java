@@ -6,7 +6,6 @@ import com.battleship.domain.Game;
 import com.battleship.domain.GameService;
 import com.battleship.domain.Ship;
 import com.battleship.domain.Square;
-import com.battleship.domain.User;
 import com.battleship.enums.ShipDirection;
 import com.battleship.enums.Player;
 import com.battleship.dao.DBGameDao;
