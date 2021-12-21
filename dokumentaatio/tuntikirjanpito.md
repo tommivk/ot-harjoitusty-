@@ -31,4 +31,4 @@
 | 20.12  | 2    | dokumentaatio                                         |
 | 20.12  | 1    | testausta                                             |
 |        |      |                                                       |
-|  yht   | 50   |                                                       |
+|  yht   | 50h  |                                                       |
