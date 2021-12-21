@@ -274,7 +274,7 @@ public class GameTest {
             }
         }
         assertEquals(Color.GREY, game.getPlayerOneSquares()[5][5].getRectangle().getFill());
-        game.clearButtonColors(Player.PLAYER1);
+        game.clearButtonImages(Player.PLAYER1);
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
                 assertEquals(Color.WHITESMOKE, game.getPlayerOneSquares()[5][5].getRectangle().getFill());

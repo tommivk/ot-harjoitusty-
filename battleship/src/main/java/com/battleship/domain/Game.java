@@ -150,7 +150,7 @@ public class Game {
      * 
      * @param player which players squares will be cleared
      */
-    public void clearButtonColors(Player player) {
+    public void clearButtonImages(Player player) {
         for (int i = 0; i < 10; i++) {
             for (int k = 0; k < 10; k++) {
                 Square square = player == Player.PLAYER1 ? this.playerOneSquares[i][k] : this.playerTwoSquares[i][k];

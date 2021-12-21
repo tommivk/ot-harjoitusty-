@@ -502,7 +502,7 @@ public class BattleshipUi extends Application {
                         game.placeShip(row, column, Player.PLAYER1);
 
                         if (game.playerOneShipsIsEmpty()) {
-                            game.clearButtonColors(Player.PLAYER1);
+                            game.clearButtonImages(Player.PLAYER1);
                             if (!game.getIsAgainstComputer()) {
                                 turnLabel.setText("Place your ships, " + userService.getLoggedPlayerTwo().getName());
                             }
@@ -568,7 +568,7 @@ public class BattleshipUi extends Application {
                     });
                 } else {
                     game.getComputer().placeComputerShips();
-                    game.clearButtonColors(Player.PLAYER2);
+                    game.clearButtonImages(Player.PLAYER2);
                 }
                 playerTwoGrid.add(playerTwoButton, k, i);
             }
