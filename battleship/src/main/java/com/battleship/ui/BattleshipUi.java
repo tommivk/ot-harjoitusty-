@@ -63,22 +63,22 @@ public class BattleshipUi extends Application {
     }
 
     public Scene startScene(Stage stage) {
-        StackPane stackpane = new StackPane();
-        StackPane stackpane2 = new StackPane();
+        StackPane loginStackPane = new StackPane();
+        StackPane signupStackPane = new StackPane();
 
         Rectangle loginRect = new Rectangle(200, 200);
         Rectangle signUpRect = new Rectangle(200, 200);
 
         loginRect.setFill(Color.DIMGRAY);
         signUpRect.setFill(Color.DIMGRAY);
-        stackpane.setPickOnBounds(false);
-        stackpane.setOnMouseClicked(event -> {
+        loginStackPane.setPickOnBounds(false);
+        loginStackPane.setOnMouseClicked(event -> {
             stage.setScene(loginScene(stage));
             stage.show();
         });
 
-        stackpane2.setPickOnBounds(false);
-        stackpane2.setOnMouseClicked(event -> {
+        signupStackPane.setPickOnBounds(false);
+        signupStackPane.setOnMouseClicked(event -> {
             stage.setScene(signUpScene(stage));
         });
 
@@ -88,10 +88,10 @@ public class BattleshipUi extends Application {
         Text newUserText = new Text("New user");
         newUserText.setFill(Color.WHITESMOKE);
         newUserText.setStyle("-fx-font-size: 18; -fx-font-weight: bold;");
-        stackpane.getChildren().addAll(loginRect, loginText);
-        stackpane2.getChildren().addAll(signUpRect, newUserText);
+        loginStackPane.getChildren().addAll(loginRect, loginText);
+        signupStackPane.getChildren().addAll(signUpRect, newUserText);
 
-        HBox hbox = new HBox(stackpane, stackpane2);
+        HBox hbox = new HBox(loginStackPane, signupStackPane);
         hbox.setSpacing(30);
         hbox.setAlignment(Pos.CENTER);
         return new Scene(hbox);
