@@ -22,7 +22,7 @@ Pelitilaluokan `Game` toimintaa testaan tiedostossa `GameTest`. Testit ovat enim
 ### Järjestelmätestaus
 Järjestelmätestaus on suoritettu manuaalisesti
 Sovellusta on testattu Linux ympäristössä javan versiolla 11. Testauksessa on käyty läpi kaikki sovelluksen toiminnallisuudet. 
-### Testeihin jääneet puuteet
+### Testeihin jääneet puutteet
 Testien luomaa tietokantatiedostoa ei poisteta testien suorituksen jälkeen
 
 ### Ohjelmaan jääneet ongelmat
