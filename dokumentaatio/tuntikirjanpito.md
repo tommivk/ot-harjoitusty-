@@ -33,5 +33,4 @@
 | 21.12  | 1    | dokumentaatio                                         |
 | 26.12  | 1    | dokumentaatio                                         |
 |        |      |                                                       |
-
-| yht | 52h | |
+| yht    | 52h  |                                                       |
