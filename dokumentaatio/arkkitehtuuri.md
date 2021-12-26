@@ -25,7 +25,7 @@ Taulussa `Games` on sarakkeet `id` `playeroneshots`  `playertwoshots` `playerone
 
 
 ### Sovelluslogiikka
-Yhtä pelikentän ruutua kuvastaa ``Square`` olio, jolla on ilmentymämuuttujana javafx olio ``Rectangle``, jonka javafx lopulta renderöi käyttöliittymään. ``Square`` olioon on myös mahdollista lisätä ilmentymämuuttujana olio ``Ship`` joka kuvastaa yhtä laivaa pelikentällä.
+ Yhtä pelikentän ruutua pelissä kuvastaa ``Square`` olio, jolla on ilmentymämuuttujana javafx olio ``Rectangle``, jonka javafx lopulta renderöi käyttöliittymään. ``Square`` olioon on myös mahdollista lisätä ilmentymämuuttujana olio ``Ship`` joka kuvastaa yhtä laivaa pelikentällä. `Computer` luokka sisältää kaikki pelin tietokonevastustajan toiminnot ja metodit. `Game` luokka vastaa pelin pelitilan hallinnasta.
 
 ### Sekvenssikaavio uuden käyttäjän luomisesta
 ![newuser](https://user-images.githubusercontent.com/52420413/146920034-85c4996c-c610-43bc-a765-4f65f7e77c6c.png)
