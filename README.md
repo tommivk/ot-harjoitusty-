@@ -31,17 +31,20 @@ mvn test
 ```
 mvn jacoco:report
 ```
+raportti löytyy tiedostosta <em>target/site/jacoco/index.html</em>
+
 ### Checkstyle raportin luominen
 ``` 
 mvn jxr:jxr checkstyle:checkstyle
 ```
-
+raportti löytyy tiedostosta <em>target/site/checkstyle.html</em>
 ### Suoritettavan jarin generointi
 ```
 mvn package
 ```
-
+generoi suoritettavan <em>jar</em> tiedoston <em>battleship-1.0-SNAPSHOT.jar</em> hakemistoon <em>target</em>
 ### JavaDoc
 ```
 mvn javadoc:javadoc
 ```
+generoitu javadoc löytyy tiedostosta <em>target/site/apidocs/index.html</em>
