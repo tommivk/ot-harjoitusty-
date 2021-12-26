@@ -72,10 +72,6 @@ Prosessi on sama kuin edellisessä kaaviossa, mutta pelivuoro ei vaihdu ja nyt p
 Luokkakaaviosta näkyy luokkien väliset yhteydet
 
 
-### Ohjelmaan jääneet ongelmat
-* ohjelmaan jäi pari checkstyle virhettä
-  * GameDao luokassa sijaitseva metodi `createGame` ylittää metodin maksimipituuden kolmella rivillä. Metodin pituutta lisää lähinnä tietokantaan arvot asettavat `setInt` metodikutsut
-  * Computer luokka ylittää jonkin verran checkstylen määrittämän luokan pituusrajan
-* tietokonevastustajan käyttämä "brute force" menetelmä ei ole kovin tehokas menetelmä ja  sen sijaan olisi parempi pitää kirjaa jäljellä olevista ruuduista
+### Ohjelman arkkitehtuuriin jääneet ongelmat
 * käyttöliittymää rakentavaa koodia olisi ehkä voinut refaktoroida hieman enemmän erillisiksi metodeiksi
 * scene näkymät olisi voinut mahdollisesti jakaa omiin luokkiinsa
