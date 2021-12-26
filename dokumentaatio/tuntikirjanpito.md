@@ -30,5 +30,8 @@
 | 19.12  | 1    | javadoc                                               |
 | 20.12  | 2    | dokumentaatio                                         |
 | 20.12  | 1    | testausta                                             |
+| 21.12  | 1    | dokumentaatio                                         |
+| 26.12  | 1    | dokumentaatio                                         |
 |        |      |                                                       |
-|  yht   | 50h  |                                                       |
+
+| yht | 52h | |
